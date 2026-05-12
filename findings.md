@@ -325,12 +325,83 @@ Before threshold: max defeatable entrant tracks roughly 0.8x incumbent's current
 
 ---
 
+---
+
+## F17: Timescale scaling formula
+
+**Source:** `simulations/timescale.py`
+
+Measured singleton emergence timescales (t_10x, t_dom) across parameter sweeps. Power-law fits.
+
+| Parameter | Effect on t_10x | Fit exponent |
+|---|---|---|
+| alpha (resource coupling) | Higher -> faster | alpha^(-0.30) |
+| gap (initial advantage) | Larger -> faster | gap^(-0.15) |
+| N (agent count) | More -> slower | N^(+0.96) |
+| beta_low (threshold depth) | Deeper -> faster | |beta_low|^(-0.31) |
+
+**Combined formula:**
+```
+t_10x ~ 2.44 * N^0.96 * alpha^(-0.30) * gap^(-0.15) * |beta_low|^(-0.31)
+```
+
+(C absorbs threshold position T and beta_high. Fits are independent single-variable power laws; combined formula assumes multiplicative independence.)
+
+**Key results:**
+- N scales almost exactly linearly (N^0.96 ≈ N). More agents = proportionally more time.
+- Gap has the weakest effect (gap^-0.15). Doubling gap reduces time by only 11%. The threshold mechanism dominates over initial conditions.
+- t_10x ≈ t_100x ≈ t_dom for all parameters tested. Once 10x separation is reached, dominance is near-immediate — superexponential growth collapses all subsequent milestones together.
+
+---
+
+## F18: Continuous entry — critical entry rate lambda_crit ≈ 0.25
+
+**Source:** `simulations/continuous_entry.py`, Experiment 1
+
+Entry model: Poisson arrivals at rate lambda, Pareto(shape=2) capabilities.
+
+| Lambda | Incumbent survival |
+|---|---|
+| 0.01 | 99% |
+| 0.10 | 97% |
+| 0.25 | 88% |
+| 0.40 | 73% |
+| 0.63 | 60% |
+| 1.00 | 48% |
+| 2.51 | 9% |
+| 6.31 | 0% |
+
+Survival drops below 90% at lambda ≈ 0.25. At lambda = 1.0, outcome is essentially random (48%). At lambda ≥ 6.3, incumbent never survives.
+
+**Mechanism:** The critical window is pre-threshold. At lambda = 1.0, mean peak competitor count reaches 5 agents simultaneously, which distributes resources widely enough to prevent any agent from accumulating the resources needed to reach threshold T first.
+
+**Interaction with moat (F15):** Post-threshold, even high lambda is survivable because the moat exceeds 10^6 within 3 time units of crossing. The lambda_crit figure characterizes pre-threshold fragility only.
+
+---
+
+## F19: Entry capability distribution matters — heavy tails are more dangerous
+
+**Source:** `simulations/continuous_entry.py`, Experiment 2
+
+Lambda=1.0. Varying Pareto scale (mean entrant capability) and shape (tail weight).
+
+| Entry scale | Survival (shape=1.5, heavy) | Survival (shape=2.0) | Survival (shape=3.0, light) |
+|---|---|---|---|
+| 0.5x (weak entrants) | 72% | 87% | 98% |
+| 1.0x (equal capability) | 40% | 60% | 62% |
+| 2.0x (2x stronger) | 18% | 28% | 30% |
+| 5.0x (5x stronger) | 6% | 18% | 19% |
+
+Heavier-tailed distributions (lower shape) are significantly more dangerous at high entry scales. A distribution that occasionally produces extreme entrants (10-50x incumbent's origin) is more threatening than a higher average entry with lighter tail.
+
+---
+
 ## Revised open questions
 
-**OQ2:** N scaling timescale comparison — still unresolved analytically.
+**OQ2:** Analytical timescale formula — empirical power law now measured (F17). Closed-form derivation from the ODE still pending.
 
-**OQ4:** Moat growth rate — can t* for F3 (when the moat becomes effectively infinite) be derived analytically from the intelligence explosion equation?
+**OQ4 (partially resolved):** Moat growth rate tracks S_inc(t) superexponentially — see derivations.md Section 6. Exact closed-form involves the singular ODE solution.
 
-**OQ5:** What determines the 2.9x crossover in Case B (F10)? Should be derivable from the condition: "Agent 1 reaches threshold T before running out of resources." Formal derivation pending.
+**OQ5 (partially resolved):** Crossover X* ≈ T^(1/alpha) gives 3^1 = 3 for alpha=1, T=3, consistent with observed 2.9. Scaling relation derived — closed-form integral not solved.
 
-**OQ6:** Continuous entry model: agents enter at rate λ with initial capability S_new ~ P(S). Does the incumbent maintain dominance? Prediction: yes, if moat growth rate > entry rate * max(P(S)). Formal analysis pending.
+**OQ6 (resolved by F18-F19):** Critical entry rate lambda_crit ≈ 0.25 per time unit for Pareto(shape=2) distributions. Heavy-tailed distributions lower this further. Post-threshold, any lambda is survivable due to moat growth.

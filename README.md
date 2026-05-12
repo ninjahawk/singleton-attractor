@@ -134,19 +134,91 @@ Alpha sweep (top): separation increases monotonically with resource-capability c
 
 ---
 
+### Beta regimes — asymmetric ceiling and threshold race
+
+<div align="center">
+<img src="figures/br_case_b.png" width="780"/>
+</div>
+
+<div align="center">
+<img src="figures/br_phase_diagram.png" width="640"/>
+</div>
+
+Threshold agent vs flat agent (top): incumbent can overcome up to 2.9x initial disadvantage. Above that, resource starvation prevents threshold from being reached. Threshold race phase diagram (bottom): lower-threshold agent wins at equal starts but compensates only ~1.47x initial disadvantage at most. Larger threshold gaps plateau rather than compound.
+
+---
+
+### Stochastic noise — singleton always emerges
+
+<div align="center">
+<img src="figures/stoch_winner_rate.png" width="780"/>
+</div>
+
+Singleton emergence rate is **100% at every tested noise level**. Winner identity degrades above σ≈0.023 and becomes random at σ≈0.23. Noise determines which agent wins — not whether a singleton forms.
+
+---
+
+### Late entrant moat
+
+<div align="center">
+<img src="figures/le_moat.png" width="640"/>
+</div>
+
+<div align="center">
+<img src="figures/le_phase_diagram.png" width="640"/>
+</div>
+
+Moat at threshold crossing: 3x. Three time units later: >1,000,000x. Late entry is only a threat during the pre-threshold window. Post-threshold, the moat is effectively insurmountable.
+
+---
+
+### Timescale scaling
+
+<div align="center">
+<img src="figures/timescale_sweeps.png" width="780"/>
+</div>
+
+Power-law fits across all parameters. N scales nearly linearly (N^0.96). Gap has the weakest effect (gap^-0.15) — the threshold mechanism dominates initial conditions. Emergent formula:
+
+```
+t_10x ~ 2.44 * N^0.96 * alpha^(-0.30) * gap^(-0.15) * |beta_low|^(-0.31)
+```
+
+---
+
+### Continuous entry — critical rate
+
+<div align="center">
+<img src="figures/ce_phase_diagram.png" width="640"/>
+</div>
+
+Incumbent survival stays above 90% for entry rate λ < 0.25 per time unit. At λ=1.0, survival is 48%. Above λ≈6.3, incumbent never survives. Post-threshold entries are survivable at any rate due to moat growth.
+
+---
+
 ## Key findings
 
 | # | Finding |
 |---|---------|
 | F1 | Growth equation analytical solution matches numerical integration to 0.000% error |
 | F2 | Competitive exclusion holds for all initial gaps tested (1% to 100%) |
-| F3 | Beta-threshold crossing accelerates separation by 12.4 million times vs flat-beta at same time |
+| F3 | Beta-threshold crossing accelerates separation by 12.4 million times vs flat-beta |
 | F4 | Winner = initial leader in 200/200 N=10 trials |
 | F5 | Elimination order is strictly weakest-first |
-| F6 | Separation increases monotonically with alpha (tested α=0.25 to 3.0) |
+| F6 | Separation increases monotonically with alpha |
 | F7 | Winner identity holds at 100% down to sigma=0.001 initial spread |
-| F8 | Niche partitioning does not prevent singleton — beta-flip dominates over resource structure |
+| F8 | Niche partitioning does not prevent singleton — beta-flip dominates resource structure |
 | F9 | Minimum beta-flip separation across all tested parameters: 1,179x |
+| F10 | Threshold agent defeats flat agent up to 2.9x initial disadvantage |
+| F11 | In threshold race, lower threshold compensates only ~1.19x initial disadvantage |
+| F12 | Threshold advantage plateaus — larger gaps beyond ~4 units provide no additional compensation |
+| F13 | Singleton emergence rate is 100% across all tested noise levels |
+| F14 | 1% initial gap is overwhelmed by sigma≥0.05 noise — winner becomes random |
+| F15 | Moat grows from 3x at threshold crossing to >1,000,000x within 3 time units |
+| F16 | Late entry is only a threat pre-threshold |
+| F17 | t_10x ~ 2.44 * N^0.96 * alpha^(-0.30) * gap^(-0.15) * |beta_low|^(-0.31) |
+| F18 | Critical entry rate lambda_crit ≈ 0.25/time unit for Pareto(shape=2) entries |
+| F19 | Heavy-tailed entry distributions (lower Pareto shape) are more dangerous than high-mean entries |
 
 ---
 
@@ -154,12 +226,14 @@ Alpha sweep (top): separation increases monotonically with resource-capability c
 
 | # | Question | Status |
 |---|----------|--------|
-| 1 | Does the β-flip produce unbounded separation without resource competition? | Confirmed (F8) |
+| 1 | Does β-flip produce unbounded separation without resource competition? | Confirmed (F8) |
 | 2 | Does competitive exclusion hold for all initial gaps? | Confirmed (F2) |
-| 3 | Under what conditions does oligopoly persist instead? | Revised — requires different β regimes, not just separate niches |
-| 4 | What is the empirical signature in the Fermi paradox? | Open |
-| 5 | Does stochastic noise affect singleton emergence? | Open (OQ3) |
-| 6 | What happens with agents in different fundamental β regimes? | Open (OQ1) |
+| 3 | Under what conditions does oligopoly persist? | Resolved — requires different β regimes (F10-F12) |
+| 4 | Does stochastic noise prevent singleton emergence? | Resolved — no (F13) |
+| 5 | Is late entry a persistent threat? | Resolved — pre-threshold only (F15-F16) |
+| 6 | What is the timescale formula? | Resolved — F17 |
+| 7 | What is the critical entry rate? | Resolved — F18-F19 |
+| 8 | What are the cosmological implications? | See theory/cosmological_mapping.md |
 
 ---
 
@@ -169,23 +243,34 @@ Alpha sweep (top): separation increases monotonically with resource-capability c
 |------|-------------|
 | `theory/foundations.md` | Literature review and prior work with full citations |
 | `theory/formal_claim.md` | Theorem statement and proof sketch |
-| `theory/derivations.md` | Step-by-step mathematical derivations |
-| `simulations/agents.py` | Core agent model |
-| `simulations/competition.py` | Lotka-Volterra competition dynamics |
+| `theory/derivations.md` | Step-by-step mathematical derivations (7 sections) |
+| `theory/cosmological_mapping.md` | Physical parameter mapping and Fermi paradox implications |
 | `simulations/intelligence_explosion.py` | dS/dt = S^(1-β) dynamics |
-| `simulations/run_experiments.py` | Experiment runner |
-| `figures/` | Output plots |
-| `findings.md` | Running log of confirmed results with parameter values |
+| `simulations/competition.py` | Two-agent competitive exclusion |
+| `simulations/agents.py` | N-agent capability competition |
+| `simulations/run_experiments.py` | Comprehensive parameter sweep |
+| `simulations/beta_regimes.py` | Asymmetric ceiling and threshold race |
+| `simulations/stochastic.py` | Stochastic noise robustness |
+| `simulations/late_entrant.py` | Late entrant moat dynamics |
+| `simulations/timescale.py` | Timescale scaling formula |
+| `simulations/continuous_entry.py` | Continuous entry model |
+| `figures/` | 21 output plots |
+| `findings.md` | 19 confirmed findings with parameter values |
 
 ---
 
 ## Run
 
 ```bash
-python simulations/intelligence_explosion.py   # β sweep — growth regime analysis
+python simulations/intelligence_explosion.py   # growth regimes and singularity
 python simulations/competition.py              # two-agent competitive exclusion
-python simulations/agents.py                  # N-agent capability competition
-python simulations/run_experiments.py         # full experiment suite
+python simulations/agents.py                  # N-agent competition
+python simulations/run_experiments.py         # parameter sweeps
+python simulations/beta_regimes.py            # asymmetric ceiling + phase diagram
+python simulations/stochastic.py              # noise robustness
+python simulations/late_entrant.py            # moat dynamics
+python simulations/timescale.py               # scaling formula
+python simulations/continuous_entry.py        # continuous entry model
 ```
 
 ---
