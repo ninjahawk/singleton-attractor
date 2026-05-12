@@ -67,10 +67,10 @@ quantitatively.
 Key results: the $\beta$-threshold produces $12.4\times 10^6$ times greater
 separation than flat dynamics at identical initial conditions; stochastic noise
 at all tested amplitudes randomizes which agent wins but never prevents
-singleton formation (100\% emergence rate, 300 trials per noise level);
+singleton formation (zero formation failures in 300 trials per noise level);
 cooperation under any structure---no cooperation, oracle-optimal cooperation,
-rational cooperation---produces 100\% singleton emergence with indistinguishable
-timing; and the timescale formula is
+rational cooperation---produces zero singleton-formation failures with
+indistinguishable timing; and the timescale formula is
 $t_{10\times} \approx 2.44 \cdot N^{0.96} \cdot \alpha^{-0.30} \cdot
 \mathrm{gap}^{-0.15} \cdot |\betaL|^{-0.31}$.
 We identify five conditions under which the theorem fails and characterize each
@@ -174,8 +174,12 @@ $T > 0$ is the capability level where $\beta(S)$ changes sign.
 \end{definition}
 
 \begin{definition}[Singleton]
-Agent $j$ is a \emph{singleton} at time $t$ if $S_j(t)/S_i(t) \to \infty$
-for all $i \neq j$.
+Agent $j$ is a \emph{singleton} if $S_j(t)/S_i(t) \to \infty$ for all
+$i \neq j$, where the limit is taken as $t \to \sup\mathcal{T}$ and
+$\mathcal{T}$ is the maximal interval on which the system is defined.
+In the superexponential case $\mathcal{T} = [0,\tstar)$ for finite $\tstar$
+and the ratio diverges as $t \to (t^*)^-$; in the pre-threshold case
+$\mathcal{T} = [0,\infty)$ and the ratio diverges as $t \to \infty$.
 \end{definition}
 
 \subsection{Assumptions}
@@ -218,8 +222,10 @@ A1 follows from \citet{yudkowsky2013intelligence}; A2 from Omohundro's
 instrumental convergence \citep{omohundro2008basic}: resource acquisition is
 an instrumental subgoal for any sufficiently capable optimizer.
 A3 is the fundamental physical constraint.
-A4 is the key structural assumption, asserting that recursive self-improvement
-can cross from diminishing to accelerating returns.
+A4 is the key conditional: the theorem proves that \emph{if} at least one
+agent can reach $T$ (A4), \emph{then} a singleton emerges.
+A4 asserts the premise; the theorem derives the consequence.
+Whether A4 holds empirically is a separate question.
 A5 is satisfied by any physical noise in initial conditions.
 
 We use fast resource equilibration (A2 as a steady-state condition).
@@ -230,6 +236,12 @@ regulatory barriers, and path dependency present in real systems.
 These frictions slow resource acquisition without reversing its direction;
 quantitative timescale estimates (F17) should be treated as lower bounds in
 systems with significant friction.
+For the finite-time blowup result specifically: the proof uses only
+$r_1(t) > 1/2$, which holds as long as $S_1 > S_2$ (Lemma~\ref{lem:rmin}),
+independently of the equilibration timescale.
+Even with arbitrarily slow resource adjustment, the post-threshold incumbent
+holds more than half the resources at every moment and the blowup is
+guaranteed.
 
 \noindent\textit{Competition model.}
 A2--A3 follow Lotka--Volterra competition rather than Cournot or Bertrand.
@@ -352,6 +364,15 @@ agent~2 remains below $T$ ($\beta_2 > 0$).
 Then $\rho(t) \to \infty$ at a finite time $\tstar$.
 \end{theorem}
 
+\begin{remark}
+$\beta(S)$ is a sigmoid (Definition~2.3), so $\beta_1(S_1)$ varies as $S_1$
+grows.
+Throughout the proof, $|\beta_1|$ denotes $\inf_{S > T}|\beta(S)| > 0$,
+the sigmoid's asymptotic magnitude for $S \gg T$.
+Using this lower bound on $|\beta_1|$ gives an upper bound on $\tstar$;
+the actual blowup is no later than computed.
+\end{remark}
+
 \begin{proof}
 We establish three lemmas, then combine them.
 
@@ -371,16 +392,14 @@ Since $\beta_2 > 0$ the bound grows as $t^{1/\beta_2}$: finite for all finite $t
 
 \begin{lemma}[Resource share lower bound]
 \label{lem:rmin}
-For all $t \geq \tcross$:
-$r_1(t) \geq \rmin := S_1(\tcross)^\alpha /
-\bigl(S_1(\tcross)^\alpha + S_2(\tcross)^\alpha\bigr) > 1/2$.
+For all $t \geq \tcross$: $r_1(t) > 1/2$.
 \end{lemma}
 \begin{proof}
-At $\tcross$, $S_1 > S_2$ (by Theorem~\ref{thm:ratio}), so $r_1(\tcross) > 1/2$.
-For $t > \tcross$, $S_1$ grows superexponentially ($\beta_1 < 0$) while $S_2$
-grows polynomially (Lemma~\ref{lem:s2bound}), so $S_1(t)/S_2(t)$ is
-non-decreasing.
-Thus $r_1(t) = 1/(1+(S_2/S_1)^\alpha) \geq r_1(\tcross) = \rmin > 1/2$.
+By the theorem's hypothesis, agent~2 remains below $T$ throughout, so
+$S_2(t) < T$ for all $t \geq \tcross$.
+Since $\dot{S}_1 > 0$ and $S_1(\tcross) = T$, we have $S_1(t) \geq T > S_2(t)$,
+hence $S_1(t)^\alpha > S_2(t)^\alpha$.
+Therefore $r_1(t) = S_1^\alpha/(S_1^\alpha + S_2^\alpha) > 1/2$.
 \end{proof}
 
 \begin{lemma}[$S_1$ diverges in finite time]
@@ -388,23 +407,23 @@ Thus $r_1(t) = 1/(1+(S_2/S_1)^\alpha) \geq r_1(\tcross) = \rmin > 1/2$.
 There exists finite $\tstar$ such that $S_1(t) \to \infty$ as $t \to \tstar$.
 \end{lemma}
 \begin{proof}
-By Lemma~\ref{lem:rmin}, $r_1 \geq \rmin$.
+By Lemma~\ref{lem:rmin}, $r_1(t) > 1/2$ for all $t \geq \tcross$.
 With $\beta_1 < 0$:
 \[
-  \dot{S}_1 \geq \rmin \cdot S_1^{1+|\beta_1|}.
+  \dot{S}_1 > \tfrac{1}{2}\, S_1^{1+|\beta_1|}.
 \]
 Let $u = S_1^{-|\beta_1|}$. Then
 \[
   \dot{u} = -|\beta_1|\, S_1^{-|\beta_1|-1}\, \dot{S}_1
-          \leq -|\beta_1|\, \rmin.
+          < -\tfrac{|\beta_1|}{2}.
 \]
 Integrating:
 \[
-  u(t) \leq S_1(\tcross)^{-|\beta_1|} - |\beta_1|\,\rmin\,(t - \tcross).
+  u(t) < S_1(\tcross)^{-|\beta_1|} - \tfrac{|\beta_1|}{2}\,(t - \tcross).
 \]
-$u(t)$ reaches zero at
+$u(t)$ reaches zero by time
 \[
-  \tstar = \tcross + \frac{S_1(\tcross)^{-|\beta_1|}}{|\beta_1|\,\rmin} < \infty.
+  \tstar = \tcross + \frac{2\,S_1(\tcross)^{-|\beta_1|}}{|\beta_1|} < \infty.
 \]
 As $t \to \tstar$, $u(t) \to 0$, so $S_1(t) \to \infty$.
 \end{proof}
@@ -417,11 +436,13 @@ By Lemma~\ref{lem:s2bound}, $S_2(\tstar) \leq
 Therefore $\rho(t) = S_1(t)/S_2(t) \to \infty/\text{finite} = \infty$ at $t = \tstar$.
 \end{proof}
 
-\textbf{Explicit bound:}
+\textbf{Explicit bound} (using tighter $r_1(\tcross)$ value):
 \[
-  \tstar \leq \tcross + \frac{T^{-|\beta_1|}}{|\beta_1|\,\rmin},
-  \quad \rmin = \frac{T^\alpha}{T^\alpha + S_2(\tcross)^\alpha}.
+  \tstar \leq \tcross + \frac{T^{-|\beta_1|}}{|\beta_1|\,r_1(\tcross)},
+  \quad r_1(\tcross) = \frac{T^\alpha}{T^\alpha + S_2(\tcross)^\alpha} > \tfrac{1}{2}.
 \]
+The conservative bound uses $r_1 > 1/2$; the explicit formula uses the
+tighter value $r_1(\tcross)$ at threshold crossing.
 
 \subsection{Step 3: Resource monopoly stability}
 \label{sec:step3}
@@ -476,6 +497,15 @@ Therefore $r_N \leq S_N^\alpha / S_1^\alpha = \rho_{1N}^{-\alpha} \to 0$:
 agent~$N$'s growth stalls.
 The system reduces to $N-1$ agents $\{S_1, \ldots, S_{N-1}\}$.
 By the inductive hypothesis, agent~1 is the singleton of this reduced system.
+
+\textit{Note on simultaneous dynamics:}
+The induction eliminates agents sequentially, but all $N$ agents evolve
+simultaneously.
+The sequential reduction is formally valid in the limit ($r_N \to 0$ removes
+agent~$N$'s influence on remaining agents' dynamics as $\rho_{1N}\to\infty$),
+but the correction from simultaneous evolution is not analytically bounded here.
+It is verified empirically: F4 and F5 confirm strictly weakest-first
+elimination with agent~1 winning in 200/200 trials for $N = 10$.
 \end{proof}
 
 \textit{Verification:}
@@ -553,7 +583,9 @@ resource pools (see Section~\ref{sec:failures}, F1 revised).
 \subsection{$\beta$-regime sensitivity (F10--F12)}
 
 A threshold agent ($\betaL = -0.3$) defeats a flat agent ($\beta = 0.5$
-always) provided the flat agent does not start more than $2.9\times$ ahead (F10).
+always) provided the flat agent does not start more than approximately
+$2.9\times$ ahead (F10); this is a point estimate from simulation with no
+reported variance.
 Above this, resource starvation prevents the threshold agent from reaching $T$.
 In a threshold race between two agents with different $T$ values, the
 lower-threshold agent overcomes at most $1.19\times$ initial disadvantage (F11),
@@ -565,24 +597,28 @@ and the advantage plateaus beyond a threshold gap of $\sim\!4$ units (F12).
 \centering
 \includegraphics[width=0.85\textwidth]{../figures/stoch_winner_rate.png}
 \caption{Stochastic robustness. 300 trials per noise level $\sigma$.
-Singleton emergence rate (ratio $> 10\times$): 100\% at every tested level.
-Winner identity (initial leader) degrades above $\sigma \approx 0.023$ and
-becomes random at $\sigma \approx 0.23$.}
+Singleton emergence rate (ratio $> 10\times$): zero failures at every tested
+level.
+Winner identity: initial leader wins $> 50\%$ of trials below $\sigma \approx
+0.23$ (default 10\% gap); degradation begins near $\sigma \approx 0.023$.}
 \label{fig:stochastic}
 \end{figure}
 
-Singleton emergence rate is \textbf{100\% at every tested noise level}
-($\sigma$ from 0.001 to 1.0, 300 trials per level, F13).
-Noise randomizes winner identity but never prevents singleton formation.
-A 1\% initial gap is overwhelmed by $\sigma \geq 0.05$ noise, making the
-winner essentially random (F14).
-This is consistent with Theorem~\ref{thm:stochastic} (Section~\ref{sec:stochastic}).
-The winner-randomization threshold $\sigma \approx 0.23$ is an empirical
-observation from simulation, not analytically derived.
-Feller's criterion proves singleton formation at all $\sigma > 0$ but does
-not bound the noise amplitude at which initial-leader identity becomes
-unreliable; that threshold depends on the initial capability gap and is a
-function of the ratio $\sigma / \mathrm{gap}$.
+No singleton-formation failures were observed in 300 trials at any tested
+noise level ($\sigma$ from 0.001 to 1.0, F13).
+Theorem~\ref{thm:stochastic} proves emergence probability~1; the simulation
+confirms zero observed failures but cannot establish a probability.
+Noise affects \emph{which} agent wins, not \emph{whether} a singleton forms.
+Three noise thresholds appear in these results and are distinct:
+(1)~$\sigma \approx 0.023$: winner identity begins to degrade (initial leader
+starts losing some trials) for the default 10\% initial gap;
+(2)~$\sigma \approx 0.05$: a 1\% initial gap is overwhelmed---winner becomes
+essentially random at that specific gap (F14);
+(3)~$\sigma \approx 0.23$: winner identity is fully random for the default
+10\% gap.
+The randomization threshold scales with the initial gap; $\sigma/\mathrm{gap}
+\approx 2$ is the approximate crossover.
+All three thresholds are empirical observations, not analytically derived.
 
 \subsection{Late entrant moat (F15--F16)}
 
@@ -600,7 +636,12 @@ From power-law fits across single-variable sweeps:
   \label{eq:timescale}
 \end{equation}
 The $N^1$ exponent is analytically derived (Appendix~\ref{app:timescale});
-the others are estimated via scaling arguments.
+the others are fitted from single-variable sweeps with all other parameters
+held fixed.
+The formula does not account for interaction effects between parameters and
+has not been cross-validated on a held-out parameter set.
+Confidence intervals on the fitted exponents are not reported; the formula
+should be treated as a scaling estimate, not a precise prediction.
 Key property: $t_{10\times} \approx t_{100\times} \approx t_{\mathrm{dom}}$ across all
 parameters---superexponential growth collapses all subsequent milestones.
 
@@ -624,22 +665,29 @@ qualitative structure intact.
 \centering
 \includegraphics[width=0.85\textwidth]{../figures/coop_dynamic_game.png}
 \caption{Cooperation regime invariance. Three regimes across 50 trials each.
-Singleton emergence: 100\% in all three. Mean $t_{10\times} = 10.09$ in all
-three (indistinguishable).}
+Zero singleton-formation failures in all three regimes.
+Mean $t_{10\times} = 10.09$ in all three (indistinguishable).}
 \label{fig:coop}
 \end{figure}
 
 Four experiments test whether cooperation prevents singleton emergence.
-(1)~Critical coalition size: $N = 2$ coalition members prevent a singleton
-candidate ($S = 1.1$) from crossing $T = 3.0$ (F20).
+F21--F23 are structural consequences of the no-renegotiation assumption
+(Section~\ref{sec:coalition}) rather than independent empirical discoveries;
+the experiments confirm that the model behaves as the assumption implies.
+(1)~Critical coalition size: $N = 2$ coalition members can prevent a singleton
+candidate ($S = 1.1$) from crossing $T = 3.0$ under certain conditions (F20).
 (2)~Coalition coherence failure: an 8-member coalition with $8\times$ combined
-capability fails---coalition resources split among 8 members give each
+capability fails because coalition resources split among 8 members give each
 $\sim\!11\%$ individually; the singleton gets $\sim\!12\%$ alone (F21).
+This follows directly from proportional internal distribution.
 (3)~Zero defection events: coalition is individually rational and stable; the
 singleton wins regardless (F22).
 (4)~Cooperation regime invariance: no cooperation, oracle-optimal cooperation,
-and rational cooperation all produce 100\% singleton emergence with
+and rational cooperation all produce zero singleton-formation failures with
 indistinguishable timing (mean $t_{10\times} = 10.09$ in all three, F23).
+Oracle cooperation produces a different singleton (suppresses the initial
+leader) but cannot prevent singleton formation because the coalition's
+internal competition then resolves to a new singleton on the same timescale.
 
 \subsection{Coalition dynamics under varying $\alpha$ (F24--F25)}
 
@@ -665,7 +713,8 @@ dashed) matches the empirical boundary.}
 
 In all 56 tested $(\alpha, N)$ combinations where the coalition suppresses
 the external singleton, an internal coalition singleton forms.
-100\% singleton emergence is universal across all tested $\alpha$ values.
+Zero singleton-formation failures were observed across all tested $\alpha$
+values.
 
 % ============================================================
 \section{Failure Conditions}
@@ -677,11 +726,13 @@ assumption fails and the resulting consequences.
 \paragraph{F1: Niche partitioning (A2/A3 weakened)---revised.}
 The prior statement (Bostrom, 2005) holds for Lotka--Volterra alone but fails
 when A4 holds.
-The $\beta$-flip mechanism operates independently of resource competition;
-exclusive-resource agents still cross $T$ and achieve unbounded separation
-($1{,}103\times$ at zero overlap, F8).
-\textit{Corrected condition:} Stable oligopoly requires genuinely different
-$\beta$-regimes---one agent structurally incapable of crossing into $\beta < 0$.
+The $\beta$-flip mechanism operates independently of resource competition.
+\textit{Note:} The zero-overlap simulation (F8) relaxes A3 (single shared
+pool) and operates outside the formal model.
+It is an out-of-model robustness check, not a theorem consequence.
+Within the formal model, A3 holds and the revised condition is:
+stable oligopoly requires genuinely different $\beta$-regimes---one agent
+structurally incapable of crossing into $\beta < 0$.
 
 \paragraph{F2: No $\beta$-threshold (A4 fails).}
 If $\beta(S) > 0$ for all $S$, Step~2 fails.
@@ -690,15 +741,18 @@ is exponential rather than superexponential and the timescale is much longer.
 
 \paragraph{F3: Continuous entry (A3 weakened).}
 Late entry threatens only the pre-threshold incumbent (F15--F16).
-High continuous entry rates ($\lambda > 6.3$ per time unit) prevent any
-stable pre-threshold incumbent (F18), producing competitive churn.
+Two distinct entry-rate thresholds apply: $\lambda \approx 0.25$ per time
+unit is where incumbent survival first drops below 90\% (F18), and
+$\lambda > 6.3$ is where no stable pre-threshold incumbent can form at all
+(F18)---25$\times$ higher, describing a qualitatively different regime
+of competitive churn rather than degraded survival.
 Post-threshold, any entry rate is survivable.
 
 \paragraph{F4: Identical initial conditions (A5 fails).}
 Under perfect symmetry, a singleton still emerges, but the theorem cannot
 designate which agent.
 Any physical noise breaks symmetry; F13--F14 show even $\sigma = 0.001$
-initial spread produces a singleton in 100\% of trials.
+initial spread produces a singleton in every tested trial.
 
 \paragraph{F5: Cooperation.}
 Coalition pooling can suppress a singleton candidate externally
@@ -1063,8 +1117,14 @@ it already has somewhere in our light cone.
 \label{app:timescale}
 
 \paragraph{$N^1$ scaling (analytical).}
-Initially, $N$ equal agents each have resource share $1/N$.
-The leader's growth rate is approximately:
+The derivation assumes $N$ agents with equal initial capability, each
+starting with resource share $1/N$.
+A5 requires initial heterogeneity, so this is a conservative case: the
+leader's initial share is exactly $1/N$ (worst case), giving an upper bound
+on $\tcross$.
+With unequal initial conditions the leader starts with share $> 1/N$,
+so actual $\tcross \leq$ the equal-agent estimate.
+The leader's growth rate under the equal-agent approximation:
 \[
   \dot{S}_{\mathrm{lead}} \approx S^{1-\betaH} / N.
 \]
