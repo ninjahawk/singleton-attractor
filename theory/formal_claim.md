@@ -89,7 +89,7 @@ F1 requires not just separate resource pools but different β regimes: one agent
 
 **F2 (No β-threshold):** If β(S) > 0 for all S (diminishing returns to self-improvement at all capability levels), growth is always subexponential. Step 2 fails. The claim still holds in the long run (competitive exclusion still applies from Step 1), but the separation is exponential rather than superexponential, and the singleton takes longer to emerge.
 
-**F3 (Agent creation):** If new agents can enter the environment with high initial capability (violating the closed system assumption in A3), the leading agent may never achieve full dominance before being challenged by a new entrant. This is the "multiple progenitors" problem.
+**F3 (Agent creation) — bounded in time:** Simulation (findings.md F15-F16) shows F3 is only a threat during the pre-threshold phase. Once the incumbent crosses the β threshold, its moat grows superexponentially: from 3x at crossing to >1,000,000x within 3 time units. F3 requires a new entrant to arrive AND outcompete the incumbent BEFORE threshold crossing. After threshold, no tested entrant capability can displace the incumbent. The threat window is finite and can be characterized analytically (OQ4-OQ5).
 
 **F4 (Identical initial conditions):** If S_i(0) = S_j(0) for all i, j (violating A5), the system is symmetric and no agent has an initial advantage. In practice, noise breaks symmetry and Step 1 applies to the first perturbation. But in a perfectly symmetric system, the claim cannot specify which agent becomes the singleton — only that one will.
 

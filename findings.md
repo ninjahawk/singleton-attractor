@@ -190,8 +190,147 @@ Lower threshold position (T closer to initial capability) accelerates onset. Dee
 
 ## Open questions from findings
 
-**OQ1:** If niche partitioning doesn't prevent singleton when agents share the same β function, what happens when agents have fundamentally different β functions? E.g., one agent saturates at β=0.5 while the other can achieve β=-0.3. This is the true test of F1.
+**OQ1:** If niche partitioning doesn't prevent singleton when agents share the same β function, what happens when agents have fundamentally different β functions? E.g., one agent saturates at β=0.5 while the other can achieve β=-0.3. This is the true test of F1. → Answered by F10-F12.
 
 **OQ2:** N scaling: for N ≥ 30 in subexponential regime, time to 10x ratio exceeds 500. With threshold β, convergence is much faster. The paper should distinguish timescales between the two regimes.
 
-**OQ3:** Stochastic noise: all experiments are deterministic. Need to verify noise doesn't prevent singleton. Prediction: noise affects only which agent wins (in near-tie initial conditions), not whether a singleton emerges.
+**OQ3:** Stochastic noise: all experiments are deterministic. Need to verify noise doesn't prevent singleton. Prediction: noise affects only which agent wins (in near-tie initial conditions), not whether a singleton emerges. → Answered by F13-F14.
+
+---
+
+## F10: Asymmetric ceiling — threshold agent vs flat agent
+
+**Source:** `simulations/beta_regimes.py`, Case B
+
+Agent 1: sigmoid threshold β (β_low=-0.3 above T=3). Agent 2: flat β=0.5 (never reaches superexponential).
+
+The threshold agent (Agent 1) defeats the flat agent (Agent 2) unless Agent 2 starts more than **2.9x** ahead. Above 2.9x initial disadvantage, Agent 2 monopolizes resources before Agent 1 can reach threshold T=3, and Agent 1 never enters superexponential growth.
+
+**The mechanism of Agent 2 winning:** Not that β=0.5 competes effectively with β=-0.3. It is that a large enough resource monopoly starves Agent 1 before the threshold is reached. If Agent 1 could reach T=3, it would win. The question is whether it gets enough resource to grow at all.
+
+**Key implication:** Flat-β agents cannot win by being "more capable" — they can only win by preventing the threshold agent from crossing its threshold. This is a starvation mechanism, not a competitive capability mechanism.
+
+---
+
+## F11: Threshold race — lower threshold wins, but advantage is small
+
+**Source:** `simulations/beta_regimes.py`, Case C
+
+Both agents have sigmoid threshold β, identical β_low=-0.3 and β_high=0.5. T1=3, T2=5.
+
+- Equal starts: Agent 1 (lower threshold) wins in all tested configurations (T1 from 1.5 to 4.9, T2=5.0 fixed).
+- Agent 1 can overcome at most **1.19x initial disadvantage** against Agent 2 (T2=T1+2).
+
+The lower-threshold advantage is much smaller than the asymmetric-ceiling advantage (F10: 2.9x). Both agents can eventually enter superexponential growth, so Agent 1's crossing-first window is limited. If Agent 2 starts far enough ahead, it gets enough resource share to race past its threshold (T2) before Agent 1 reaches T1.
+
+---
+
+## F12: Phase diagram — threshold gap vs initial position
+
+**Source:** `simulations/beta_regimes.py`, Case D
+
+Phase diagram: Agent 1 (T=2.0) vs Agent 2 (T=2.0+gap). Varied initial capability ratio and threshold gap.
+
+| T2-T1 | Max S2(0)/S1(0) where Agent 1 still wins |
+|---|---|
+| 0.50 | 0.79x (Agent 1 must start ahead) |
+| 0.92 | 1.08x |
+| 3.04 | 1.08x |
+| 3.88 | 1.47x |
+| 6.00 | 1.47x |
+
+The relationship is step-function, not linear. Small threshold gaps (<0.5 units) provide no advantage unless Agent 1 already starts ahead. Larger gaps (≥0.92) allow a modest ~1.08x compensation. Very large gaps (≥3.88) allow ~1.47x compensation. The advantage plateaus — larger threshold gaps beyond ~4 units do not provide proportionally more compensation.
+
+---
+
+## F13: Stochastic noise does not prevent singleton
+
+**Source:** `simulations/stochastic.py`, Experiment 2
+
+300 trials per sigma level. Two-agent threshold β (T=3, β_low=-0.3, β_high=0.5). S1(0)=1.1, S2(0)=1.0.
+
+| Sigma | Winner = initial leader | Singleton emerges (ratio >10x) |
+|---|---|---|
+| 0.001 | 100% | 100% |
+| 0.013 | 100% | 100% |
+| 0.026 | 98% | 100% |
+| 0.038 | 89% | 100% |
+| 0.079 | 74% | 100% |
+| 0.113 | 66% | 100% |
+| 0.234 | 58% | 100% |
+| 0.336 | 53% | 100% |
+| 0.695 | 50% | 100% |
+| 1.000 | 47% | 100% |
+
+**Singleton emergence rate is 100% at every tested noise level.** Noise randomizes which agent wins (winner identity drops to chance at sigma≈0.23) but never prevents a singleton from forming. The β-flip produces such overwhelming separation that even large noise cannot suppress the ratio below 10x.
+
+**Interpretation:** Noise affects the winner-selection phase (which agent gets the first threshold crossing) but not the dominance phase (what happens after). Once any agent crosses the threshold under any level of noise, it dominates absolutely.
+
+---
+
+## F14: Near-equal starts under noise — winner becomes random at low sigma
+
+**Source:** `simulations/stochastic.py`, Experiment 3
+
+S1(0)=1.01, S2(0)=1.0 (1% gap). 500 trials per noise level.
+
+| Sigma | Winner = initial leader |
+|---|---|
+| 0.00 | 100% |
+| 0.05 | 53.6% |
+| 0.10 | 52.2% |
+| 0.30 | 51.6% |
+| 0.50 | 52.6% |
+
+A 1% initial gap is completely overwhelmed by sigma≥0.05 noise. Outcome is essentially random (≈50%) for all sigma>0. This shows that the winner-determination threshold scales with the initial gap — larger gaps survive larger noise.
+
+---
+
+## F15: Late entrant moat grows superexponentially after threshold crossing
+
+**Source:** `simulations/late_entrant.py`, Experiment 3
+
+Incumbent starts at S=1.0, crosses beta threshold (T=3) at t=1.404.
+
+| Time after threshold crossing | Max entrant capability incumbent can defeat |
+|---|---|
+| 0.00 | 3.0 |
+| 1.05 | 19.0 |
+| 2.11 | 2,356 |
+| 3.16 | >1,000,000 |
+| 4.21 | >1,000,000 |
+
+At threshold crossing, the incumbent can defeat entrants starting at 3x its original capability. 3 time units later, the moat exceeds 1,000,000x. The moat grows at least as fast as the incumbent's capability — superexponentially.
+
+**This makes F3 (late entrant) a threat only during the pre-threshold window.** Once threshold is crossed, no realistic entrant with any tested capability can displace the incumbent. F3 is bounded in time, not persistent.
+
+---
+
+## F16: Pre-threshold phase diagram confirms F3 window
+
+**Source:** `simulations/late_entrant.py`, Experiment 2
+
+With head start t0 up to 3.9 (just before threshold crossing at t=1.4, after accounting for approach dynamics):
+
+| t0 | S_inc at entry | Max entrant defeated |
+|---|---|---|
+| 0.5 | 1.56 | 1.4 |
+| 1.2 | 2.54 | 2.1 |
+| 1.9 | 5.67 | 4.3 |
+| 2.5 | 22.8 | 18.3 |
+| 3.2 | 261 | 234 |
+| 3.9+ | >1e8 (cap) | >1,000 (tested range) |
+
+Before threshold: max defeatable entrant tracks roughly 0.8x incumbent's current capability — incumbent cannot overcome a co-equal entrant. After threshold: moat grows without bound.
+
+---
+
+## Revised open questions
+
+**OQ2:** N scaling timescale comparison — still unresolved analytically.
+
+**OQ4:** Moat growth rate — can t* for F3 (when the moat becomes effectively infinite) be derived analytically from the intelligence explosion equation?
+
+**OQ5:** What determines the 2.9x crossover in Case B (F10)? Should be derivable from the condition: "Agent 1 reaches threshold T before running out of resources." Formal derivation pending.
+
+**OQ6:** Continuous entry model: agents enter at rate λ with initial capability S_new ~ P(S). Does the incumbent maintain dominance? Prediction: yes, if moat growth rate > entry rate * max(P(S)). Formal analysis pending.
