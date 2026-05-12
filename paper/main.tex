@@ -45,45 +45,34 @@ Formal Theory and Simulation of Dominant Intelligence Emergence}
 
 % ---------- Abstract ----------
 \begin{abstract}
-We formalize the conditional claim: \emph{if} competitive environments with
-recursive self-improvement can reach a capability threshold where growth
-becomes superexponential (Assumption~A4), \emph{then} one agent achieves
-unbounded capability advantage over all others in finite time.
-Whether A4 holds in any real system is an empirical question this paper does
-not address; the scalar capability assumption further limits applicability
-to settings where a single capability measure meaningfully characterizes each
-agent.
+This paper asks what happens to competitive multi-agent systems when one agent
+can undergo recursive self-improvement fast enough to enter superexponential
+growth.
+The answer, under five explicit assumptions, is that the agent achieves
+unbounded capability advantage over all competitors in finite time.
+The critical assumption is A4: that a capability threshold $T$ exists where
+the growth exponent $\beta(S)$ flips negative.
+Whether any real system satisfies A4 is an open empirical question; the paper
+does not settle it.
 The model combines Yudkowsky's intelligence explosion equation
 ($dS/dt = S^{1-\beta}$), Omohundro's instrumental resource acquisition, and
-Lotka--Volterra competitive exclusion into a unified framework with five
-explicit assumptions.
-We prove three results formally and state one conjecture:
-(1)~ratio divergence under resource competition (Theorem~\ref{thm:ratio}),
-(2)~finite-time separation at the $\beta$-threshold under adversarial resource
-dynamics (Theorem~\ref{thm:finitetime}),
-(3)~local instability of the equal-resource equilibrium
-(Proposition~\ref{prop:monopoly}), and
-(4)~$N$-agent generalization by induction
-(Conjecture~\ref{thm:nagent}: simultaneous-dynamics gap not closed).
-We additionally derive the exact transcendental condition for coalition
-external suppression with numerical solution $\alpha^* \approx 0.64$
-(Theorem~\ref{thm:criticalalpha}), and a complete stochastic blowup proof
-via Feller's explosion criterion (Theorem~\ref{thm:stochastic}).
-All results are conditional on Assumption~A4 (reachable $\beta$-threshold);
-whether A4 holds in any real system is not addressed.
-Eleven simulation scripts and 25 model-internal findings verify the numerical
-behavior of the ODE system.
-Key results: the $\beta$-threshold produces $12.4\times 10^6$ times greater
-separation than flat dynamics; stochastic noise randomizes which agent wins
-but never prevents singleton formation (zero failures in 300 trials per noise
-level); cooperation under any structure produces zero formation failures with
-indistinguishable timing.
-We identify five conditions under which the theorem fails and characterize each
-quantitatively.
-One finding revises Bostrom's niche partitioning failure mode: separate resource
-niches do not prevent singleton emergence when agents share the same
-$\beta$-function; genuine failure requires structurally different growth
-ceilings.
+Lotka--Volterra competitive exclusion.
+Three results are proved formally.
+The $N$-agent generalization is a conjecture with an acknowledged
+simultaneous-dynamics gap.
+Additional results include the exact transcendental condition for coalition
+suppression ($\alpha^* \approx 0.64$, Theorem~\ref{thm:criticalalpha}) and a
+stochastic blowup proof via Feller's criterion (Theorem~\ref{thm:stochastic}).
+Eleven simulation scripts verify the ODE system's numerical behavior across
+25 parameter configurations.
+The $\beta$-threshold crossing produces $12.4\times 10^6$ times more
+separation than flat-$\beta$ dynamics at the same time point.
+Stochastic noise at all tested amplitudes randomizes which agent wins; it does
+not prevent a singleton from forming.
+Neither cooperation structure nor coalition size prevents singleton emergence
+in any tested configuration.
+Separate resource niches are not a sufficient failure condition, contrary to
+Bostrom (2005): the real requirement is structurally different $\beta$-regimes.
 \end{abstract}
 
 % ============================================================
@@ -109,29 +98,23 @@ formalizes related selection dynamics in biological and strategic populations.
 analyzes instrumental convergence at length but does not formalize competitive
 dynamics as a dynamical system.
 
-No prior work combines these into a unified formal model with falsifiable
-quantitative predictions.
-Good's \citeyearpar{good1965speculations} intelligence explosion concept is
-qualitative.
-Bostrom's singleton hypothesis is historical-extrapolative.
-Omohundro's drives argument is mechanistic but not formalized as a dynamical
-system.
-Yudkowsky's growth equation treats single-agent dynamics.
-Lotka--Volterra treats biological populations without recursive self-improvement.
+None of these works combine into a formal model with testable quantitative
+predictions.
+Good's \citeyearpar{good1965speculations} account is verbal.
+Bostrom's argument is historical and extrapolative.
+Omohundro gives mechanisms without dynamics.
+Yudkowsky's growth equation covers a single agent in isolation.
+Lotka--Volterra handles biological competition without self-improvement.
 
-The central conditional of this paper is Assumption~A4: that recursive
-self-improvement can cross from diminishing to accelerating returns---i.e.,
-that $\beta(S)$ becomes negative for some reachable $S = T$.
-All results are conditional on A4.
-Whether A4 holds in any real system is an empirical question this paper does
-not answer; it is the key uncertainty between the formal results and any
-real-world application.
-Readers should note that the core argument has a near-tautological structure:
-A4 asserts that superexponential growth is reachable, and the theorems prove
-that if superexponential growth is reached, the agent dominates.
-The formal machinery establishes \emph{how} this dominance occurs
-(finite-time, under adversarial resource dynamics, robust to noise and
-cooperation) but does not resolve the contested empirical premise.
+Everything in this paper is conditional on Assumption~A4: that $\beta(S)$
+can go negative for some capability level $S = T$ that is actually reachable.
+A4 is the contested premise.
+The theorems prove that \emph{if} A4 holds, a singleton emerges---and they
+specify how: in finite time, under adversarial resource dynamics, robust to
+noise and cooperation.
+That structure is close to tautological.
+The interesting empirical question---whether any real system will ever satisfy
+A4---is outside the paper's reach.
 
 This paper makes the following contributions.
 
@@ -1070,28 +1053,32 @@ finite time.
 
 \subsection{What is new}
 
-The components (Yudkowsky 2013, Omohundro 2008, Lotka--Volterra) are
-established.
-The contributions are:
-\begin{enumerate}[label=(\arabic*)]
-\item The formal combination of all three into a unified model with explicit
-falsifiable assumptions.
-\item Theorem~\ref{thm:finitetime}: finite-time separation \emph{under
-competition}.
-Prior work treats the $\beta$-flip as a single-agent result; this paper proves
-it holds against adversarial resource dynamics.
-\item The niche partitioning revision (F8): Bostrom's stated failure condition
-requires different $\beta$-regimes, not different resource pools.
-\item Cooperation failure (F23): coalition coherence failure is structural
-(Theorem~\ref{thm:coalcoherence}), not empirical.
-\item The critical $\alpha$ condition (Theorem~\ref{thm:criticalalpha}): exact
-transcendental equation, analytical derivation of why the transition falls
-between $\alpha = 0.5$ and $\alpha = 0.75$.
-\item Complete stochastic proof (Theorem~\ref{thm:stochastic}): Feller's
-criterion closes the gap left by informal drift-dominance arguments.
-\item Quantitative measurements (timescale formula, $\lambda_{\mathrm{crit}}$,
-moat characterization, F1--F25) not available in prior work.
-\end{enumerate}
+Yudkowsky (2013), Omohundro (2008), and Lotka--Volterra are all prior work.
+The combination is not.
+
+The main technical contribution is Theorem~\ref{thm:finitetime}: finite-time
+separation \emph{under competition}.
+Prior work treats the $\beta$-flip as a single-agent phenomenon.
+This paper proves it survives adversarial resource dynamics, which is
+non-trivial---an opponent can slow the race to threshold, but not stop it.
+
+The niche partitioning finding (F8) corrects Bostrom (2005).
+Separate resource pools are not a sufficient failure condition; what matters
+is whether the trailing agent can reach $\beta < 0$ at all.
+
+On the stochastic side, Theorem~\ref{thm:stochastic} closes a gap that prior
+informal arguments left open.
+Feller's criterion gives a clean, complete proof that noise changes the winner
+distribution but not the emergence probability.
+
+Theorem~\ref{thm:criticalalpha} derives the coalition-suppression threshold
+analytically.
+The transition near $\alpha = 0.64$ was previously only a simulation
+observation; it now has an exact transcendental equation behind it.
+
+The simulation scripts produce quantitative measurements---timescale formula,
+$\lambda_{\mathrm{crit}}$, moat characterization, F1--F25---that were not
+previously available.
 
 \subsection{Timescale formula analysis}
 
@@ -1107,40 +1094,45 @@ dominates initial conditions.
 
 \subsection{Limitations}
 
-\textit{Theorem~\ref{thm:nagent} (N-agent induction)} formalizes the
-sequential reduction argument; the simultaneous-dynamics correction is verified
-by simulation (F4, F5) but not analytically derived.
+\textit{The $N$-agent conjecture.}
+The inductive step works cleanly in the sequential limit but does not bound
+the error from truly simultaneous dynamics.
+The gap is real.
+Simulation (200/200 trials, $N=10$) confirms the conclusion holds, but
+simulation on the same ODE system is not the same as closing the proof.
 
-\textit{Proposition~\ref{prop:monopoly} (resource monopoly)} uses a Jacobian
-linearization that is a valid local stability statement but not a global proof.
+\textit{Local stability only.}
+Proposition~\ref{prop:monopoly} gives local instability of the equal-resource
+state via Jacobian eigenvalues.
+It says nothing about whether trajectories starting far from that point
+converge to monopoly.
 
-\textit{The timescale formula} is empirical with analytical support only for
-the $N$ exponent.
-Exact $\alpha$, $\mathrm{gap}$, and $|\betaL|$ exponents require numerical
-integration of the coupled ODE.
+\textit{Scalar capability.}
+The $\beta$-flip mechanism requires a scalar $S$ crossing a single threshold
+$T$.
+Real optimization capability is multidimensional---compute, algorithmic
+efficiency, data access, adversarial robustness---and different agents can
+lead on different dimensions simultaneously.
+There is no obvious way to extend the model to that setting.
+Whether competitive exclusion holds in a vector capability space is an open
+question, and the answer determines whether any of this applies to real AI
+systems.
 
-\textit{The cooperation result} depends on $\alpha$.
-For $\alpha \geq \alpha^* \approx 0.64$, coalition external suppression occurs
-at $N = 2$; internal singleton still forms.
-For $\alpha < \alpha^*$, external singleton wins directly.
-The critical $\alpha^* \approx 0.64$ is numerically determined from
-Theorem~\ref{thm:criticalalpha}; no closed-form root.
+\textit{Timescale formula.}
+Equation~\eqref{eq:timescale} is fitted from single-variable sweeps with no
+cross-validation.
+The $N^1$ exponent has an analytical derivation; the others do not.
+Use it as a rough scaling guide, not a prediction.
 
-\textit{Scalar capability (fundamental limitation).}
-$S$ is a scalar; real optimization capability is multidimensional (compute,
-algorithmic efficiency, data access, robustness to adversarial action).
-This is not a minor caveat.
-The entire $\beta$-flip mechanism depends on a scalar $S$ crossing a single
-threshold $T$; there is no obvious analog when capability is a vector and
-different agents lead on different dimensions.
-Competitive exclusion in a multidimensional capability space is a
-fundamental open question that this paper does not resolve, and its answer
-directly limits the real-world applicability of the results.
+\textit{Fast equilibration.}
+Theorem~\ref{thm:finitetime} requires A2.
+With slow resource equilibration, the finite-time bound on $\tstar$ breaks
+down even if the ratio still diverges eventually.
 
-\textit{No spatial structure.}
-Real environments have finite propagation speed.
-Adding spatial structure extends timescales but the qualitative result holds
-within any causally connected region.
+\textit{Spatial structure.}
+The model has none.
+Results apply within any causally connected region; adding propagation delays
+extends timescales without changing the qualitative picture.
 
 \subsection{Open questions}
 
@@ -1157,32 +1149,30 @@ coalition avoids fracturing under competitive pressure.
 \section{Conclusion}
 \label{sec:conclusion}
 
-Under assumptions A1--A5, a singleton attractor is the long-run outcome
-of competitive environments with recursive self-improvement.
-Under these assumptions, the $\beta$-threshold mechanism dominates: once any
-agent enters superexponential growth (A4), its capability diverges from all
-competitors in finite time regardless of initial conditions, resource
-structure, noise level, or cooperative strategy---provided A1--A3 and A5
-also hold.
+Under A1--A5, competitive environments with recursive self-improvement
+produce a singleton.
+Once any agent crosses the $\beta$-threshold, its capability separates from
+all competitors in finite time.
+Initial conditions matter less than threshold position; noise changes who wins,
+not whether a winner emerges; cooperation under any tested structure fails to
+prevent it.
 
-The conditions under which this fails are more specific than the prior
-literature suggests.
-Niche partitioning requires different $\beta$-regimes, not different resource
-pools.
-Late entry is a threat only during a finite pre-threshold window.
-Cooperation fails (under proportional internal resource distribution and
-no renegotiation): distributing resources among members leaves each individual
-weaker than an unconstrained singleton candidate.
-Only a true merger prevents singleton emergence, and the merged entity is
-simply a stronger singleton candidate.
+The failure conditions are narrower than the prior literature implies.
+Bostrom's niche partitioning argument requires that one agent cannot reach
+$\beta < 0$---separate resource pools alone are not enough.
+Late entrants are a real threat only before threshold crossing.
+Coalitions fail not because they are irrational but because proportional
+internal resource distribution leaves each member individually weaker than a
+singleton candidate.
+A merger of the whole coalition would work, but then you have a singleton.
 
-The empirical question is whether the assumptions hold at scales of interest.
-A3 (resource limitation) holds in any causally connected region.
-A4 ($\beta$-threshold reachability) is the key empirical uncertainty.
-A5 holds under any physical noise.
-Whether dominant causal eventuality is a feature of our universe depends on
-whether recursive self-improvement can cross into $\beta < 0$---and on whether
-it already has somewhere in our light cone.
+The hard question is A4.
+A3 holds in any physical environment.
+A5 is satisfied by noise.
+Whether any system can actually achieve $\beta < 0$ is what the formal
+results cannot address.
+That is the gap between the mathematics and anything it might mean in
+practice.
 
 % ============================================================
 \section*{Acknowledgments}
