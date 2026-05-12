@@ -44,9 +44,14 @@ Formal Theory and Simulation of Dominant Intelligence Emergence}
 
 % ---------- Abstract ----------
 \begin{abstract}
-We formalize and test the claim that competitive environments with recursive
-self-improvement converge to a \emph{singleton attractor}: one agent achieves
+We formalize the conditional claim: \emph{if} competitive environments with
+recursive self-improvement can reach a capability threshold where growth
+becomes superexponential (Assumption~A4), \emph{then} one agent achieves
 unbounded capability advantage over all others in finite time.
+Whether A4 holds in any real system is an empirical question this paper does
+not address; the scalar capability assumption further limits applicability
+to settings where a single capability measure meaningfully characterizes each
+agent.
 The model combines Yudkowsky's intelligence explosion equation
 ($dS/dt = S^{1-\beta}$), Omohundro's instrumental resource acquisition, and
 Lotka--Volterra competitive exclusion into a unified framework with five
@@ -184,6 +189,11 @@ control. Resources are rivalrous: $\sum_i R_i(t) \leq \Rmax$ for all $t$.
 \begin{definition}[Growth function]
 $f(S) = S^{1-\beta(S)}$, where $\beta: \mathbb{R}_{>0} \to \mathbb{R}$ is a
 sigmoid with $\beta(S) > 0$ for $S < T$ and $\beta(S) < 0$ for $S > T$.
+The sigmoid is chosen for mathematical tractability---it yields a single
+threshold $T$ and monotone sign change.
+Real self-improvement dynamics could be non-monotonic, multi-threshold, or
+plateau-structured; the sigmoid is a tractability assumption, not an
+empirically established functional form.
 \end{definition}
 
 \begin{definition}[Threshold]
@@ -246,8 +256,9 @@ Whether A4 holds empirically is a separate question.
 A5 is satisfied by any physical noise in initial conditions.
 
 We use fast resource equilibration (A2 as a steady-state condition).
-Slow resource dynamics extend timescales but do not change the qualitative
-result; simulations verify this by testing $\tau > 0$ equilibration delays.
+Empirical tests with $\tau > 0$ equilibration delays show timescale
+extension without qualitative change, but this is not proved analytically
+for the finite-time blowup result (see below).
 The fast-equilibration assumption abstracts over commercialization lag,
 regulatory barriers, and path dependency present in real systems.
 These frictions slow resource acquisition without reversing its direction;
@@ -403,6 +414,20 @@ agent~2 remains below $T$ ($\beta_2 > 0$).
 Then $\rho(t) \to \infty$ at a finite time $\tstar$.
 \end{theorem}
 
+\begin{remark}[Simultaneous T-crossing not covered]
+This theorem requires agent~1 to have crossed $T$ while agent~2 has not.
+The case where two near-equal agents approach $T$ simultaneously is not
+addressed here.
+Under A5 (initial heterogeneity), the agents cannot reach $T$ at exactly the
+same instant; by Theorem~\ref{thm:ratio}, the initial leader reaches $T$
+first.
+However, the \emph{near-simultaneous} case (both agents close to $T$ with
+similar trajectories) produces competitive dynamics that Theorem~\ref{thm:ratio}
+handles only asymptotically---the separation may be small at threshold
+crossing, and the subsequent post-threshold advantage depends on the
+capability gap at that moment.
+\end{remark}
+
 \begin{remark}
 $\beta(S)$ is a sigmoid (Definition~2.3), so $\beta_1(S_1)$ varies as $S_1$
 grows.
@@ -526,8 +551,11 @@ limit ($r_N \to 0$ removing agent~$N$'s influence one at a time), but the
 simultaneous-dynamics correction---that the remaining $N-1$ agents'
 interaction is not perturbed by agent~$N$'s residual share---is not
 analytically bounded.
-This theorem is therefore a conjecture with strong simulation support
-(F4, F5: 200/200 trials, $N=10$) rather than a fully closed proof.
+This theorem is therefore a conjecture supported by simulation (F4, F5:
+the result held in all 200 tested trials for $N=10$ on a purpose-built ODE
+system) but without an analytical bound on the gap.
+Simulation trials on the same ODE system confirm the model's own behavior;
+they do not close the proof.
 \end{theorem}
 
 \begin{proof}
@@ -589,8 +617,12 @@ subexponential regime.
 Result holds for all tested gaps (1\% to 100\%, F2).
 Winner equals initial leader in 200/200 independent trials with $N = 10$ (F4).
 Elimination order is strictly weakest-first (F5).
-Separation ratio increases monotonically with $\alpha$, from 36,448$\times$
-at $\alpha = 0.25$ to 541,016$\times$ at $\alpha = 3.0$ (F6).
+Separation ratio increases monotonically with $\alpha$ across the tested
+range (F6).
+Note that $\alpha = 0.25$ and $\alpha = 3.0$ have very different physical
+interpretations (sublinear vs.\ cubic coupling) and the range is not
+grounded in any real system; breadth of sweep establishes ODE robustness,
+not physical robustness.
 
 \subsection{$\beta$-threshold acceleration (F3, F9)}
 
@@ -1111,9 +1143,11 @@ coalition avoids fracturing under competitive pressure.
 
 Under assumptions A1--A5, a singleton attractor is the long-run outcome
 of competitive environments with recursive self-improvement.
-The $\beta$-threshold mechanism dominates: once any agent enters superexponential
-growth, its capability diverges from all competitors in finite time regardless
-of initial conditions, resource structure, noise level, or cooperative strategy.
+Under these assumptions, the $\beta$-threshold mechanism dominates: once any
+agent enters superexponential growth (A4), its capability diverges from all
+competitors in finite time regardless of initial conditions, resource
+structure, noise level, or cooperative strategy---provided A1--A3 and A5
+also hold.
 
 The conditions under which this fails are more specific than the prior
 literature suggests.
