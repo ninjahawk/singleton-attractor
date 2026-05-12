@@ -289,6 +289,8 @@ Phase diagram across alpha and N (top): green = coalition wins, red = singleton 
 
 | Path | Description |
 |------|-------------|
+| `paper/main.tex` | Submission-ready LaTeX paper (six theorems, 25 findings) |
+| `paper/refs.bib` | Bibliography |
 | `theory/foundations.md` | Literature review and prior work with full citations |
 | `theory/formal_claim.md` | Theorem statement and proof sketch |
 | `theory/derivations.md` | Step-by-step mathematical derivations (7 sections) |
