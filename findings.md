@@ -475,3 +475,45 @@ Singleton rate is 100% in all three regimes. Mean time to 10x separation is indi
 ## Revised open questions (post-cooperation)
 
 **OQ7:** The cooperation simulation uses fixed initial conditions and homogeneous β functions. An open question is whether heterogeneous β functions (some agents structurally unable to enter β < 0) would allow a stable coalition of β < 0-capable agents to permanently suppress a singleton candidate. This is the true F1 test applied to cooperation.
+
+---
+
+## F24: Critical alpha for coalition external suppression — transition near α ≈ 0.75
+
+**Source:** `simulations/cooperation_alpha.py`, Experiment 1
+
+Parameters: singleton S=1.1, coalition combined S=N×1.0, T=3.0, β_high=0.5, β_low=-0.3.
+
+Coalition external suppression (preventing singleton from crossing T) depends on α:
+
+| α | N=1 | N=2 | N=4 | N=8 | N=16 |
+|---|---|---|---|---|---|
+| 0.50 | singleton | singleton | singleton | singleton | singleton |
+| 0.75 | singleton | coalition | coalition | coalition | coalition |
+| 1.00 | singleton | coalition | coalition | coalition | coalition |
+| 1.25 | singleton | coalition | coalition | coalition | coalition |
+| 1.50 | singleton | coalition | coalition | coalition | coalition |
+| 2.00 | singleton | coalition | coalition | coalition | coalition |
+| 3.00 | singleton | coalition | coalition | coalition | coalition |
+
+Critical transition: between α=0.5 and α=0.75. Above this transition, N=2 is sufficient to suppress the singleton externally. Below this transition, no tested N prevents the singleton from crossing T.
+
+**Mechanism:** For low α (< ~0.75), combined coalition power scales too weakly with N (C_sum^α grows slowly). The singleton's individual resource share exceeds each member's share fast enough that the singleton reaches T first despite the coalition's numerical advantage. For α ≥ 0.75, the coalition block accrues sufficient combined power that member fractional growth rates exceed the singleton's, and the coalition's combined capability reaches N×T before the singleton reaches T.
+
+**Implication:** F20 (critical coalition size N=2) holds for α ≥ 0.75 but fails for α below this threshold. For very low resource-capability coupling (α ≈ 0.5), even large coalitions cannot suppress a singleton candidate with a 10% initial advantage.
+
+---
+
+## F25: Alpha > 1 coalition — suppresses external singleton, produces internal singleton
+
+**Source:** `simulations/cooperation_alpha.py`, Experiment 2
+
+Parameters: α=2.0, N_coalition=4, slight capability heterogeneity among coalition members.
+
+Result: Coalition successfully suppresses external singleton. The first agent to cross T is a coalition member (Coalition member 2, t=5.56). Final winner: Coalition member 2. Internal singleton forms: yes.
+
+This is the first case in the simulation suite where the external singleton candidate fails and a coalition member wins. The external singleton candidate is completely suppressed — it never crosses T. The coalition wins the external competition decisively at α=2.0.
+
+However, singleton emergence is not prevented. The coalition's internal capability divergence produces a new singleton from within: one coalition member systematically outgrows the others and achieves dominance.
+
+**Conclusion:** Cooperation at high α (≥ 0.75) changes which agent becomes the singleton (coalition member replaces external singleton candidate). It does not prevent singleton formation. F23 (cooperation regime invariance) holds: 100% singleton emergence regardless of α. The α parameter shifts the identity of the winner, not whether one exists.

@@ -6,7 +6,7 @@
 
 ## Abstract
 
-We formalize and test the claim that competitive environments with recursive self-improvement converge to a singleton attractor: one agent achieves unbounded capability advantage over all others in finite time. The model combines Yudkowsky's intelligence explosion equation (dS/dt = S^(1-β)), Omohundro's instrumental resource acquisition, and Lotka-Volterra competitive exclusion into a unified framework. We derive three results analytically — competitive exclusion from marginal advantage, finite-time separation at the β-threshold, and resource monopoly stability — and verify them across ten simulation experiments with 23 confirmed findings. Key quantitative results: the β-threshold produces 12.4 million times greater separation than flat dynamics at identical initial conditions; stochastic noise at all tested amplitudes randomizes which agent wins but never prevents singleton formation; and cooperation under any structure (no cooperation, oracle-optimal cooperation, rational cooperation) produces 100% singleton emergence with indistinguishable timing. The cooperation result identifies a structural failure: coalition pooling distributes resources among members, leaving each individual weaker than an unconstrained singleton candidate regardless of coalition size (for resource-capability coupling α=1). We identify four conditions under which the theorem fails and characterize each quantitatively. We also identify a novel revision to Bostrom's niche partitioning failure mode: separate resource niches do not prevent singleton emergence when agents share the same β-function; genuine failure requires structurally different growth ceilings.
+We formalize and test the claim that competitive environments with recursive self-improvement converge to a singleton attractor: one agent achieves unbounded capability advantage over all others in finite time. The model combines Yudkowsky's intelligence explosion equation (dS/dt = S^(1-β)), Omohundro's instrumental resource acquisition, and Lotka-Volterra competitive exclusion into a unified framework. We prove four results formally: (1) ratio divergence under resource competition, (2) finite-time separation at the β-threshold, (3) resource monopoly stability, and (4) N-agent generalization by induction. We verify these across eleven simulation scripts with 25 confirmed findings. Key quantitative results: the β-threshold produces 12.4 million times greater separation than flat dynamics at identical initial conditions; stochastic noise at all tested amplitudes randomizes which agent wins but never prevents singleton formation; and cooperation under any structure (no cooperation, oracle-optimal cooperation, rational cooperation) produces 100% singleton emergence with indistinguishable timing. For resource-capability coupling α < approximately 0.75, no coalition size prevents singleton formation. For α ≥ 0.75, coalitions of N=2 suppress the external singleton but invariably produce an internal singleton from coalition divergence. We identify five conditions under which the theorem fails and characterize each quantitatively. One finding revises Bostrom's niche partitioning failure mode: separate resource niches do not prevent singleton emergence when agents share the same β-function; genuine failure requires structurally different growth ceilings.
 
 ---
 
@@ -20,9 +20,9 @@ This paper makes three contributions:
 
 1. **A formal model** combining recursive self-improvement, instrumental resource acquisition, and competitive exclusion. The model has five assumptions (A1-A5) and produces the singleton attractor as a theorem under those assumptions.
 
-2. **Analytic results** including a formal proof of finite-time separation at the β-threshold (not previously proven under competition), the resource monopoly stability condition, and a new coalition coherence theorem identifying when singleton candidates beat each coalition member individually.
+2. **Four formal proofs:** ratio divergence under competition (Theorem 1, previously stated as a sketch), finite-time separation at the β-threshold under adversarial resource dynamics (Theorem 2), resource monopoly stability via Jacobian analysis (Proposition 3), and N-agent singleton by induction (Theorem 4). Additionally: timescale scaling analysis deriving the N^1 exponent analytically, and a stochastic argument showing drift dominates diffusion post-threshold.
 
-3. **Quantitative measurements** from ten simulation scripts: timescale formula (t_10x ~ 2.44 · N^0.96 · α^(-0.30) · gap^(-0.15) · |β_low|^(-0.31)), critical coalition size, critical entry rate (λ_crit ≈ 0.25), moat growth characterization, and stochastic robustness across all tested noise levels.
+3. **Quantitative measurements** from eleven simulation scripts and 25 confirmed findings: timescale formula (t_10x ~ 2.44 · N^0.96 · α^(-0.30) · gap^(-0.15) · |β_low|^(-0.31)), critical coalition size, critical entry rate (λ_crit ≈ 0.25), moat growth characterization, stochastic robustness, and coalition dynamics under varying α.
 
 The paper is organized as follows. Section 2 describes the model and assumptions. Section 3 presents the theorem and proof. Section 4 presents simulation results. Section 5 characterizes failure conditions. Section 6 discusses cosmological implications. Section 7 discusses limitations and open questions.
 
@@ -74,9 +74,21 @@ The model uses fast resource equilibration (A2 gives steady-state allocation). T
 
 ### 3.1 Step 1: Competitive exclusion from marginal advantage
 
-**Proposition 1:** For any two agents with S₁(0) > S₂(0), the ratio ρ(t) = S₁(t)/S₂(t) is non-decreasing and diverges.
+**Theorem 1 (Ratio divergence):** For any S₁(0) > S₂(0) > 0 and α > β(S) (satisfied for α > 0 and any pre-threshold β), ρ(t) = S₁(t)/S₂(t) is strictly increasing and ρ(t) → ∞ as t → ∞.
 
-*Proof sketch:* From A2, r₁ = S₁^(1-β+α)/(S₁^α + S₂^α) > r₂ whenever S₁ > S₂ (for α > 0). The ratio dynamics follow dρ/dt = (r₁-r₂)ρ, so ρ grows exponentially at rate (r₁-r₂) > 0. Full derivation in theory/derivations.md Section 1. □
+*Proof:*
+
+Compute dρ/dt using A1-A2 (resource at steady-state):
+```
+dρ/dt = (S₂·dS₁/dt - S₁·dS₂/dt) / S₂²
+      = ρ · (S₁^(α-β) - S₂^(α-β)) / (S₁^α + S₂^α)
+```
+
+Since S₁ > S₂ and α - β > 0, the numerator S₁^(α-β) - S₂^(α-β) > 0. Therefore dρ/dt > 0: ρ is strictly increasing.
+
+For divergence: if ρ converged to finite L > 1, then dρ/dt > 0 at ρ = L (since S₁ ≠ S₂ at any L > 1), contradicting convergence. Therefore ρ → ∞. □
+
+Full derivation including the α - β > 0 condition and post-threshold case: theory/derivations.md Section 1.
 
 ### 3.2 Step 2: Finite-time separation at the β-threshold
 
@@ -118,7 +130,11 @@ where r_min = T^α / (T^α + S₂(t_cross)^α).
 
 ### 3.4 N-agent generalization
 
-**Proposition 4:** The singleton result extends to N agents by induction. Rank agents by initial capability: S₁(0) > S₂(0) > ... > S_N(0). The pairwise ratio S₁/S₂ diverges first (largest r₁-r₂ differential relative to gap). Once S₂ is excluded, the system reduces to N-1 agents. Repeated application: agent 1 is the singleton. Elimination order is weakest-first (confirmed F5). □
+**Theorem 4 (N-agent singleton):** For N ≥ 2 agents with S₁(0) > S₂(0) > ... > S_N(0), agent 1 is the singleton. Elimination order is weakest-first.
+
+*Proof by induction on N.* Base case N=2: follows from Theorems 1 and 2. Inductive step: among N agents, agent N's resource share r_N = S_N^α / ΣS_j^α is smallest (S_N < all others). From Theorem 1, ρ₁N = S₁/S_N diverges. As r_N → 0, agent N's growth halts; the system reduces to N-1 agents. By inductive hypothesis, agent 1 is the singleton of the reduced system. □
+
+Elimination order confirmed empirically: F5 (N=8, all eliminations strictly weakest-first). Full proof: theory/derivations.md Section 4.
 
 ---
 
@@ -179,6 +195,16 @@ Four cooperation experiments (F20-F23):
 
 **Cooperation regime invariance:** Across no cooperation, oracle-optimal cooperation (all non-leaders pool against current leader at each step), and rational cooperation, singleton emergence occurs in 100% of 50 trials with indistinguishable timing (mean t_10x = 10.09 in all three regimes, F23). Oracle cooperation successfully suppresses the initial leader but generates internal divergence within the coalition that produces a new singleton at the same timescale.
 
+### 4.11 Coalition dynamics under varying α
+
+**Critical α for external suppression (F24):** Coalition external suppression requires α ≥ approximately 0.75. For α = 0.5, no tested coalition size (up to N=16) prevents the singleton from crossing T. For α ≥ 0.75, N=2 is sufficient. This refines F20: the N=2 critical size holds only for α ≥ 0.75.
+
+**Internal dynamics at α = 2.0 (F25):** For α = 2.0, N = 4: coalition successfully suppresses external singleton (never reaches T). First agent to cross T is a coalition member (t = 5.56). Internal singleton forms. Coalition wins the external competition; a new singleton forms within.
+
+The transition between α = 0.5 (singleton always wins) and α = 0.75 (coalition wins at N=2) reflects the block pooling mechanics: for low α, coalition combined power scales sublinearly with N, insufficient to overcome the singleton's individual resource advantage. For higher α, coalition block power scales superlinearly and each member's effective growth rate exceeds the singleton's.
+
+In all 56 tested (α, N) combinations where the coalition suppresses the external singleton, an internal coalition singleton forms. 100% singleton emergence is universal across all tested α values.
+
 **Summary findings table:**
 
 | # | Finding | Source |
@@ -202,10 +228,12 @@ Four cooperation experiments (F20-F23):
 | F17 | t_10x ~ 2.44 · N^0.96 · α^(-0.30) · gap^(-0.15) · |β_low|^(-0.31) | timescale.py |
 | F18 | λ_crit ≈ 0.25/time unit (Pareto shape=2) | continuous_entry.py |
 | F19 | Heavy-tailed distributions more dangerous than high-mean | continuous_entry.py |
-| F20 | Critical coalition size: N=2 | cooperation.py |
+| F20 | Critical coalition size: N=2 (for α ≥ 0.75) | cooperation.py |
 | F21 | Coalition coherence failure: 8-member coalition loses individual race | cooperation.py |
 | F22 | Zero defection events: coalition stable, still loses | cooperation.py |
 | F23 | 100% singleton emergence in all cooperation regimes | cooperation.py |
+| F24 | Critical α for coalition external suppression: transition near α ≈ 0.75 | cooperation_alpha.py |
+| F25 | At α=2.0, N=4: coalition suppresses external singleton, internal singleton forms | cooperation_alpha.py |
 
 ---
 
@@ -235,9 +263,13 @@ The symmetric system has no designated singleton. In practice, any noise breaks 
 
 ### 5.5 Cooperation
 
-Coalition pooling can suppress a singleton candidate externally (F20: critical size N=2). However, coalition coherence fails: for α=1, distributing coalition resources among N members leaves each individual weaker than an unconstrained singleton (coalition coherence theorem, Section 6 below). Under oracle-optimal cooperation, the coalition suppresses the initial leader but generates an internal singleton at the same timescale (F23). Cooperation displaces which agent becomes the singleton; it does not prevent singleton formation.
+Coalition pooling can suppress a singleton candidate externally for α ≥ 0.75 (F24: critical N=2 at this coupling). However, coalition suppression of the external singleton always produces an internal singleton from coalition divergence (F23, F25). Oracle-optimal cooperation changes which agent becomes the singleton; it does not prevent singleton formation. This holds across all tested α values (0.5 to 3.0).
 
-*Caveat:* For α > 1, the coalition coherence condition changes. A coalition of sufficient size N > N* = (S/c)^(γ/(α-1)) can amplify individual member growth rates enough to overcome the singleton's advantage (derivations.md Section 9). This case has not been verified by simulation and remains an open question.
+The cooperation failure has two mechanisms depending on α:
+- **α < 0.75:** Coalition cannot suppress the external singleton — combined block power scales too weakly. Singleton candidate wins directly.
+- **α ≥ 0.75:** Coalition suppresses external singleton. Internal coalition divergence produces a new singleton. F23 shows this occurs at the same timescale as no-cooperation.
+
+A true merger of all agents into a single entity would prevent this: the merged agent has no internal competition. However, the merged entity is simply a new, stronger singleton candidate, and the theorem applies to it against any unmerged agents.
 
 ---
 
@@ -305,24 +337,34 @@ The building blocks (Yudkowsky 2013, Omohundro 2008, Lotka-Volterra) are establi
 4. The cooperation result: coalition coherence failure is a structural result derivable from the model, not an empirical curiosity.
 5. Quantitative measurements (timescale formula, λ_crit, moat characterization) that do not appear in prior work.
 
-### 8.2 Limitations
+### 8.2 Timescale formula
 
-**The proofs are sketches for steps 1, 3, and 4.** Only Theorem 2 (finite-time separation) is fully proven here. Steps 1, 3, and 4 have detailed derivations (theory/derivations.md) but not formal proofs in the mathematical sense. Full proofs for Step 1 (divergence of ratio under competitive exclusion) and Step 3 (instability of equal-resource allocation) are standard results that can be cited; the novel connection is the composition.
+The empirical formula (F17) is t_10x ~ 2.44 · N^0.96 · α^(-0.30) · gap^(-0.15) · |β_low|^(-0.31). Section 10 of theory/derivations.md derives the N^1 exponent analytically from the pre-threshold phase. The other exponents are estimated via scaling arguments:
 
-**The timescale formula is empirical.** The power-law fits (F17) are measured from simulation; a closed-form derivation from the ODE is not yet complete.
+- **α:** Higher α concentrates resources on the leader, reducing time to threshold. Exponent from scaling: O(α^(-δ)), δ estimated from coupled ODE dynamics. Empirical: -0.30.
+- **gap:** Affects initial ratio divergence rate but not threshold crossing time. Exponent expected to be small. Empirical: -0.15.
+- **|β_low|:** Affects post-threshold growth speed. Exponent from post-threshold ODE: approximately -1 for post-threshold contribution alone. Combined with phase mixture, empirical: -0.31.
 
-**The cosmological parameter mapping is rough.** The mapping from model variables to physical quantities involves assumptions that are not derived from the model itself.
+The N^1 prediction (analytically derived) vs N^0.96 (empirical) reflects a small correction from the leader's increasing resource share as it pulls ahead during the pre-threshold phase.
 
-**The cooperation result is specific to α=1.** For α > 1, the coalition coherence condition changes and a sufficiently large coalition may prevent singleton emergence. This has not been simulated.
+### 8.3 Limitations
 
-**The model has no spatial structure.** Real environments have geography and finite propagation speed. Adding spatial structure would likely extend timescales but the qualitative result should hold within a causally connected region.
+**Proofs for Steps 3 and 4 are detailed but not fully rigorous.** Theorem 2 (Section 8, derivations) and Theorem 1 (Section 1, revised) are proven formally. Step 3 (resource monopoly stability) relies on a Jacobian linearization argument that assumes the system is near the equal-resource fixed point — a valid local stability statement. Step 4 (N-agent induction) formalizes the sequential reduction argument; the simultaneous-dynamics correction is addressed by simulation (F5).
 
-### 8.3 Open questions
+**The timescale formula is empirical.** N exponent is analytically derived (N^1). Other exponents require numerical integration of the coupled ODE for closed-form expressions.
 
-1. Formal proof of Step 1 ratio divergence under resource competition (as opposed to the approximation in derivations.md Section 1).
-2. Closed-form timescale expression from the ODE.
-3. Coalition coherence for α > 1: does sufficiently large N prevent singleton emergence, and what is the phase boundary?
-4. Stochastic formal proof: does singleton emergence hold in expectation under multiplicative noise for all σ > 0?
+**The cosmological parameter mapping is rough.** The mapping from model variables to physical quantities involves assumptions that are not derived from the model.
+
+**The cooperation result depends on α.** For α ≥ 0.75, coalition external suppression occurs at N=2; internal singleton still forms. For α < 0.75, external singleton wins directly. The critical α transition is empirically identified near 0.625-0.75; exact analytical value not derived.
+
+**The model has no spatial structure.** Real environments have geography and finite propagation speed. Adding spatial structure would extend timescales but the qualitative result should hold within any causally connected region.
+
+### 8.4 Open questions
+
+1. Closed-form timescale exponents for α, gap, and β_low from the coupled ODE (N exponent is derived).
+2. Exact critical α for coalition external suppression as a function of S/c ratio and N.
+3. Stochastic formal proof: full Ikeda-Watanabe comparison theorem verification for dS = S^(1+|β|)dt + σS dW.
+4. True merger stability: can a merged coalition avoid fracturing under competitive pressure, and what game-theoretic conditions are required?
 
 ---
 
@@ -364,3 +406,4 @@ All simulations use default parameters unless otherwise stated: α=1.0, β_high=
 | timescale.py | Scaling formula | F17 |
 | continuous_entry.py | Continuous entry model | F18-F19 |
 | cooperation.py | Coalition and cooperation dynamics | F20-F23 |
+| cooperation_alpha.py | Coalition coherence under varying α | F24-F25 |

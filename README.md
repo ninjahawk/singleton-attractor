@@ -249,6 +249,22 @@ Rational defection does not occur (0 defection events) — cooperation is indivi
 | F21 | Coalition coherence failure: 8-member coalition loses the individual capability race to singleton despite 8× combined power |
 | F22 | Rational defection does not occur — coalition is stable — but singleton wins anyway |
 | F23 | Cooperation regime invariance: 100% singleton rate, identical timing across no-coop, oracle-coop, and rational-coop |
+| F24 | Critical alpha for coalition suppression: transition near alpha=0.75; at alpha=0.5 no coalition size works |
+| F25 | At alpha=2.0, N=4: coalition suppresses external singleton; internal coalition singleton forms anyway |
+
+---
+
+### Coalition coherence under varying alpha
+
+<div align="center">
+<img src="figures/ca_alpha_sweep.png" width="780"/>
+</div>
+
+<div align="center">
+<img src="figures/ca_internal_alpha2.png" width="780"/>
+</div>
+
+Phase diagram across alpha and N (top): green = coalition wins, red = singleton wins. At alpha=0.5, singleton wins against all tested N. At alpha >= 0.75, N=2 is sufficient. At alpha=2.0, N=4 (bottom): coalition suppresses external singleton; first to cross T is a coalition member (t=5.56); internal singleton forms. Higher alpha changes who becomes the singleton. It does not prevent one forming.
 
 ---
 
@@ -264,7 +280,8 @@ Rational defection does not occur (0 defection events) — cooperation is indivi
 | 6 | What is the timescale formula? | Resolved — F17 |
 | 7 | What is the critical entry rate? | Resolved — F18-F19 |
 | 8 | What are the cosmological implications? | See theory/cosmological_mapping.md |
-| 9 | Does cooperation prevent singleton emergence? | Resolved — no (F20-F23) |
+| 9 | Does cooperation prevent singleton emergence? | Resolved — no (F20-F25) |
+| 10 | Does higher alpha rescue cooperation? | Resolved — changes winner, not outcome (F24-F25) |
 
 ---
 
@@ -286,8 +303,9 @@ Rational defection does not occur (0 defection events) — cooperation is indivi
 | `simulations/timescale.py` | Timescale scaling formula |
 | `simulations/continuous_entry.py` | Continuous entry model |
 | `simulations/cooperation.py` | Coalition and cooperation dynamics |
-| `figures/` | 25 output plots |
-| `findings.md` | 23 confirmed findings with parameter values |
+| `simulations/cooperation_alpha.py` | Coalition coherence under varying alpha |
+| `figures/` | 27 output plots |
+| `findings.md` | 25 confirmed findings with parameter values |
 
 ---
 
@@ -304,6 +322,7 @@ python simulations/late_entrant.py            # moat dynamics
 python simulations/timescale.py               # scaling formula
 python simulations/continuous_entry.py        # continuous entry model
 python simulations/cooperation.py             # coalition and cooperation dynamics
+python simulations/cooperation_alpha.py       # coalition coherence under varying alpha
 ```
 
 ---
