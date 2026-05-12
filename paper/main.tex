@@ -109,6 +109,14 @@ system.
 Yudkowsky's growth equation treats single-agent dynamics.
 Lotka--Volterra treats biological populations without recursive self-improvement.
 
+The central conditional of this paper is Assumption~A4: that recursive
+self-improvement can cross from diminishing to accelerating returns---i.e.,
+that $\beta(S)$ becomes negative for some reachable $S = T$.
+All results are conditional on A4.
+Whether A4 holds in any real system is an empirical question this paper does
+not answer; it is the key uncertainty between the formal results and any
+real-world application.
+
 This paper makes the following contributions.
 
 \begin{enumerate}[label=(\arabic*)]
@@ -116,12 +124,15 @@ This paper makes the following contributions.
 resource acquisition, and competitive exclusion with five explicit assumptions
 (A1--A5, Section~\ref{sec:model}).
 
-\item \textbf{Four formal proofs} (Section~\ref{sec:theorems}):
+\item \textbf{Three formal proofs and one simulation-supported conjecture}
+(Section~\ref{sec:theorems}):
 ratio divergence under competition (Theorem~\ref{thm:ratio});
 finite-time separation at the $\beta$-threshold under adversarial resource
 dynamics (Theorem~\ref{thm:finitetime});
-resource monopoly stability (Proposition~\ref{prop:monopoly});
-$N$-agent singleton by induction (Theorem~\ref{thm:nagent}).
+local instability of the equal-resource state
+(Proposition~\ref{prop:monopoly}, local only);
+$N$-agent singleton by induction (Theorem~\ref{thm:nagent},
+simultaneous-dynamics gap acknowledged).
 
 \item \textbf{Two supplementary derivations} (Sections~\ref{sec:coalition},
 \ref{sec:stochastic}):
@@ -145,7 +156,8 @@ Section~\ref{sec:failures} characterizes the five failure conditions.
 Section~\ref{sec:coalition} derives the coalition coherence and critical-$\alpha$
 theorems.
 Section~\ref{sec:stochastic} proves stochastic blowup.
-Section~\ref{sec:cosmology} discusses cosmological implications.
+Section~\ref{sec:cosmology} discusses speculative cosmological implications
+(not a formal result).
 Section~\ref{sec:discussion} covers limitations and open questions.
 
 % ============================================================
@@ -447,11 +459,13 @@ tighter value $r_1(\tcross)$ at threshold crossing.
 \subsection{Step 3: Resource monopoly stability}
 \label{sec:step3}
 
-\begin{proposition}[Resource monopoly]
+\begin{proposition}[Resource monopoly, local stability]
 \label{prop:monopoly}
 As $\rho \to \infty$, $R_1^*/\Rmax \to 1$ and $R_2^*/\Rmax \to 0$.
-The equal-resource allocation is an unstable equilibrium; resource monopoly is
-stable.
+The equal-resource allocation ($S_1 = S_2$) is a \emph{locally} unstable
+equilibrium: any small perturbation grows.
+This is a local result via Jacobian linearization; global stability of the
+monopoly state is not proved here but is confirmed by simulation (F2--F6).
 \end{proposition}
 
 \begin{proof}
@@ -474,11 +488,19 @@ singleton.
 \subsection{Step 4: $N$-agent generalization}
 \label{sec:step4}
 
-\begin{theorem}[$N$-agent singleton]
+\begin{theorem}[$N$-agent singleton (simulation-supported)]
 \label{thm:nagent}
 Under A1--A5, for $N \geq 2$ agents with
 $S_1(0) > S_2(0) > \cdots > S_N(0)$, agent~1 is the singleton.
 Elimination order is strictly weakest-first.
+
+\emph{Note:} The inductive argument is formally complete for the sequential
+limit ($r_N \to 0$ removing agent~$N$'s influence one at a time), but the
+simultaneous-dynamics correction---that the remaining $N-1$ agents'
+interaction is not perturbed by agent~$N$'s residual share---is not
+analytically bounded.
+This theorem is therefore a conjecture with strong simulation support
+(F4, F5: 200/200 trials, $N=10$) rather than a fully closed proof.
 \end{theorem}
 
 \begin{proof}
@@ -627,7 +649,15 @@ The moat grows from $3\times$ at threshold crossing to $> 10^6\times$ within
 Late entry threatens the incumbent only during the pre-threshold window (F16).
 Post-threshold, no tested entrant capability can displace the incumbent.
 
-\subsection{Timescale formula (F17)}
+\subsection{Timescale formula (F17, empirical scaling estimate)}
+
+\textit{The formula below is a fitted scaling estimate, not a derived result.
+Only the $N^1$ exponent has an analytical derivation (Appendix~\ref{app:timescale}).
+All other exponents are fitted from single-variable sweeps with no
+cross-validation, no confidence intervals, and no accounting for interaction
+effects.
+It should not be used for quantitative prediction outside the tested parameter
+range.}
 
 From power-law fits across single-variable sweeps:
 \begin{equation}
@@ -952,18 +982,27 @@ finite time.
 \end{remark}
 
 % ============================================================
-\section{Cosmological Implications}
+\section{Cosmological Implications (Speculative)}
 \label{sec:cosmology}
 
-This section states empirical predictions.
-It is the most speculative part of the paper.
+\textbf{Warning:} This section is informal speculation, not a result of the
+formal model.
+The model has no spatial structure (acknowledged in Section~\ref{sec:discussion}),
+no speed-of-light constraint, and no mechanism for territorial expansion.
+Assumption~A3 (fixed $\Rmax$) directly contradicts a cosmological setting where
+accessible matter depends on expansion speed and the age of the universe.
+The physical-unit mappings below are proposed heuristics, not derivations.
+Readers assessing the paper's formal contributions should treat this section
+as a separate, exploratory discussion.
 
 The model is dimensionless.
-Proposed mapping to physical quantities: $S$ is total computational substrate
-controlled; $R$ is energy and matter; $\alpha \approx 1$ (linear coupling as a
-first approximation, versus $\alpha \approx 3$ for volumetric 3D expansion);
-$t$ units calibrated to context (AI development scale: 1 unit $\approx$ 10--30
-years; cosmological: 1 unit $\approx$ 1--100 Myr).
+Proposed mapping to physical quantities ($S$ = total computational substrate
+controlled; $R$ = energy and matter) is not derived from the model but offered
+as a conceptual bridge.
+$\alpha \approx 1$ (linear coupling) is a first approximation;
+$\alpha \approx 3$ would apply for volumetric 3D expansion.
+Time-unit calibration: AI development scale, 1 unit $\approx$ 10--30 years;
+cosmological scale, 1 unit $\approx$ 1--100 Myr.
 
 \paragraph{Fermi paradox.}
 If a singleton emerged anywhere in our past light cone, it would expand at
