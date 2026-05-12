@@ -83,7 +83,9 @@ As S₁/S₂ → ∞ and R₁/R₂ → ∞, agent 1 approaches control of all av
 
 ## Conditions under which the claim fails
 
-**F1 (Niche partitioning):** If agents compete for different resources rather than the same resource pool, competitive exclusion does not apply. Stable oligopoly is possible. The claim requires shared resource competition (A3). If the environment allows specialization into non-overlapping niches, multiple agents can persist indefinitely.
+**F1 (Niche partitioning) — weaker than initially stated:** Niche partitioning was predicted to produce stable oligopoly. Simulation (findings.md F8) shows this is false when agents share the same β function. Even at zero resource overlap, separation reaches >1000x because the β-flip mechanism operates independently of resource competition. The agent with higher initial capability crosses the threshold first regardless of whether its growth comes from shared or exclusive resources.
+
+F1 requires not just separate resource pools but different β regimes: one agent structurally unable to cross into β < 0, while the other can. This is a more specific condition than initially stated. If both agents are capable of the same recursive self-improvement ceiling, the one that crosses the threshold first dominates regardless of resource structure.
 
 **F2 (No β-threshold):** If β(S) > 0 for all S (diminishing returns to self-improvement at all capability levels), growth is always subexponential. Step 2 fails. The claim still holds in the long run (competitive exclusion still applies from Step 1), but the separation is exponential rather than superexponential, and the singleton takes longer to emerge.
 

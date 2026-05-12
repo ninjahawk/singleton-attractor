@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://python.org)
 [![NumPy](https://img.shields.io/badge/NumPy-scientific_computing-013243?logo=numpy&logoColor=white)](https://numpy.org)
 [![Matplotlib](https://img.shields.io/badge/Matplotlib-visualization-11557c)](https://matplotlib.org)
-[![Status](https://img.shields.io/badge/status-in_progress-yellow)](https://github.com/ninjahawk/singleton-attractor)
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/ninjahawk/singleton-attractor)
 
 **Formal theory and simulation — competitive capability dynamics in multi-agent systems**
 
@@ -68,15 +68,98 @@ The gap: nobody has combined these into a unified formal proof that singleton em
 
 ---
 
+## Results
+
+### Growth regimes and singularity verification
+
+<div align="center">
+<img src="figures/ie_growth_regimes.png" width="780"/>
+</div>
+
+Three distinct growth regimes confirmed. β < 0 produces finite-time singularity; β = 0 produces exponential; β > 0 produces subexponential. Analytical singularity times match numerical integration to 0.000% error across all tested β values.
+
+---
+
+### Competitive exclusion from marginal advantage
+
+<div align="center">
+<img src="figures/comp_baseline.png" width="780"/>
+</div>
+
+A 10% initial capability advantage produces diverging ratio in the subexponential regime. Result holds for all tested initial gaps (1% to 100%). Higher alpha (resource-capability coupling) accelerates divergence monotonically.
+
+---
+
+### Beta-threshold effect
+
+<div align="center">
+<img src="figures/comp_threshold.png" width="780"/>
+</div>
+
+When the leading agent crosses the capability threshold and enters β < 0, separation accelerates by **12.4 million times** compared to flat-β dynamics at the same time point. This is the primary mechanism, not resource competition.
+
+---
+
+### N-agent elimination order
+
+<div align="center">
+<img src="figures/agents_elimination.png" width="780"/>
+</div>
+
+N=8 agents eliminated strictly weakest-first. Winner is always the initial leader. Verified across 200 independent trials with N=10: winner = initial leader in 200/200 cases (100%).
+
+---
+
+### Niche partitioning — unexpected result
+
+<div align="center">
+<img src="figures/exp_niche_partitioning.png" width="780"/>
+</div>
+
+Niche partitioning was predicted to produce stable oligopoly. It does not. Even at zero resource overlap (fully separate niches), separation reaches 1,103x. The β-flip mechanism operates independently of resource competition. Oligopoly requires not just separate resources but genuinely different β regimes — one agent structurally unable to reach β < 0.
+
+---
+
+### Parameter sweeps
+
+<div align="center">
+<img src="figures/exp_alpha_sweep.png" width="580"/>
+</div>
+
+<div align="center">
+<img src="figures/exp_beta_sweep.png" width="580"/>
+</div>
+
+Alpha sweep (top): separation increases monotonically with resource-capability coupling, from 36,448x at α=0.25 to 541,016x at α=3.0. Beta threshold heatmap (bottom): minimum separation across all tested parameter combinations is 1,179x.
+
+---
+
+## Key findings
+
+| # | Finding |
+|---|---------|
+| F1 | Growth equation analytical solution matches numerical integration to 0.000% error |
+| F2 | Competitive exclusion holds for all initial gaps tested (1% to 100%) |
+| F3 | Beta-threshold crossing accelerates separation by 12.4 million times vs flat-beta at same time |
+| F4 | Winner = initial leader in 200/200 N=10 trials |
+| F5 | Elimination order is strictly weakest-first |
+| F6 | Separation increases monotonically with alpha (tested α=0.25 to 3.0) |
+| F7 | Winner identity holds at 100% down to sigma=0.001 initial spread |
+| F8 | Niche partitioning does not prevent singleton — beta-flip dominates over resource structure |
+| F9 | Minimum beta-flip separation across all tested parameters: 1,179x |
+
+---
+
 ## Key questions
 
 | # | Question | Status |
 |---|----------|--------|
-| 1 | Does capability-resource coupling produce the β-flip? | Open |
-| 2 | Does the β-flip produce unbounded competitive separation in finite time? | Open |
-| 3 | Under what initial conditions does oligopoly persist instead? | Open |
-| 4 | What is the empirical signature of this in the Fermi paradox? | Open |
-| 5 | What is the minimum capability differential required to trigger exclusion? | Open |
+| 1 | Does the β-flip produce unbounded separation without resource competition? | Confirmed (F8) |
+| 2 | Does competitive exclusion hold for all initial gaps? | Confirmed (F2) |
+| 3 | Under what conditions does oligopoly persist instead? | Revised — requires different β regimes, not just separate niches |
+| 4 | What is the empirical signature in the Fermi paradox? | Open |
+| 5 | Does stochastic noise affect singleton emergence? | Open (OQ3) |
+| 6 | What happens with agents in different fundamental β regimes? | Open (OQ1) |
 
 ---
 
