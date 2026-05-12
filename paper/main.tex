@@ -225,6 +225,20 @@ A5 is satisfied by any physical noise in initial conditions.
 We use fast resource equilibration (A2 as a steady-state condition).
 Slow resource dynamics extend timescales but do not change the qualitative
 result; simulations verify this by testing $\tau > 0$ equilibration delays.
+The fast-equilibration assumption abstracts over commercialization lag,
+regulatory barriers, and path dependency present in real systems.
+These frictions slow resource acquisition without reversing its direction;
+quantitative timescale estimates (F17) should be treated as lower bounds in
+systems with significant friction.
+
+\noindent\textit{Competition model.}
+A2--A3 follow Lotka--Volterra competition rather than Cournot or Bertrand.
+LV is appropriate here because agents compete for a common resource pool
+rather than setting quantities or prices; the essential property is that
+resource shares sum to one and capability yields proportionally higher share.
+LV captures this with one parameter ($\alpha$); Cournot and Bertrand
+introduce additional market-structure assumptions with no natural counterpart
+in a general capability competition.
 
 \noindent\textit{$\beta$-heterogeneity.}
 The $\beta$-function is agent-specific in general; it reflects the structure of
@@ -246,6 +260,12 @@ Simulation sweeps show the singleton result holds monotonically across
 $\alpha \in [0.25, 3.0]$ (F6), and Theorem~\ref{thm:criticalalpha} quantifies
 the critical threshold $\alpha^* \approx 0.64$ below which coalition suppression
 fails.
+The power-law form was chosen over sigmoid saturation as the minimal
+single-parameter model.
+A saturating form would require two parameters (midpoint and steepness)
+without additional empirical guidance; the power-law and sigmoid are
+qualitatively equivalent in the unsaturated regime that precedes threshold
+crossing.
 
 % ============================================================
 \section{Main Results}
@@ -557,6 +577,12 @@ Noise randomizes winner identity but never prevents singleton formation.
 A 1\% initial gap is overwhelmed by $\sigma \geq 0.05$ noise, making the
 winner essentially random (F14).
 This is consistent with Theorem~\ref{thm:stochastic} (Section~\ref{sec:stochastic}).
+The winner-randomization threshold $\sigma \approx 0.23$ is an empirical
+observation from simulation, not analytically derived.
+Feller's criterion proves singleton formation at all $\sigma > 0$ but does
+not bound the noise amplitude at which initial-leader identity becomes
+unreliable; that threshold depends on the initial capability gap and is a
+function of the ratio $\sigma / \mathrm{gap}$.
 
 \subsection{Late entrant moat (F15--F16)}
 
@@ -585,6 +611,12 @@ $\lambda \approx 0.25$ per time unit (F18).
 Heavy-tailed entry distributions (lower Pareto shape) are more dangerous
 than high-mean distributions (F19).
 Post-threshold, any $\lambda$ is survivable due to moat growth.
+Arrival timing follows a Poisson process---a tractable baseline that assumes
+memoryless, independent entry events.
+Real competitive entry may be clustered (triggered by a public breakthrough)
+or self-inhibiting (early failures discourage successors); these deviations
+would shift $\lambda_{\mathrm{crit}}$ but leave the pre/post-threshold
+qualitative structure intact.
 
 \subsection{Cooperation (F20--F23)}
 
@@ -685,6 +717,14 @@ theorem applies to it against any unmerged agents.
 
 \subsection{Individual growth rate comparison}
 \label{sec:coalitionindiv}
+
+\textit{Modeling assumption:}
+Coalition members distribute internal resources proportionally to individual
+capability ($C_i^\alpha / \sum_j C_j^\alpha$) and cannot renegotiate to
+concentrate all resources on a single member.
+If they could credibly commit to full concentration, the coalition would
+function as a merged agent---a different scenario addressed in
+Section~\ref{sec:failures} (F5: cooperation).
 
 \begin{theorem}[Coalition coherence]
 \label{thm:coalcoherence}
