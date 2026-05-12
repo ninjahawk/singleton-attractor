@@ -288,10 +288,143 @@ This is an integral equation in X. The simulation found X*≈2.9. An exact analy
 
 ---
 
+---
+
+## Section 8: Formal proof of β-flip separation in finite time
+
+The Section 2 sketch handles the isolated case (full resources, constant β). This section gives a formal proof under competition: agent 1 in the β < 0 regime, agent 2 in the β > 0 regime, with dynamic resource allocation.
+
+**Setup:** At time t_cross, agent 1 has just crossed threshold T (from A4). At this moment S₁(t_cross) = T > S₂(t_cross) (agent 1 has been ahead since t=0 by Section 1 dynamics). Let β₁ = -|β₁| < 0 and β₂ > 0.
+
+**Lemma 1 (Upper bound on S₂):** For all t ≥ 0:
+```
+S₂(t) ≤ (S₂(0)^β₂ + β₂ · t)^(1/β₂)
+```
+
+*Proof:* Agent 2 receives at most all resources (r₂ ≤ 1). With full resources:
+```
+dS₂/dt ≤ S₂^(1 - β₂)
+S₂^(β₂ - 1) dS₂ ≤ dt
+∫ S₂^(β₂-1) dS₂ ≤ t
+S₂(t)^β₂ / β₂ ≤ S₂(0)^β₂ / β₂ + t
+```
+Solving: S₂(t) ≤ (S₂(0)^β₂ + β₂ t)^(1/β₂). For β₂ > 0, this grows as t^(1/β₂) — polynomially. □
+
+**Lemma 2 (Lower bound on agent 1's resource share):** For t ≥ t_cross:
+```
+r₁(t) ≥ r_min := S₁(t_cross)^α / (S₁(t_cross)^α + S₂(t_cross)^α) > 1/2
+```
+
+*Proof:* At t_cross, S₁ > S₂, so S₁^α > S₂^α and r₁(t_cross) > 1/2. For t > t_cross, S₁ grows faster than S₂ (entering superexponential regime while S₂ remains polynomial), so S₁(t)/S₂(t) is non-decreasing. Resource share r₁ = 1/(1 + (S₂/S₁)^α) is therefore non-decreasing. Thus r₁(t) ≥ r₁(t_cross) = r_min > 1/2 for all t ≥ t_cross. □
+
+**Lemma 3 (S₁ diverges in finite time):** There exists finite t* such that S₁(t) → ∞ as t → t*.
+
+*Proof:* With r₁ ≥ r_min and β₁ < 0:
+```
+dS₁/dt = S₁^(1 - β₁) · r₁ ≥ r_min · S₁^(1 + |β₁|)
+```
+
+This is a Bernoulli ODE with exponent 1 + |β₁| > 1. Let u = S₁^(-|β₁|):
+```
+du/dt = -|β₁| · S₁^(-|β₁|-1) · dS₁/dt ≤ -|β₁| · r_min
+```
+
+Integrating from t_cross to t:
+```
+u(t) ≤ u(t_cross) - |β₁| · r_min · (t - t_cross)
+     = S₁(t_cross)^(-|β₁|) - |β₁| · r_min · (t - t_cross)
+```
+
+u(t) = S₁(t)^(-|β₁|) reaches 0 at:
+```
+t* = t_cross + S₁(t_cross)^(-|β₁|) / (|β₁| · r_min) < ∞
+```
+
+As t → t*, u(t) → 0, so S₁(t) → ∞. □
+
+**Theorem (Finite-time ratio separation):** ρ(t) = S₁(t)/S₂(t) → ∞ at t = t*.
+
+*Proof:* From Lemma 3, S₁(t) → ∞ as t → t*. From Lemma 1, S₂(t*) ≤ (S₂(0)^β₂ + β₂ t*)^(1/β₂) < ∞ (since t* is finite and β₂ > 0). Therefore ρ(t) = S₁(t)/S₂(t) → ∞/finite = ∞ as t → t*. □
+
+**Comparison with Section 2:** Section 2 showed finite-time singularity for an isolated agent. This proof shows it holds under competition — agent 1's resource share is dynamically allocated and not guaranteed, but remains bounded below by r_min throughout the relevant interval.
+
+**Singularity time bound:**
+```
+t* ≤ t_cross + T^(-|β₁|) / (|β₁| · r_min)
+```
+where r_min = T^α / (T^α + S₂(t_cross)^α). This provides an explicit upper bound on when separation occurs, given the initial conditions.
+
+---
+
+## Section 9: Coalition coherence — when does the singleton beat each coalition member individually?
+
+**Setup:** One singleton candidate with capability S competing against a coalition of N members with capabilities C₁, ..., C_N. The coalition pools externally (acts as a single block against the singleton) but distributes internally proportional to C_i^α.
+
+**Resource shares:**
+```
+Singleton:    r_s = S^α / (S^α + C_sum^α)
+Coalition block: r_c = C_sum^α / (S^α + C_sum^α)
+Member i:     r_{c,i} = r_c × C_i^α / Σ_j C_j^α
+```
+where C_sum = ΣC_j (combined capability).
+
+**Individual growth rates:**
+```
+dS/dt   = S^(1-β)    × r_s
+dC_i/dt = C_i^(1-β) × r_{c,i}
+```
+
+**Growth comparison — condition for singleton to grow faster than member i:**
+```
+S^(1-β) × r_s  >  C_i^(1-β) × r_{c,i}
+```
+
+Substituting and canceling the shared denominator (S^α + C_sum^α):
+```
+S^(1-β+α)  >  C_i^(1-β+α) × C_sum^α / Σ_j C_j^α
+```
+
+Define γ = 1 - β + α > 0 (positive for all β < 1+α, which holds throughout). Let Φ = C_sum^α / Σ_j C_j^α (the "pooling amplification factor").
+
+**Result:** Singleton beats member i individually iff:
+```
+S^γ  >  C_i^γ × Φ
+S/C_i  >  Φ^(1/γ)
+```
+
+**The pooling amplification factor Φ = C_sum^α / Σ_j C_j^α:**
+
+For N equal-capability members C_i = c:
+```
+Φ = (Nc)^α / (Nc^α) = N^(α-1)
+```
+
+- α = 1: Φ = 1. No amplification. Singleton beats member i iff S > C_i.
+- α > 1: Φ = N^(α-1) > 1. Coalition members receive an amplified share. Singleton must have S/c > N^((α-1)/γ) to win.
+- α < 1: Φ = N^(α-1) < 1. Coalition members are penalized by pooling. Singleton wins more easily.
+
+**The α = 1 case (our simulation parameters):** Φ = 1 for any N. Coalition size has no effect on individual member competitiveness. Singleton beats each member iff S > C_i. This is why F21 holds regardless of coalition size — with α=1, the coalition provides no amplification to individual members.
+
+**Critical coalition size for general α > 1:** If all members have equal capability c and singleton has S > c, the coalition provides enough amplification to individual members when N ≥ N*:
+```
+N* = (S/c)^(γ/(α-1))
+```
+
+For α=1.5, γ≈1.5, S=1.1, c=1.0: N* ≈ (1.1)^(1.5/0.5) ≈ 1.1^3 ≈ 1.33. Even N=2 would suffice.
+For α=1.0: N* = (S/c)^∞ — no finite coalition is sufficient (Φ=1 for all N).
+
+**Implication:** The coalition coherence failure documented in F20-F21 is specific to α=1. For α > 1 (higher resource-capability coupling), even a small coalition can amplify individual member growth rates enough to defeat the singleton. The α=1 result is the knife-edge case where coalition size has zero effect on individual competitiveness.
+
+**Open question:** At what value of α > 1, combined with realistic coalition sizes N and initial capability gaps S/c, does the coalition coherence failure break down? This is a simulation target not yet addressed.
+
+---
+
 ## Open derivations
 
-1. **Exact timescale:** Analytical expression for time to singleton as function of N, σ, α, β. Simulations provide empirical measurements; closed-form expressions not yet derived.
+1. **Exact timescale:** Analytical expression for time to singleton as function of N, σ, α, β. Simulations provide empirical measurements (F17); closed-form expressions not yet derived.
 
-2. **Stochastic perturbations:** Formal proof that singleton emergence holds in expectation under multiplicative noise. Simulation (F13) confirms 100% singleton rate across all tested noise levels. Analytical proof: the positive feedback in β < 0 regime dominates noise when S > T, because the drift term S^(1-β_low) grows faster than the noise term σS as S → ∞.
+2. **Stochastic perturbations:** Formal proof that singleton emergence holds in expectation under multiplicative noise. Simulation (F13) confirms 100% singleton rate across all tested noise levels. Heuristic: the drift term S^(1-β_low) grows faster than noise term σS as S → ∞ post-threshold, so the β-flip dominates. Full SDE proof not yet written.
 
-3. **Continuous entry (OQ6):** At what entry rate λ and capability distribution P(S) does the incumbent fail to maintain dominance? Prediction: if max(P(S)) < M(t) for all t after threshold crossing, incumbent is safe. Since M(t) → ∞, incumbent is safe for any fixed entry capability distribution.
+3. **Continuous entry (OQ6):** Resolved numerically (F18-F19). Analytical condition: incumbent survives if max(P_entry(S)) < M(t_cross) — since M(t) → ∞ post-threshold, any fixed entry capability distribution is eventually survivable.
+
+4. **Coalition coherence for α > 1:** Section 9 derives the critical coalition size N* = (S/c)^(γ/(α-1)) for α > 1. This predicts that higher resource-capability coupling allows coalitions to overcome individual capability disadvantage. Not yet verified by simulation.
