@@ -18,6 +18,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{assumption}{Assumption}
@@ -56,14 +57,14 @@ The model combines Yudkowsky's intelligence explosion equation
 ($dS/dt = S^{1-\beta}$), Omohundro's instrumental resource acquisition, and
 Lotka--Volterra competitive exclusion into a unified framework with five
 explicit assumptions.
-We prove three results formally and state one simulation-supported conjecture:
+We prove three results formally and state one conjecture:
 (1)~ratio divergence under resource competition (Theorem~\ref{thm:ratio}),
 (2)~finite-time separation at the $\beta$-threshold under adversarial resource
 dynamics (Theorem~\ref{thm:finitetime}),
 (3)~local instability of the equal-resource equilibrium
 (Proposition~\ref{prop:monopoly}), and
-(4)~$N$-agent generalization by induction (Theorem~\ref{thm:nagent},
-simultaneous-dynamics gap acknowledged).
+(4)~$N$-agent generalization by induction
+(Conjecture~\ref{thm:nagent}: simultaneous-dynamics gap not closed).
 We additionally derive the exact transcendental condition for coalition
 external suppression with numerical solution $\alpha^* \approx 0.64$
 (Theorem~\ref{thm:criticalalpha}), and a complete stochastic blowup proof
@@ -102,6 +103,11 @@ The classical Lotka--Volterra competition model
 \citep{lotka1925elements,volterra1926fluctuations} establishes that two agents
 sharing a resource pool with even a marginal growth-rate advantage diverge in
 ratio as $e^{(r_1 - r_2)t}$.
+Evolutionary game theory \citep{maynardsmith1982evolution,weibull1995evolutionary}
+formalizes related selection dynamics in biological and strategic populations.
+\citet{bostrom2014superintelligence} develops the singleton concept and
+analyzes instrumental convergence at length but does not formalize competitive
+dynamics as a dynamical system.
 
 No prior work combines these into a unified formal model with falsifiable
 quantitative predictions.
@@ -134,15 +140,15 @@ This paper makes the following contributions.
 resource acquisition, and competitive exclusion with five explicit assumptions
 (A1--A5, Section~\ref{sec:model}).
 
-\item \textbf{Three formal proofs and one simulation-supported conjecture}
+\item \textbf{Three formal proofs and one conjecture}
 (Section~\ref{sec:theorems}):
 ratio divergence under competition (Theorem~\ref{thm:ratio});
 finite-time separation at the $\beta$-threshold under adversarial resource
 dynamics (Theorem~\ref{thm:finitetime});
-local instability of the equal-resource state
-(Proposition~\ref{prop:monopoly}, local only);
-$N$-agent singleton by induction (Theorem~\ref{thm:nagent},
-simultaneous-dynamics gap acknowledged).
+local instability of the equal-resource state, with full Jacobian
+(Proposition~\ref{prop:monopoly});
+$N$-agent singleton by induction
+(Conjecture~\ref{thm:nagent}: simultaneous-dynamics gap not closed).
 
 \item \textbf{Two supplementary derivations} (Sections~\ref{sec:coalition},
 \ref{sec:stochastic}):
@@ -332,10 +338,9 @@ reach threshold $T$.
 
 \emph{Status:} This theorem is fully proved for $N = 2$
 (Theorems~\ref{thm:ratio} and~\ref{thm:finitetime}).
-For $N > 2$ it relies on Theorem~\ref{thm:nagent}, which carries an
-unresolved simultaneous-dynamics gap (see that theorem's note).
-The $N > 2$ case should be treated as a conjecture with strong simulation
-support.
+For $N > 2$ it relies on Conjecture~\ref{thm:nagent}, which carries an
+unresolved simultaneous-dynamics gap.
+The $N > 2$ case is a conjecture, not a theorem.
 \end{theorem}
 
 The proof proceeds in four steps---Theorems~\ref{thm:ratio},
@@ -523,24 +528,34 @@ monopoly state is not proved here but is confirmed by simulation (F2--F6).
 \begin{proof}
 From A2: $R_1^* = \Rmax/(1 + \rho^{-\alpha}) \to \Rmax$ as $\rho \to \infty$. \checkmark
 
-For stability: linearize around the equal-resource point
-$S_1 = S_2 = S^*$, $R_1 = R_2 = \Rmax/2$.
-A perturbation $S_1 = S^* + \varepsilon$, $S_2 = S^* - \varepsilon$ gives
+For local instability: compute the Jacobian of the full 2D system at the
+symmetric fixed point $S_1 = S_2 = S^*$.
+Under A2, $dS_i/dt = S_i^\gamma / D$ where $\gamma = 1 - \beta + \alpha$
+and $D = S_1^\alpha + S_2^\alpha$.
+Let $C = S^{*(\gamma - \alpha - 1)}/4 > 0$.
+Differentiating:
 \[
-  r_1 \approx \tfrac{1}{2} + \tfrac{\alpha\varepsilon}{2S^*},
+  J = \begin{pmatrix} C(2\gamma - \alpha) & -C\alpha \\ -C\alpha & C(2\gamma - \alpha) \end{pmatrix}.
 \]
-so agent~1 receives more resources than agent~2, which amplifies the
-capability gap.
-The growth rate of $\varepsilon$ is positive: the equal-resource state is
-unstable.
-Under A5, $\varepsilon > 0$ at $t = 0$; the system evolves toward the
-singleton.
+This symmetric matrix has eigenvalues
+\[
+  \lambda_1 = 2C(\gamma - \alpha) = 2C(1-\beta),
+  \qquad
+  \lambda_2 = 2C\gamma = 2C(1-\beta+\alpha),
+\]
+with eigenvectors $[1,1]$ (uniform growth) and $[1,-1]$ (symmetry-breaking).
+Since $\alpha > 0$ and $\beta < \alpha$ (pre-threshold), $\gamma > 0$,
+so $\lambda_2 = 2C\gamma > 0$ always.
+The $[1,-1]$ perturbation mode grows exponentially: the symmetric fixed
+point is locally unstable in the symmetry-breaking direction.
+Under A5, the system starts with $S_1 > S_2$, i.e., away from the fixed
+point in the $[1,-1]$ direction.
 \end{proof}
 
 \subsection{Step 4: $N$-agent generalization}
 \label{sec:step4}
 
-\begin{theorem}[$N$-agent singleton (simulation-supported)]
+\begin{conjecture}[$N$-agent singleton]
 \label{thm:nagent}
 Under A1--A5, for $N \geq 2$ agents with
 $S_1(0) > S_2(0) > \cdots > S_N(0)$, agent~1 is the singleton.
@@ -556,7 +571,7 @@ the result held in all 200 tested trials for $N=10$ on a purpose-built ODE
 system) but without an analytical bound on the gap.
 Simulation trials on the same ODE system confirm the model's own behavior;
 they do not close the proof.
-\end{theorem}
+\end{conjecture}
 
 \begin{proof}
 By induction on $N$.
@@ -685,10 +700,11 @@ Winner identity: initial leader wins $> 50\%$ of trials below $\sigma \approx
 \label{fig:stochastic}
 \end{figure}
 
-No singleton-formation failures were observed in 300 trials at any tested
-noise level ($\sigma$ from 0.001 to 1.0, F13).
-Theorem~\ref{thm:stochastic} proves emergence probability~1; the simulation
-confirms zero observed failures but cannot establish a probability.
+Theorem~\ref{thm:stochastic} proves singleton formation with probability~1
+for any $\sigma > 0$; this is the actual proof of the result.
+The simulation (300 trials per noise level, zero failures) is a consistency
+check against the theorem, not independent evidence---it confirms the ODE
+integrations behave as the SDE analysis predicts.
 Noise affects \emph{which} agent wins, not \emph{whether} a singleton forms.
 Three noise thresholds appear in these results and are distinct:
 (1)~$\sigma \approx 0.023$: winner identity begins to degrade (initial leader
@@ -1167,6 +1183,13 @@ A5 holds under any physical noise.
 Whether dominant causal eventuality is a feature of our universe depends on
 whether recursive self-improvement can cross into $\beta < 0$---and on whether
 it already has somewhere in our light cone.
+
+% ============================================================
+\section*{Acknowledgments}
+
+No external funding was received for this work.
+Simulation code is available at
+\url{https://github.com/ninjahawk/singleton-attractor}.
 
 % ============================================================
 \bibliographystyle{plainnat}
