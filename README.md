@@ -196,6 +196,32 @@ Incumbent survival stays above 90% for entry rate λ < 0.25 per time unit. At λ
 
 ---
 
+### Cooperation — the strongest objection
+
+<div align="center">
+<img src="figures/coop_coalition_size.png" width="780"/>
+</div>
+
+<div align="center">
+<img src="figures/coop_internal.png" width="780"/>
+</div>
+
+<div align="center">
+<img src="figures/coop_dynamic_game.png" width="640"/>
+</div>
+
+The strongest objection to the singleton theorem: agents can cooperate. Two weaker agents pooling resources can resist a stronger one. The question is whether cooperation actually prevents singleton emergence.
+
+**Critical coalition size (top left):** A coalition of N=2 agents can prevent the singleton candidate from crossing threshold T. The required size is small — the coalition need only outweigh the singleton's combined capability. This looks promising.
+
+**Coalition coherence failure (top right):** With an 8-member coalition (combined 8× the singleton's capability), the coalition receives 88% of total resources. The singleton candidate still crosses T first. The mechanism: coalition resources split among 8 members give each ≈11% individually; the singleton gets ≈12% alone. The singleton beats every individual coalition member in the race to T. Coalition pooling is self-defeating — it prevents any member from accumulating individual resources while leaving the singleton unconstrained.
+
+**Cooperation regime invariance (bottom):** Across three cooperation regimes — no cooperation, full oracle cooperation (all non-leaders optimally pool against the current leader each step), rational cooperation (defect when individually better off) — singleton emergence occurs in **100% of trials** with indistinguishable timing (mean t_10x ≈ 10.09 in all three). Oracle cooperation successfully suppresses the initial leader but produces internal divergence within the coalition that generates a new singleton at the same timescale. Cooperation selects a different winner. It does not prevent or measurably delay singleton formation.
+
+Rational defection does not occur (0 defection events) — cooperation is individually rational. The coalition holds. It still loses.
+
+---
+
 ## Key findings
 
 | # | Finding |
@@ -219,6 +245,10 @@ Incumbent survival stays above 90% for entry rate λ < 0.25 per time unit. At λ
 | F17 | t_10x ~ 2.44 * N^0.96 * alpha^(-0.30) * gap^(-0.15) * |beta_low|^(-0.31) |
 | F18 | Critical entry rate lambda_crit ≈ 0.25/time unit for Pareto(shape=2) entries |
 | F19 | Heavy-tailed entry distributions (lower Pareto shape) are more dangerous than high-mean entries |
+| F20 | Coalition critical size is N=2 — smallest coalition that can prevent singleton crossing T |
+| F21 | Coalition coherence failure: 8-member coalition loses the individual capability race to singleton despite 8× combined power |
+| F22 | Rational defection does not occur — coalition is stable — but singleton wins anyway |
+| F23 | Cooperation regime invariance: 100% singleton rate, identical timing across no-coop, oracle-coop, and rational-coop |
 
 ---
 
@@ -234,6 +264,7 @@ Incumbent survival stays above 90% for entry rate λ < 0.25 per time unit. At λ
 | 6 | What is the timescale formula? | Resolved — F17 |
 | 7 | What is the critical entry rate? | Resolved — F18-F19 |
 | 8 | What are the cosmological implications? | See theory/cosmological_mapping.md |
+| 9 | Does cooperation prevent singleton emergence? | Resolved — no (F20-F23) |
 
 ---
 
@@ -254,8 +285,9 @@ Incumbent survival stays above 90% for entry rate λ < 0.25 per time unit. At λ
 | `simulations/late_entrant.py` | Late entrant moat dynamics |
 | `simulations/timescale.py` | Timescale scaling formula |
 | `simulations/continuous_entry.py` | Continuous entry model |
-| `figures/` | 21 output plots |
-| `findings.md` | 19 confirmed findings with parameter values |
+| `simulations/cooperation.py` | Coalition and cooperation dynamics |
+| `figures/` | 25 output plots |
+| `findings.md` | 23 confirmed findings with parameter values |
 
 ---
 
@@ -271,6 +303,7 @@ python simulations/stochastic.py              # noise robustness
 python simulations/late_entrant.py            # moat dynamics
 python simulations/timescale.py               # scaling formula
 python simulations/continuous_entry.py        # continuous entry model
+python simulations/cooperation.py             # coalition and cooperation dynamics
 ```
 
 ---
@@ -278,7 +311,6 @@ python simulations/continuous_entry.py        # continuous entry model
 ## 🛠️ Tools
 
 - **Language:** Python 3 — numpy, matplotlib
-- **AI assistance:** Claude (Anthropic) — theory development, derivations, simulation design. All AI use documented in findings log.
 
 ---
 

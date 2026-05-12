@@ -405,3 +405,73 @@ Heavier-tailed distributions (lower shape) are significantly more dangerous at h
 **OQ5 (partially resolved):** Crossover X* ≈ T^(1/alpha) gives 3^1 = 3 for alpha=1, T=3, consistent with observed 2.9. Scaling relation derived — closed-form integral not solved.
 
 **OQ6 (resolved by F18-F19):** Critical entry rate lambda_crit ≈ 0.25 per time unit for Pareto(shape=2) distributions. Heavy-tailed distributions lower this further. Post-threshold, any lambda is survivable due to moat growth.
+
+---
+
+## F20: Coalition critical size is N=2
+
+**Source:** `simulations/cooperation.py`, Experiment 1
+
+Parameters: singleton S=1.1, coalition combined capability = N × 1.0, T=3.0, β_high=0.5, β_low=-0.3, α=1.0.
+
+A coalition of N=2 combined capability prevents a singleton candidate from crossing threshold T. At N=1 (no coalition), singleton crosses at t=2.46. At N≥2, singleton never reaches T within t=30.
+
+The mechanism is straightforward: combined coalition capability 2.0 > singleton 1.1 gives the coalition >78% of resources, starving the singleton before it can accumulate the capability to enter β < 0 territory.
+
+The critical size is small. This would appear to make cooperation a viable defense. F21 shows why it is not.
+
+---
+
+## F21: Coalition coherence failure — coalition pooling is self-defeating
+
+**Source:** `simulations/cooperation.py`, Experiment 2
+
+Parameters: N=8 coalition members (S=1.0±0.025) + 1 singleton candidate (S=1.1), T=3.0.
+
+External power ratio: coalition combined ~8.0 vs singleton 1.1. Coalition receives ~88% of total resources. The singleton candidate still crosses T first at t=10.94.
+
+**Mechanism:** Coalition resources are split proportionally among 8 members. Each coalition member receives ≈(88%/8) = 11% of total resources. The singleton candidate receives ≈12%. The singleton gets a larger individual share than any individual coalition member, and beats every coalition member in the race to T.
+
+Coalition pooling helps the group externally but hurts each individual internally. The same distribution mechanism that prevents any single coalition member from accumulating resources also ensures the singleton candidate — free from that constraint — stays individually ahead.
+
+**The coalition wins the group competition and loses the capability race.** F1 (niche partitioning) assumed resource separation would produce oligopoly. F21 shows cooperation has the same structural problem: it can redistribute resources to prevent the singleton from winning externally, but the coalition's internal competition ensures the singleton beats each individual member.
+
+---
+
+## F22: Rational defection is not the coalition's failure mode
+
+**Source:** `simulations/cooperation.py`, Experiment 3
+
+Parameters: N=8 agents, agent 0 (S=1.15) competes alone, agents 1-7 form coalition. Defection threshold: agent defects if individual share > coalition share × 1.01.
+
+Defection events: 0. Coalition stays intact for the full run (t=20).
+
+Coalition members find it individually rational to remain in the coalition — defection would reduce each member's share by exposing them to the full competitive denominator. The coalition is stable.
+
+Agent 0 wins regardless. Agent 0 was never a coalition member. The coalition's stability is not the issue. The issue is that external singleton candidates are not subject to the coalition's internal resource dilution, so they beat each coalition member individually even when the coalition holds together.
+
+---
+
+## F23: Cooperation regime invariance — singleton emerges regardless of cooperation structure
+
+**Source:** `simulations/cooperation.py`, Experiment 4
+
+Parameters: N=8, 50 trials per regime, 10x ratio threshold.
+
+| Regime | Singleton rate | Mean t_10x |
+|---|---|---|
+| No cooperation | 100% | 10.09 |
+| Full oracle cooperation (all non-leaders pool against current leader) | 100% | 10.09 |
+| Rational cooperation (defect when individually better off) | 100% | 10.09 |
+
+Singleton rate is 100% in all three regimes. Mean time to 10x separation is indistinguishable across regimes.
+
+**Mechanism in full-oracle case:** Non-leaders successfully suppress the initial leader's resource share. But the coalition has internal divergence — the strongest follower accumulates capability faster than weaker followers. That follower becomes the new leader, faces the pooled coalition, gets suppressed, and the process repeats. Each round, internal capability spread grows. Eventually one agent achieves 10x over others regardless.
+
+**Cooperation displaces which agent becomes the singleton. It does not prevent or measurably delay singleton formation.** This is the sharpest result from the cooperation experiments. Even optimal oracle cooperation — a strategy unavailable to real agents — cannot prevent the dynamics from producing a singleton.
+
+---
+
+## Revised open questions (post-cooperation)
+
+**OQ7:** The cooperation simulation uses fixed initial conditions and homogeneous β functions. An open question is whether heterogeneous β functions (some agents structurally unable to enter β < 0) would allow a stable coalition of β < 0-capable agents to permanently suppress a singleton candidate. This is the true F1 test applied to cooperation.

@@ -93,6 +93,14 @@ F1 requires not just separate resource pools but different β regimes: one agent
 
 **F4 (Identical initial conditions):** If S_i(0) = S_j(0) for all i, j (violating A5), the system is symmetric and no agent has an initial advantage. In practice, noise breaks symmetry and Step 1 applies to the first perturbation. But in a perfectly symmetric system, the claim cannot specify which agent becomes the singleton — only that one will.
 
+**F5 (Cooperation) — does not prevent singleton:** Simulation (findings.md F20-F23) tests whether agent cooperation prevents singleton emergence. Coalition pooling can suppress a singleton candidate from crossing threshold T (critical size N=2). However, coalition pooling is self-defeating: resources distributed among coalition members give each individual member a smaller share than the singleton candidate receives alone. The singleton beats every individual coalition member in the race to T despite the coalition having dominant combined power (F21).
+
+Rational defection does not destroy the coalition (0 defection events, F22) — cooperation is individually rational. But coalition stability is irrelevant: the coalition's internal resource competition ensures the singleton candidate outpaces each member individually.
+
+Across no-cooperation, full oracle cooperation, and rational cooperation, singleton emergence occurs in 100% of trials with identical timing (F23). Cooperation displaces which agent becomes the singleton; it does not prevent or measurably delay singleton formation.
+
+F5 would require agents to merge into a single entity (eliminating internal competition) rather than cooperating as distinct agents. A true merger satisfies A5 only if the merged entity has heterogeneous internal β — but at that point it is simply a new single agent, and the theorem applies to it as the new entrant with highest initial capability.
+
 ---
 
 ## What the simulations test
