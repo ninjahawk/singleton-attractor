@@ -323,24 +323,18 @@ crossing.
 \section{Main Results}
 \label{sec:theorems}
 
-\begin{theorem}[Singleton Attractor]
+\begin{theorem}[Singleton Attractor, $N=2$]
 \label{thm:singleton}
-Under A1--A5, for any $N \geq 2$ agents, there exists an agent $j$ and a
-finite time $\tstar$ such that $S_j(t)/S_i(t) \to \infty$ for all $i \neq j$
-and all $t > \tstar$.
-Agent $j$ is the agent with highest initial capability among those able to
-reach threshold $T$.
-
-\emph{Status:} This theorem is fully proved for $N = 2$
-(Theorems~\ref{thm:ratio} and~\ref{thm:finitetime}).
-For $N > 2$ it relies on Conjecture~\ref{thm:nagent}, which carries an
-unresolved simultaneous-dynamics gap.
-The $N > 2$ case is a conjecture, not a theorem.
+Under A1--A5 with $N = 2$ agents, the agent with higher initial
+capability is a singleton: there exists $\tstar < \infty$ such that
+$S_1(t)/S_2(t) \to \infty$ as $t \to \tstar$.
 \end{theorem}
 
-The proof proceeds in four steps: Theorem~\ref{thm:ratio},
-Theorem~\ref{thm:finitetime}, Proposition~\ref{prop:monopoly}, and
-Conjecture~\ref{thm:nagent}.
+The proof proceeds in three steps for $N = 2$
+(Theorem~\ref{thm:ratio}, Theorem~\ref{thm:finitetime},
+Proposition~\ref{prop:monopoly}).
+The $N \geq 3$ case is the subject of Conjecture~\ref{thm:nagent} and
+is not proved here.
 
 \subsection{Step 1: Ratio divergence from marginal advantage}
 \label{sec:step1}
@@ -390,10 +384,11 @@ limit---contradicting the right-hand side diverging to $+\infty$.
 Therefore $\rho(t) \to \infty$.
 
 \textit{Case~2: $S_2(t)\to M<\infty$.}
-Monotone $\dot{S}_2 > 0$ and boundedness force $\dot{S}_2 \to 0$.
-Since $\dot{S}_2 = S_2^{1-\beta+\alpha}/D$ and $S_2 \to M > 0$,
-we need $D \to \infty$, so $S_1 \to \infty$.
-Then $\rho = S_1/S_2 \to \infty / M = \infty$.
+Suppose for contradiction that $S_1$ also remains bounded, $S_1 \to L_1 < \infty$.
+Then $D \to L_1^\alpha + M^\alpha =: D_\infty < \infty$ and
+$\dot{S}_1 \to L_1^{1-\beta+\alpha}/D_\infty > 0$, so $S_1$ grows at a uniformly
+positive asymptotic rate, contradicting $S_1$ bounded.
+Hence $S_1 \to \infty$, and $\rho = S_1/S_2 \to \infty/M = \infty$.
 \end{proof}
 
 \begin{remark}
@@ -408,10 +403,19 @@ stronger result of finite-time rather than asymptotic divergence.
 
 \begin{theorem}[Finite-time separation]
 \label{thm:finitetime}
-Suppose agent~1 has crossed $T$ (so $\beta_1 = -|\beta_1| < 0$) and
-agent~2 remains below $T$ ($\beta_2 > 0$).
+Suppose $T > 1$, agent~1 has crossed $T$ (so $\beta_1 = -|\beta_1| < 0$),
+and agent~2 remains below $T$ ($\beta_2 > 0$).
 Then $\rho(t) \to \infty$ at a finite time $\tstar$.
 \end{theorem}
+
+\noindent\textit{On the hypothesis $T > 1$.} The post-escape blow-up
+argument compares $S_1^{1+|\beta(S_1)|}$ with $S_1^{1+|\beta^*|}$, which
+requires $S_1 \geq 1$ to flip the inequality the right way.
+With $T > 1$ this holds throughout $[\tcross, \tstar)$ since
+$S_1 \geq T > 1$.
+For $T \leq 1$ the result still holds after a rescaling
+$\tilde{S} = S/T$, which puts the threshold at $1$ and leaves the
+structure of the dynamics intact.
 
 \begin{remark}[Simultaneous T-crossing not covered]
 This theorem requires agent~1 to have crossed $T$ while agent~2 has not.
@@ -524,10 +528,13 @@ Therefore $\rho(t) = S_1(t)/S_2(t) \to \infty/\text{finite} = \infty$ at $t = \t
 \begin{proposition}[Symmetry-breaking instability]
 \label{prop:monopoly}
 As $\rho \to \infty$, $R_1^*/\Rmax \to 1$ and $R_2^*/\Rmax \to 0$.
-The symmetric subspace $\{S_1 = S_2\}$ is invariant under the dynamics;
-the transverse perturbation mode grows exponentially at rate
-$(\alpha - \beta)/(2 S^{\beta})$, so any initial heterogeneity (A5) is
-amplified.
+The symmetric subspace $\{S_1 = S_2\}$ is invariant under the dynamics.
+The transverse perturbation $\varepsilon = \rho - 1$ satisfies
+$\dot{\varepsilon} = \mu(t)\,\varepsilon + O(\varepsilon^2)$ with
+$\mu(t) = (\alpha - \beta)/(2\,S(t)^{\beta})$;
+the integrated rate $\int_0^t \mu(s)\,ds$ diverges as $t \to \infty$
+in the pre-threshold regime, so any initial heterogeneity (A5) is amplified
+without bound.
 \end{proposition}
 
 \begin{proof}
@@ -538,9 +545,17 @@ Writing $\rho = 1 + \varepsilon$ and expanding~\eqref{eq:rhodot} to first order
 around $\rho = 1$:
 \[
   \frac{d\varepsilon}{dt}
-  = \frac{\alpha - \beta}{2\,S_2^{\beta}}\,\varepsilon + O(\varepsilon^2),
+  = \mu(t)\,\varepsilon + O(\varepsilon^2),
+  \qquad
+  \mu(t) := \frac{\alpha - \beta}{2\,S(t)^{\beta}}.
 \]
-so $\varepsilon$ grows exponentially while $\alpha > \beta$.
+The instantaneous rate $\mu(t)$ is positive whenever $\alpha > \beta$
+but decays as $S(t)$ grows.
+The relevant question is whether $\int_0^t \mu(s)\,ds$ diverges.
+On the symmetric subspace, $S(t)$ grows as a power law $S(t) \sim t^{1/\beta}$
+in the pre-threshold regime, so $S(t)^\beta \sim t$ and
+$\int_0^t \mu(s)\,ds \sim (\alpha-\beta)/(2)\,\ln t \to \infty$.
+Hence $\varepsilon(t) \to \infty$.
 Under A5 the system starts with $\varepsilon(0) \neq 0$.
 \end{proof}
 
@@ -581,12 +596,20 @@ Direct computation gives
 \]
 (the denominator $D$ cancels between $d\rho_{1N}/dt$ and $dS_N/dt$).
 This is the same separable ODE as the 2-agent case in
-Theorem~\ref{thm:ratio}, so the same Case~1/Case~2 argument gives
-$\rho_{1N} \to \infty$.
-Therefore $r_N = S_N^\alpha / \sum_j S_j^\alpha \leq \rho_{1N}^{-\alpha} \to 0$:
-agent~$N$'s growth stalls.
-The remaining $N-1$ agents $\{S_1, \ldots, S_{N-1}\}$ satisfy the inductive
-hypothesis.
+Theorem~\ref{thm:ratio}.
+Case~1 of the 2-agent argument transfers directly: if $S_N \to \infty$,
+the ODE forces $\rho_{1N} \to \infty$ via the same separation-of-variables
+contradiction.
+Case~2 (the bounded-$S_N$ branch) does \emph{not} transfer: the 2-agent
+argument used ``the only other agent must be unbounded,'' which fails
+when $N > 2$ because some other $S_j$ ($j \neq 1, N$) might be the
+unbounded agent rather than $S_1$.
+This is the simultaneous-dynamics gap acknowledged in the conjecture
+statement.
+Granting Case~1 (or, equivalently, granting that $S_1 \to \infty$),
+$r_N = S_N^\alpha / \sum_j S_j^\alpha \leq \rho_{1N}^{-\alpha} \to 0$,
+agent~$N$'s growth stalls, and the reduced $N{-}1$ system satisfies
+the inductive hypothesis.
 
 \textit{Note on simultaneous dynamics:}
 The induction eliminates agents sequentially, but all $N$ agents evolve
@@ -638,20 +661,26 @@ not physical robustness.
 
 \subsection{$\beta$-threshold acceleration (F3, F9)}
 
-When the leading agent crosses $T$ and enters $\beta < 0$, separation
-accelerates by \textbf{12.4 million times} compared to flat-$\beta$ dynamics at
-the same timepoint (F3).
-This is the primary mechanism.
-The minimum $\beta$-flip separation across all tested parameters is
-$1{,}179\times$ (F9).
+When the leading agent crosses $T$ and enters $\beta < 0$, the separation
+ratio diverges in finite time (Theorem~\ref{thm:finitetime}); the
+specific multiple at any single timepoint is therefore not a meaningful
+invariant of the system.
+For illustration, at $t = 6.8$ in the default configuration the
+threshold-crossing simulation produces a ratio of $\sim\!1.9\times 10^7$
+versus $\sim\!1.55$ for the flat-$\beta$ comparator (Fig.~\ref{fig:threshold});
+this ratio grows without bound as $t \to \tstar$.
+The qualitative comparison---super- versus sub-exponential---is robust
+across the tested parameter range, with minimum measured separation
+$1{,}179\times$ at the most adverse parameter set tested (F9).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.85\textwidth]{../figures/comp_threshold.png}
 \caption{$\beta$-threshold effect. Flat $\beta=0.5$ (no threshold) versus
-threshold $\beta$ ($\betaL=-0.3$ above $T=5$). At $t = 6.8$, threshold dynamics
-produce $19{,}336{,}447\times$ separation versus $1.55\times$ for flat dynamics.
-Acceleration factor: $12.4 \times 10^6$.}
+threshold $\beta$ ($\betaL=-0.3$ above $T=5$). At the snapshot $t = 6.8$ the
+threshold trajectory has reached $\sim\!1.9\times10^{7}$-fold separation versus
+$1.55$-fold for the flat comparator; the threshold ratio diverges in finite
+time, so the snapshot value is illustrative rather than invariant.}
 \label{fig:threshold}
 \end{figure}
 
@@ -730,31 +759,28 @@ The moat grows from $3\times$ at threshold crossing to $> 10^6\times$ within
 Late entry threatens the incumbent only during the pre-threshold window (F16).
 Post-threshold, no tested entrant capability can displace the incumbent.
 
-\subsection{Timescale formula (F17, empirical scaling estimate)}
+\subsection{Timescale (F17)}
 
-\textit{The formula below is a fitted scaling estimate, not a derived result.
-Only the $N^1$ exponent has an analytical derivation (Appendix~\ref{app:timescale}).
-All other exponents are fitted from single-variable sweeps with no
-cross-validation, no confidence intervals, and no accounting for interaction
-effects.
-It should not be used for quantitative prediction outside the tested parameter
-range.}
+The pre-threshold crossing time scales as $\tcross \propto N^{1}$ from
+the equal-agent approximation (Appendix~\ref{app:timescale}); empirical
+fits over our parameter sweep give $N^{0.96}$, the small deviation
+attributable to the leader's growing resource share above $1/N$.
+Across all parameters tested, $t_{10\times} \approx t_{100\times}
+\approx t_{\mathrm{dom}}$: superexponential growth collapses all
+subsequent milestones onto the same time.
 
-From power-law fits across single-variable sweeps:
-\begin{equation}
+\begin{remark}[Multi-parameter scaling estimate]
+Power-law fits over single-variable sweeps yield
+\[
   t_{10\times} \approx 2.44 \cdot N^{0.96} \cdot \alpha^{-0.30} \cdot
   \mathrm{gap}^{-0.15} \cdot |\betaL|^{-0.31}.
-  \label{eq:timescale}
-\end{equation}
-The $N^1$ exponent is analytically derived (Appendix~\ref{app:timescale});
-the others are fitted from single-variable sweeps with all other parameters
-held fixed.
-The formula does not account for interaction effects between parameters and
-has not been cross-validated on a held-out parameter set.
-Confidence intervals on the fitted exponents are not reported; the formula
-should be treated as a scaling estimate, not a precise prediction.
-Key property: $t_{10\times} \approx t_{100\times} \approx t_{\mathrm{dom}}$ across all
-parameters---superexponential growth collapses all subsequent milestones.
+\]
+Only the $N$ exponent is derived analytically; the other exponents are
+empirical fits with no cross-validation, no confidence intervals, and
+no treatment of interaction effects.
+The formula should be read as a rough scaling guide within the tested
+parameter range, not as a quantitative prediction.
+\end{remark}
 
 \subsection{Continuous entry (F18--F19)}
 
@@ -1289,17 +1315,19 @@ proxy, $\beta(S) < 0$ is not currently supported, and the framework's
 central premise becomes a falsifiable hypothesis with negative
 preliminary evidence.
 
-\subsection{Timescale formula analysis}
+\subsection{Timescale scaling}
 
-The empirical formula~\eqref{eq:timescale} has a partial analytical foundation.
+The empirical scaling estimate in Section~\ref{sec:simulations} has a
+partial analytical foundation.
 The $N^{0.96}$ exponent is analytically predicted as $N^1$ from the
-pre-threshold approximation (Appendix~\ref{app:timescale}); the small deviation
-comes from the leader's increasing resource share as it advances.
-The $\alpha^{-0.30}$ exponent tracks the integrated resource-correction;
-the $|\betaL|^{-0.31}$ exponent is a mixture of pre- and post-threshold phases
-(Appendix~\ref{app:timescale}).
-The $\mathrm{gap}^{-0.15}$ exponent is small because the threshold mechanism
-dominates initial conditions.
+pre-threshold approximation (Appendix~\ref{app:timescale}); the small
+deviation comes from the leader's increasing resource share as it
+advances.
+The $\alpha^{-0.30}$ exponent tracks the integrated resource correction
+and the $|\betaL|^{-0.31}$ exponent reflects a mixture of pre- and
+post-threshold phases (Appendix~\ref{app:timescale}).
+The $\mathrm{gap}^{-0.15}$ exponent is small because the threshold
+mechanism dominates initial conditions.
 
 \subsection{Limitations}
 
@@ -1328,10 +1356,10 @@ question, and the answer determines whether any of this applies to real AI
 systems.
 
 \textit{Timescale formula.}
-Equation~\eqref{eq:timescale} is fitted from single-variable sweeps with no
-cross-validation.
-The $N^1$ exponent has an analytical derivation; the others do not.
-Use it as a rough scaling guide, not a prediction.
+The multi-parameter scaling estimate in Section~\ref{sec:simulations}
+is fitted from single-variable sweeps with no cross-validation.
+Only the $N^1$ exponent has an analytical derivation; the others should
+be read as scaling guides, not predictions.
 
 \textit{Fast equilibration.}
 Theorem~\ref{thm:finitetime} requires A2.
