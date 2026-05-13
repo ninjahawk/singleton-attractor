@@ -61,20 +61,21 @@ Three results are proved formally.
 The $N$-agent generalization is a conjecture with an acknowledged
 simultaneous-dynamics gap.
 Additional results include the exact transcendental condition for coalition
-suppression ($\alpha^* \approx 0.64$, Theorem~\ref{thm:criticalalpha}) and a
-stochastic blowup proof via Feller's criterion (Theorem~\ref{thm:stochastic}).
+suppression ($\alpha^* \approx 0.64$, Theorem~\ref{thm:criticalalpha}) and an
+explicit Dufresne-perpetuity formula for the probability of singleton
+emergence under multiplicative GBM noise (Theorem~\ref{thm:stochastic}):
+the probability lies in $(0,1)$ for any $\sigma > 0$ and tends to $1$ as
+$\sigma \to 0$.
 Eleven simulation scripts verify the ODE system's numerical behavior across
-25 parameter configurations.
-Threshold-crossing dynamics produce arbitrarily large separation in finite
-time (illustrated in Fig.~\ref{fig:threshold}).
-Stochastic noise at all tested amplitudes randomizes which agent wins; it does
-not prevent a singleton from forming.
-Neither cooperation structure nor coalition size prevents singleton emergence
-in any tested configuration.
+25 parameter configurations; the simulations use a capability cap that
+inflates apparent emergence and is discussed where used.
 Within the formal model (A1--A5), separate resource pools alone do not prevent
 singleton emergence when both agents share a $\beta$-function that crosses zero;
 structurally different $\beta$-regimes are required.
 This refines, rather than refutes, \citet{bostrom2005singleton}.
+Section~\ref{sec:calibration} attempts an empirical calibration of $\beta(S)$
+against frontier-AI training compute (\citealt{epoch2024compute}); the
+result is reported alongside its limitations.
 \end{abstract}
 
 % ============================================================
@@ -111,12 +112,15 @@ Lotka--Volterra handles biological competition without self-improvement.
 Everything in this paper is conditional on Assumption~A4: that $\beta(S)$
 can go negative for some capability level $S = T$ that is actually reachable.
 A4 is the contested premise.
-The theorems prove that \emph{if} A4 holds, a singleton emerges---and they
-specify how: in finite time, under adversarial resource dynamics, robust to
-noise and cooperation.
+The theorems prove that \emph{if} A4 holds, a singleton emerges in
+finite time under adversarial resource dynamics; under multiplicative
+GBM-type noise the emergence becomes a high-probability rather than
+almost-sure event (Theorem~\ref{thm:stochastic}).
 That structure is close to tautological.
 The interesting empirical question---whether any real system will ever satisfy
-A4---is outside the paper's reach.
+A4---is partially addressed in Section~\ref{sec:calibration} via a
+calibration to frontier training-compute data; the result for that
+proxy is that $\beta(S) < 0$ is not currently supported.
 
 This paper makes the following contributions.
 
@@ -139,7 +143,8 @@ $N$-agent singleton by induction
 \ref{sec:stochastic}):
 the exact transcendental condition for coalition external suppression
 (Theorem~\ref{thm:criticalalpha}) with solution $\alpha^* \approx 0.64$;
-and a complete stochastic blowup proof via Feller's criterion
+and an explicit Dufresne-perpetuity formula for the probability of
+singleton emergence under multiplicative noise
 (Theorem~\ref{thm:stochastic}).
 
 \item \textbf{Quantitative simulation results} (Section~\ref{sec:simulations})
@@ -147,6 +152,14 @@ from eleven scripts and 25 confirmed findings, including a fitted single-variabl
 scaling estimate for $t_{10\times}$ (Section~\ref{sec:simulations}; only the $N$
 exponent is analytically derived) and critical coalition entry rate
 $\lambda_{\mathrm{crit}} \approx 0.25$.
+
+\item \textbf{An empirical calibration to frontier-AI training compute}
+(Section~\ref{sec:calibration}) using the Epoch AI dataset
+\citep{epoch2024compute}.
+The frontier trajectory 2012--2026 is consistent with pure exponential
+growth ($\gamma = +0.005$, 95\% CI $[-0.010,\;+0.021]$); the
+2022--2026 sub-window shows mild deceleration.
+Under this proxy the data do not support $\beta(S) < 0$.
 \end{enumerate}
 
 Section~\ref{sec:model} gives the model.
@@ -154,6 +167,7 @@ Section~\ref{sec:theorems} proves the main results.
 Section~\ref{sec:simulations} covers 25 simulation findings.
 Sections~\ref{sec:failures}--\ref{sec:stochastic} address failure conditions,
 coalition coherence, and stochastic robustness.
+Section~\ref{sec:calibration} reports the empirical calibration.
 Section~\ref{sec:discussion} covers limitations and open questions.
 Appendix~\ref{sec:cosmology} is speculative context only.
 
@@ -675,20 +689,30 @@ and the advantage plateaus beyond a threshold gap of $\sim\!4$ units (F12).
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.85\textwidth]{../figures/stoch_winner_rate.png}
-\caption{Stochastic robustness. 300 trials per noise level $\sigma$.
-Singleton emergence rate (ratio $> 10\times$): zero failures at every tested
-level.
-Winner identity: initial leader wins $> 50\%$ of trials below $\sigma \approx
-0.23$ (default 10\% gap); degradation begins near $\sigma \approx 0.023$.}
+\caption{Stochastic simulation outcomes, 300 trials per noise level
+$\sigma$, integration cap at $S = 10^{8}$.
+``Singleton emergence'' counts trials reaching the cap (ratio $> 10\times$)
+within $t_{\max}$; with the cap in place, no trials in the tested range
+fail.
+Winner identity: initial leader wins $> 50\%$ of trials below $\sigma
+\approx 0.23$ (default 10\% gap); degradation begins near $\sigma
+\approx 0.023$.
+This is consistent with high $\Pr(J \geq c)$ in
+Theorem~\ref{thm:stochastic} for small $\sigma$, not evidence of
+almost-sure emergence.}
 \label{fig:stochastic}
 \end{figure}
 
-Theorem~\ref{thm:stochastic} proves singleton formation with probability~1
-for any $\sigma > 0$; this is the actual proof of the result.
-The simulation (300 trials per noise level, zero failures) is a consistency
-check against the theorem, not independent evidence---it confirms the ODE
-integrations behave as the SDE analysis predicts.
-Noise affects \emph{which} agent wins, not \emph{whether} a singleton forms.
+Theorem~\ref{thm:stochastic} gives the probability of singleton emergence
+as $\Pr(J \geq c)$, where $J$ is a Dufresne perpetuity and $c$ depends on
+threshold and growth parameters.
+This probability is strictly between $0$ and $1$ for any $\sigma > 0$ and
+approaches $1$ as $\sigma \to 0$.
+The simulation below uses an integration cap at $S = 10^{8}$, which logs
+trials reaching the cap as singleton emergence.
+For the noise levels and time horizons tested, the cap is reached in
+every trial; this is consistent with high $\Pr(J \geq c)$ in the tested
+regime but does not establish almost-sure emergence.
 Three noise thresholds appear in these results and are distinct:
 (1)~$\sigma \approx 0.023$: winner identity begins to degrade (initial leader
 starts losing some trials) for the default 10\% initial gap;
@@ -986,66 +1010,244 @@ compound the coalition's combined advantage.
 \section{Stochastic Robustness}
 \label{sec:stochastic}
 
-We prove that singleton formation is certain (probability 1) for any noise
-amplitude $\sigma > 0$.
+For multiplicative GBM-type noise on the post-threshold dynamics, the
+probability of singleton emergence is strictly between $0$ and $1$ and
+depends on the noise amplitude.
+The deterministic blowup of Theorem~\ref{thm:finitetime} is \emph{not}
+preserved as an almost-sure event under arbitrarily large noise; what
+survives is a noise-dependent probability that approaches $1$ as
+$\sigma \to 0$ and $0$ as $\sigma \to \infty$.
 
-\begin{theorem}[Stochastic blowup]
+\begin{theorem}[Stochastic blowup probability]
 \label{thm:stochastic}
-Let agent~1's post-threshold dynamics satisfy the SDE
+Let agent~1's post-escape dynamics satisfy the SDE
 \begin{equation}
-  dS_1 = \rmin \cdot S_1^{1+|\beta_1|}\, dt + \sigma\, S_1\, dW
+  dS_1 = \rmin \cdot S_1^{1+|\beta^*|}\, dt + \sigma\, S_1\, dW,
+  \qquad S_1(t_1) = T',
   \label{eq:sde}
 \end{equation}
-with $S_1(\tcross) = T > 0$, $\rmin > 0$, and $\sigma > 0$ arbitrary.
-Then $S_1(t) \to \infty$ in finite time almost surely.
+where $|\beta^*| \in (0, |\betaL|)$ and $T'$ are as in
+Lemma~\ref{lem:escape}.
+Define
+\[
+  J \;=\; \int_{0}^{\infty}
+    \exp\!\bigl(|\beta^*|\sigma\, W(s)
+                - \tfrac{|\beta^*|\sigma^{2}}{2}\, s\bigr)\, ds,
+  \qquad
+  c \;=\; \frac{(T')^{|\beta^*|}}{|\beta^*|\,\rmin}.
+\]
+Then $J < \infty$ a.s.\ and
+\[
+  \Pr\bigl(S_1(t) \to \infty \text{ at finite } t\bigr)
+  \;=\; \Pr(J \geq c) \;\in\; (0, 1).
+\]
+The probability tends to $1$ as $\sigma \to 0$ and to $0$ as
+$\sigma \to \infty$.
 \end{theorem}
 
 \begin{proof}
-Let $|\beta^*| \in (0, |\betaL|)$ be the post-escape constant from
-Lemma~\ref{lem:escape}, so $|\beta(S_1)| \geq |\beta^*|$ once $S_1 \geq T'$.
-For $S_1 \geq T'$, the SDE~\eqref{eq:sde} gives, by It\^{o}'s formula applied
-to $u = S_1^{-|\beta^*|}$:
+By It\^{o}'s formula applied to $u = S_1^{-|\beta^*|}$,
 \[
   du = \Bigl(-|\beta^*|\rmin
             + \tfrac{|\beta^*|(|\beta^*|+1)}{2}\,\sigma^2\,u\Bigr)\,dt
      - |\beta^*|\sigma\,u\,dW.
 \]
-This is a linear SDE in $u$ with constant negative term $-|\beta^*|\rmin < 0$.
-Its explicit solution is
+This is a linear SDE in $u$.
+Setting
+$M(t) = \exp\!\bigl(-\tfrac{|\beta^*|\sigma^2}{2}(t-t_1)
+                    + |\beta^*|\sigma(W(t)-W(t_1))\bigr)$,
+direct computation gives $d(M u) = -|\beta^*|\rmin M\, dt$, hence
 \[
-  u(t) = M(t)^{-1}\!\left[u(t_1) - |\beta^*|\rmin \int_{t_1}^t M(s)\,ds\right],
+  u(t) \;=\; M(t)^{-1}\!\left[\,u(t_1)
+                              - |\beta^*|\rmin \int_{t_1}^{t} M(s)\,ds\right].
 \]
-where
-$M(s) = \exp\!\bigl(-\tfrac{|\beta^*|\sigma^2}{2}(s-t_1)
-                    + |\beta^*|\sigma(W(s)-W(t_1))\bigr)$
-is a geometric Brownian motion.
-Since $\int_{t_1}^\infty M(s)\,ds = \infty$ a.s.\
-(the integrand is positive and the exponent has positive quadratic variation
-dominating the drift for large $|\beta^*|$; see the remark below),
-there is a finite random time $\tstar > t_1$ at which the bracket vanishes:
-$u(\tstar) = 0$, i.e.\ $S_1(\tstar) = \infty$.
-Therefore $S_1 \to \infty$ in finite time a.s.
+The process $u$ is non-negative and $S_1(t) = \infty$ iff $u(t) = 0$,
+which holds iff the bracket reaches zero, i.e.\ iff
+$\int_{t_1}^{t} M(s)\,ds = u(t_1)/(|\beta^*|\rmin) = c$.
+Let
+$J = \int_{t_1}^{\infty} M(s)\,ds
+   = \int_0^\infty \exp(|\beta^*|\sigma W(s) - |\beta^*|\sigma^2 s/2)\,ds$
+(the equality in distribution uses Brownian translation invariance).
+By Dufresne's identity \citep{dufresne1990distribution}, $J$ has a
+reciprocal-gamma distribution and is a.s.\ finite.
+Therefore
+\[
+  \{S_1 \to \infty \text{ in finite time}\} \;=\; \{J \geq c\},
+\]
+and $\Pr(J \geq c) \in (0,1)$ since $J$ has a continuous distribution
+supported on $(0,\infty)$.
+
+For the limits: as $\sigma \to 0$, $M(s) \to 1$ a.s.\ and $J \to \infty$
+a.s., so $\Pr(J \geq c) \to 1$.
+As $\sigma \to \infty$, the drift $-|\beta^*|\sigma^2/2$ dominates and
+$M$ decays so rapidly that $J \to 0$ in distribution, so
+$\Pr(J \geq c) \to 0$.
 \end{proof}
 
-\begin{remark}
-Noise affects the \emph{distribution} of $\tstar$ but not the event
-$\{\tstar < \infty\}$.
-The explosion time $\tstar$ is the first time the integral
-$\int_{t_1}^t M(s)\,ds$ reaches $u(t_1)/(|\beta^*|\rmin)$; this is finite
-a.s.\ because $M(s) > 0$ always and the integral is non-decreasing and
-unbounded.
+\begin{remark}[Reading the result]
+For small noise, threshold-crossing virtually guarantees singleton
+emergence, in line with Theorem~\ref{thm:finitetime}.
+For large noise, the agent that crosses $T$ may still be pushed back
+below it: the process can wander for arbitrarily long without diverging.
+The earlier claim in this paper that singleton emergence is robust to
+arbitrary noise was incorrect; the corrected statement above gives the
+probability explicitly as a Dufresne perpetuity.
 \end{remark}
 
 \begin{remark}[Consequence for agent~2]
-Suppose agent~2 also satisfies a multiplicative-noise SDE
-$dS_2 = r_2(t)\,S_2^{1-\beta_2}\,dt + \sigma\,S_2\,dW_2$
+Suppose agent~2 satisfies $dS_2 = r_2(t)\,S_2^{1-\beta_2}\,dt + \sigma\,S_2\,dW_2$
 with $\beta_2 > 0$ and $W_2$ independent of $W$.
-The drift is sublinear and the noise is GBM-type, so by standard non-explosion
-criteria \citep[Prop.~5.5.32]{karatzas1991brownian} $S_2(t) < \infty$ a.s.\
-for all finite $t$.
-Combined with $S_1 \to \infty$ a.s.\ at finite $\tstar$
-(Theorem~\ref{thm:stochastic}), $\rho = S_1/S_2 \to \infty$ a.s.\ at $\tstar$.
+The drift is sublinear and the noise is GBM-type, so by standard
+non-explosion criteria \citep[Prop.~5.5.32]{karatzas1991brownian},
+$S_2(t) < \infty$ a.s.\ for all finite $t$.
+On the event $\{J \geq c\}$, $S_1 \to \infty$ at finite $\tstar$, hence
+$\rho = S_1/S_2 \to \infty$ at $\tstar$.
+On the complementary event, $S_1$ stays bounded and the ratio remains
+finite.
 \end{remark}
+
+\begin{remark}[On the F13 simulation]
+The simulation reported in F13 records $300$ trials per noise level with
+zero failures.
+The integration caps capabilities at $S = 10^{8}$; trials hitting the
+cap are recorded as singleton emergence.
+For the noise levels and time horizons tested, this cap converts
+unbounded drift into apparent emergence even when the underlying SDE
+would not explode in continuous time.
+The simulation is therefore consistent with high $\Pr(J \geq c)$ in the
+tested regime, but does not provide independent evidence of almost-sure
+emergence.
+\end{remark}
+
+% ============================================================
+\section{Empirical Calibration to Frontier AI Compute}
+\label{sec:calibration}
+
+The framework's central conditional---``if A4 holds, a singleton
+emerges''---is mute on whether A4 \emph{does} hold for any system that
+matters.
+This section attempts a falsifiable check using publicly available data
+on training compute for notable machine-learning systems
+\citep{epoch2024compute}.
+The result is honest and partial: under the proxy used here, the
+hypothesis $\beta(S) < 0$ is not currently supported.
+
+\subsection{Data and proxy}
+
+We use the Epoch AI ``Notable AI Models'' dataset (snapshot accessed
+2026-05-13; $8{,}273$ rows, of which $523$ have both a usable
+publication date and a numerical training-compute estimate).
+The frontier is taken as the running maximum of training compute
+(in FLOP) over time; this gives $39$ record-setting models from
+$\sim\!1956$ to $2026$, of which $26$ fall in the modern deep-learning
+window $2012$--$2026$.
+We treat $S = $ frontier training compute as a capability proxy.
+This is a strong assumption: training compute is one input to capability,
+not capability itself, and the relationship is mediated by algorithmic
+efficiency, data, and post-training techniques whose contributions are
+not recorded in the dataset.
+Results below should be read as a check on whether \emph{this particular
+proxy} exhibits the kind of trajectory A4 requires; null results do not
+rule out A4 under different proxies.
+
+\subsection{Method}
+
+Two complementary fits.
+\textbf{Power-law fit.}
+Treating the frontier trajectory as $dS/dt = c\,S^{1-\beta}$, we form
+$y(t) = \ln S(t)$, estimate $\dot{y}$ by central differences, and
+regress $\ln \dot{y}$ on $y$; the slope is $-\beta$.
+This is sensitive to numerical-derivative noise on a sparse
+record-setter sequence.
+
+\textbf{Polynomial-in-time fit.}
+Fit $\log_{10} S(t) = a + b\,t + \gamma\,t^{2}$ by ordinary least
+squares on the centered time variable.
+Curvature $\gamma > 0$ indicates super-exponential growth (and thus
+$\beta < 0$ in the power-law model); $\gamma = 0$ corresponds to
+exponential growth ($\beta = 0$); $\gamma < 0$ to deceleration
+($\beta > 0$).
+This is more robust than numerical differentiation because it does
+not require estimating $\dot{y}$ at each frontier step.
+
+\subsection{Results}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lrrrl}
+\toprule
+Window & $n$ & $\gamma$ (curvature) & 95\% CI on $\gamma$ & Reading \\
+\midrule
+2010--2018 & 9  & $+0.157$ & $[-0.095,\;+0.409]$ & accelerating, CI straddles 0 \\
+2018--2022 & 10 & $+0.082$ & $[-0.154,\;+0.317]$ & accelerating, CI straddles 0 \\
+2022--2026 & 7  & $-0.069$ & $[-0.156,\;+0.018]$ & decelerating, CI nearly excludes 0 \\
+2012--2026 & 26 & $+0.005$ & $[-0.010,\;+0.021]$ & exponential, CI tight around 0 \\
+\bottomrule
+\end{tabular}
+\caption{Polynomial-in-time fits of frontier $\log_{10}$ training
+compute. Curvature $\gamma$ is the coefficient on $t^{2}$ in
+$\log_{10} S = a + bt + \gamma t^{2}$.
+Positive $\gamma$ corresponds to super-exponential growth ($\beta < 0$).
+$R^{2}$ for the four windows is $0.87$, $0.76$, $0.99$, $0.96$.}
+\label{tab:calibration}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{../figures/calibration_beta.png}
+\caption{Left: training compute for all notable models (grey) and the
+frontier running maximum (orange).
+Right: power-law fit on $(\ln S,\;\ln \dot{y})$ where $y = \ln S$;
+slope is $-\beta$.}
+\label{fig:calibration}
+\end{figure}
+
+The full deep-learning window 2012--2026 is consistent with pure
+exponential growth: $\gamma = +0.005$ with a 95\% CI of
+$[-0.010,\;+0.021]$ that tightly straddles zero, and $R^{2} = 0.96$.
+The doubling time is approximately $0.5$ years and roughly stable.
+Sub-windows show mild acceleration during 2010--2022 and mild
+deceleration during 2022--2026, but in every sub-window the 95\%
+confidence interval includes $\gamma = 0$ (exponential).
+The power-law fit, which is noisier, gives $\beta = -0.014$ on the full
+window with a 95\% CI of $[-0.062,\;+0.035]$.
+
+\subsection{Reading}
+
+Under the frontier-compute proxy, frontier capability has been growing
+exponentially, not super-exponentially.
+The data are not consistent with $\beta(S)$ having flipped negative
+during the period observed.
+The 2022--2026 window---which the AI-safety literature sometimes
+identifies as a possible take-off period---in fact shows a doubling
+time that has lengthened from roughly $4$ months to roughly $7$ months.
+
+This does not refute A4.
+Three reasons the result is weak as evidence against the framework:
+(i)~training compute is one of several capability inputs and the
+post-training, scaffolding, and inference-compute regimes that have
+become important since $2024$ are not captured here;
+(ii)~A4 requires only that $\beta < 0$ become reachable at some future
+$T$, not that the trajectory be already in that regime; the data are
+silent on the future;
+(iii)~$26$ frontier records over $14$ years is a small sample; tighter
+data, particularly with capability measured by benchmark performance,
+might reverse the curvature sign.
+Conversely, the result \emph{is} evidence that the often-stated
+``compute is going superexponential'' claim is not supported by the
+public record on training FLOP through 2026, and that a singleton
+emerging on this proxy alone within the next several years would
+require a sharp regime change rather than continuation of the current
+trend.
+
+The exercise's main contribution is methodological: it makes A4 a
+falsifiable hypothesis on a specific dataset.
+A future study could repeat this calibration with capability proxies
+better suited to recent trends (effective compute, frontier benchmark
+performance, agentic capability scores) and with explicit confidence
+bands on whether $\beta < 0$ is consistent with the data at any
+horizon.
 
 % ============================================================
 \section{Discussion}
@@ -1066,10 +1268,12 @@ The niche partitioning finding (F8) corrects Bostrom (2005).
 Separate resource pools are not a sufficient failure condition; what matters
 is whether the trailing agent can reach $\beta < 0$ at all.
 
-On the stochastic side, Theorem~\ref{thm:stochastic} closes a gap that prior
-informal arguments left open.
-Feller's criterion gives a clean, complete proof that noise changes the winner
-distribution but not the emergence probability.
+On the stochastic side, Theorem~\ref{thm:stochastic} replaces an earlier
+incorrect a.s.-emergence claim with the correct probabilistic statement:
+under multiplicative GBM noise, $\Pr(\text{singleton emerges}) =
+\Pr(J \geq c)$ for the explicit Dufresne perpetuity $J$.
+Noise can therefore prevent emergence, with probability tending to $1$
+as $\sigma$ grows.
 
 Theorem~\ref{thm:criticalalpha} derives the coalition-suppression threshold
 analytically.
@@ -1079,6 +1283,12 @@ observation; it now has an exact transcendental equation behind it.
 The simulation scripts produce quantitative measurements---timescale formula,
 $\lambda_{\mathrm{crit}}$, moat characterization, F1--F25---that were not
 previously available.
+
+Section~\ref{sec:calibration} introduces the first empirical test of A4
+on a public dataset: under frontier training compute as a capability
+proxy, $\beta(S) < 0$ is not currently supported, and the framework's
+central premise becomes a falsifiable hypothesis with negative
+preliminary evidence.
 
 \subsection{Timescale formula analysis}
 
@@ -1134,6 +1344,16 @@ The model has none.
 Results apply within any causally connected region; adding propagation delays
 extends timescales without changing the qualitative picture.
 
+\textit{Capability proxy in the calibration.}
+Section~\ref{sec:calibration} uses training compute as a stand-in for
+$S$.
+This proxy ignores algorithmic efficiency, data, post-training, and
+inference-time compute, all of which have become significant since
+$2024$.
+A null result on this proxy is therefore weak evidence on A4 in
+general; it is strong evidence only against the specific narrative
+that ``compute alone is going superexponential.''
+
 \subsection{Open questions}
 
 \begin{enumerate}[label=(\arabic*)]
@@ -1143,6 +1363,11 @@ coupled ODE system.
 
 \item True merger stability: game-theoretic conditions under which a merged
 coalition avoids fracturing under competitive pressure.
+
+\item Calibration of $\beta(S)$ against capability proxies less tied
+to raw compute (effective compute, frontier benchmark performance,
+agent-evaluation scores), with explicit confidence bands on whether
+$\beta < 0$ is consistent with the data at any horizon.
 \end{enumerate}
 
 % ============================================================
@@ -1153,9 +1378,13 @@ Under A1--A5, competitive environments with recursive self-improvement
 produce a singleton.
 Once any agent crosses the $\beta$-threshold, its capability separates from
 all competitors in finite time.
-Initial conditions matter less than threshold position; noise changes who wins,
-not whether a winner emerges; cooperation under any tested structure fails to
-prevent it.
+Initial conditions matter less than threshold position.
+Under deterministic dynamics noise reduces to a question of who wins;
+under multiplicative GBM noise it also affects whether anyone does
+(Theorem~\ref{thm:stochastic}), with the probability of emergence
+expressible in closed form as a Dufresne perpetuity.
+Cooperation under any tested structure fails to prevent emergence in the
+deterministic model.
 
 The failure conditions are narrower than the prior literature implies.
 Bostrom's niche partitioning argument requires that one agent cannot reach
@@ -1169,10 +1398,17 @@ A merger of the whole coalition would work, but then you have a singleton.
 The hard question is A4.
 A3 holds in any physical environment.
 A5 is satisfied by noise.
-Whether any system can actually achieve $\beta < 0$ is what the formal
-results cannot address.
-That is the gap between the mathematics and anything it might mean in
-practice.
+Section~\ref{sec:calibration} converts A4 from a verbal premise into a
+falsifiable hypothesis on a specific dataset.
+Under the frontier-compute proxy, the hypothesis is not currently
+supported: $2012$--$2026$ frontier compute is consistent with pure
+exponential growth, and the most recent sub-window is mildly
+decelerating.
+This does not refute A4---training compute is one of several capability
+inputs, and the dataset is silent on the future---but it does shift the
+burden onto proponents of the singleton scenario to specify which
+capability proxy they expect to enter the $\beta < 0$ regime, and on
+what timescale.
 
 % ============================================================
 \section*{Acknowledgments}
