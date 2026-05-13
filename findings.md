@@ -517,3 +517,17 @@ This is the first case in the simulation suite where the external singleton cand
 However, singleton emergence is not prevented. The coalition's internal capability divergence produces a new singleton from within: one coalition member systematically outgrows the others and achieves dominance.
 
 **Conclusion:** Cooperation at high α (≥ 0.75) changes which agent becomes the singleton (coalition member replaces external singleton candidate). It does not prevent singleton formation. F23 (cooperation regime invariance) holds: 100% singleton emergence regardless of α. The α parameter shifts the identity of the winner, not whether one exists.
+
+---
+
+## Addenda (post-paper-revision, 2026-05)
+
+These notes address how earlier findings should be read in light of the current paper text. Original entries are preserved per the append-only rule.
+
+**On F3 (12.4M acceleration):** The 12.4 × 10⁶ figure is the ratio at the snapshot t = 6.8 in one parameter setting. Because the threshold ratio diverges in finite time (Theorem 3.4 in the paper), the snapshot value is not an invariant — it grows without bound as t → t*. The paper now reports it as illustrative rather than as a quantitative result.
+
+**On F8 (niche partitioning) — revision to formal claim:** The original entry suggested the theorem holds under a weaker A3 (resource pools may be separated). This is incorrect as a statement about the formal model: the theorems use A3 as stated. The zero-overlap simulation is an out-of-model robustness check (now flagged as such in §5 of the paper), not a re-derivation of the theorem under weakened assumptions.
+
+**On F13 (zero failures across noise):** The simulation caps capabilities at S = 10⁸ and counts a trial as "singleton emerged" if any agent reaches the cap. With the cap in place, the apparent emergence rate is consistent with the corrected Theorem 7.1, which gives P(emergence) = P(J ≥ c) ∈ (0, 1) under multiplicative GBM noise (J is a Dufresne perpetuity). For small σ this probability is near 1; for large σ it is bounded below 1. The simulation is consistent with the theorem in the small-σ regime tested but does not establish almost-sure emergence.
+
+**On F4 vs F5 (N count):** F4 is N=10 with 200 trials testing winner identity. F5 is one trial with N=8 specific values testing elimination order. These are separate experiments; the paper now cites them with their respective parameters rather than conflating them.
