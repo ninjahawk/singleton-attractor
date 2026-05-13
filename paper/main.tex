@@ -147,17 +147,13 @@ $t_{10\times} \approx 2.44 \cdot N^{0.96} \cdot \alpha^{-0.30} \cdot
 $\lambda_{\mathrm{crit}} \approx 0.25$.
 \end{enumerate}
 
-The paper is organized as follows.
-Section~\ref{sec:model} presents the model and assumptions.
-Section~\ref{sec:theorems} proves the main theorem in four steps.
-Section~\ref{sec:simulations} presents simulation results and 25 findings.
-Section~\ref{sec:failures} characterizes the five failure conditions.
-Section~\ref{sec:coalition} derives the coalition coherence and critical-$\alpha$
-theorems.
-Section~\ref{sec:stochastic} proves stochastic blowup.
-Appendix~\ref{sec:cosmology} contains speculative cosmological implications
-(not a formal result; moved from main body).
+Section~\ref{sec:model} gives the model.
+Section~\ref{sec:theorems} proves the main results.
+Section~\ref{sec:simulations} covers 25 simulation findings.
+Sections~\ref{sec:failures}--\ref{sec:stochastic} address failure conditions,
+coalition coherence, and stochastic robustness.
 Section~\ref{sec:discussion} covers limitations and open questions.
+Appendix~\ref{sec:cosmology} is speculative context only.
 
 % ============================================================
 \section{Model}
@@ -326,11 +322,9 @@ unresolved simultaneous-dynamics gap.
 The $N > 2$ case is a conjecture, not a theorem.
 \end{theorem}
 
-The proof proceeds in four steps---Theorems~\ref{thm:ratio},
-\ref{thm:finitetime}, Proposition~\ref{prop:monopoly}, and
-Theorem~\ref{thm:nagent}---each establishing one necessary component.
-Together they cover the full trajectory from initial conditions to unbounded
-dominance.
+The proof proceeds in four steps: Theorem~\ref{thm:ratio},
+Theorem~\ref{thm:finitetime}, Proposition~\ref{prop:monopoly}, and
+Conjecture~\ref{thm:nagent}.
 
 \subsection{Step 1: Ratio divergence from marginal advantage}
 \label{sec:step1}
@@ -629,8 +623,7 @@ accelerates by \textbf{12.4 million times} compared to flat-$\beta$ dynamics at
 the same timepoint (F3).
 This is the primary mechanism.
 The minimum $\beta$-flip separation across all tested parameters is
-$1{,}179\times$ (F9): even the shallowest $\beta$-flip tested produces
-enormous separation.
+$1{,}179\times$ (F9).
 
 \begin{figure}[h]
 \centering
@@ -913,9 +906,8 @@ simulation parameter): regardless of coalition size, the singleton
 
 The result above governs individual races.
 For the coalition to \emph{externally suppress} the singleton---prevent it from
-crossing $T$ at all---the coalition combined block must win the race to $N\cdot T$
+crossing $T$ at all---the coalition must collectively reach $N\cdot T$
 before the singleton reaches $T$.
-We now derive the exact condition.
 
 \begin{theorem}[Critical $\alpha$]
 \label{thm:criticalalpha}
@@ -1085,11 +1077,11 @@ previously available.
 The empirical formula~\eqref{eq:timescale} has a partial analytical foundation.
 The $N^{0.96}$ exponent is analytically predicted as $N^1$ from the
 pre-threshold approximation (Appendix~\ref{app:timescale}); the small deviation
-reflects the leader's increasing resource share as it advances.
-The $\alpha^{-0.30}$ exponent reflects the integrated resource-correction as
-the leader advances; the $|\betaL|^{-0.31}$ exponent reflects a mixture of
-pre- and post-threshold phases (Appendix~\ref{app:timescale}); the
-$\mathrm{gap}^{-0.15}$ exponent is weak because the threshold mechanism
+comes from the leader's increasing resource share as it advances.
+The $\alpha^{-0.30}$ exponent tracks the integrated resource-correction;
+the $|\betaL|^{-0.31}$ exponent is a mixture of pre- and post-threshold phases
+(Appendix~\ref{app:timescale}).
+The $\mathrm{gap}^{-0.15}$ exponent is small because the threshold mechanism
 dominates initial conditions.
 
 \subsection{Limitations}
@@ -1275,7 +1267,7 @@ Assumption~A3 (fixed $\Rmax$) directly contradicts a cosmological setting
 where accessible matter depends on expansion speed and the age of the universe.
 The time-unit calibration spans 3--4 orders of magnitude, making quantitative
 constraints effectively unconstrained.
-These observations are offered as motivating context only.
+Take this as motivating context, not formal claims.
 
 \paragraph{Fermi paradox.}
 If a singleton emerged anywhere in our past light cone, it would expand at
