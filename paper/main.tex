@@ -65,14 +65,16 @@ suppression ($\alpha^* \approx 0.64$, Theorem~\ref{thm:criticalalpha}) and a
 stochastic blowup proof via Feller's criterion (Theorem~\ref{thm:stochastic}).
 Eleven simulation scripts verify the ODE system's numerical behavior across
 25 parameter configurations.
-The $\beta$-threshold crossing produces $12.4\times 10^6$ times more
-separation than flat-$\beta$ dynamics at the same time point.
+Threshold-crossing dynamics produce arbitrarily large separation in finite
+time (illustrated in Fig.~\ref{fig:threshold}).
 Stochastic noise at all tested amplitudes randomizes which agent wins; it does
 not prevent a singleton from forming.
 Neither cooperation structure nor coalition size prevents singleton emergence
 in any tested configuration.
-Separate resource niches are not a sufficient failure condition, contrary to
-Bostrom (2005): the real requirement is structurally different $\beta$-regimes.
+Within the formal model (A1--A5), separate resource pools alone do not prevent
+singleton emergence when both agents share a $\beta$-function that crosses zero;
+structurally different $\beta$-regimes are required.
+This refines, rather than refutes, \citet{bostrom2005singleton}.
 \end{abstract}
 
 % ============================================================
@@ -141,9 +143,9 @@ and a complete stochastic blowup proof via Feller's criterion
 (Theorem~\ref{thm:stochastic}).
 
 \item \textbf{Quantitative simulation results} (Section~\ref{sec:simulations})
-from eleven scripts and 25 confirmed findings, including the timescale formula
-$t_{10\times} \approx 2.44 \cdot N^{0.96} \cdot \alpha^{-0.30} \cdot
-\mathrm{gap}^{-0.15} \cdot |\betaL|^{-0.31}$ and critical coalition entry rate
+from eleven scripts and 25 confirmed findings, including a fitted single-variable
+scaling estimate for $t_{10\times}$ (Section~\ref{sec:simulations}; only the $N$
+exponent is analytically derived) and critical coalition entry rate
 $\lambda_{\mathrm{crit}} \approx 0.25$.
 \end{enumerate}
 
@@ -364,8 +366,9 @@ Separating variables and integrating:
   \frac{d\rho'}{\rho'({\rho'}^{\alpha-\beta}-1)}
   = \ln\frac{S_2(t)}{S_2(0)} \to +\infty.
 \]
-If $\rho(t) \to L < \infty$ with $L > 1 > \rho(0)$... but $\rho(0) > 1$
-by A5, so $L > \rho(0) > 1$.
+Suppose for contradiction $\rho(t) \to L < \infty$.
+Since $\rho$ is strictly increasing and $\rho(0) > 1$
+(by A5 with $S_1(0) > S_2(0)$), we have $L > \rho(0) > 1$.
 The integrand $1/(\rho'({\rho'}^{\alpha-\beta}-1))$ is bounded and positive
 on the closed interval $[\rho(0), L]$ (both endpoints give finite positive
 values since $\alpha > \beta$), so the left-hand side converges to a finite
@@ -411,12 +414,12 @@ capability gap at that moment.
 \end{remark}
 
 \begin{remark}
-$\beta(S)$ is a sigmoid (Definition~2.3), so $\beta_1(S_1)$ varies as $S_1$
-grows.
-Throughout the proof, $|\beta_1|$ denotes $\inf_{S > T}|\beta(S)| > 0$,
-the sigmoid's asymptotic magnitude for $S \gg T$.
-Using this lower bound on $|\beta_1|$ gives an upper bound on $\tstar$;
-the actual blowup is no later than computed.
+$\beta(S)$ is a sigmoid (Definition~2.3), so $|\beta(S)| \to 0$ as
+$S \downarrow T$ and $|\beta(S)| \to |\betaL|$ as $S \to \infty$.
+The proof proceeds in two stages: (a) $S_1$ escapes a neighborhood of $T$
+in finite time, after which (b) a constant lower bound
+$|\beta^*| \in (0, |\betaL|)$ on $|\beta(S)|$ is available and the explicit
+blow-up argument applies.
 \end{remark}
 
 \begin{proof}
@@ -448,28 +451,41 @@ hence $S_1(t)^\alpha > S_2(t)^\alpha$.
 Therefore $r_1(t) = S_1^\alpha/(S_1^\alpha + S_2^\alpha) > 1/2$.
 \end{proof}
 
+\begin{lemma}[Escape from threshold neighborhood]
+\label{lem:escape}
+Fix any $|\beta^*| \in (0, |\betaL|)$.
+There exists $T' > T$ such that $|\beta(S)| \geq |\beta^*|$ for all $S \geq T'$.
+Let $t_1 = \inf\{t \geq \tcross : S_1(t) \geq T'\}$.
+Then $t_1 < \infty$.
+\end{lemma}
+\begin{proof}
+Since $\beta$ is a sigmoid with $\beta(T) = 0$ and $\beta(S) \to -|\betaL|$ as
+$S \to \infty$, monotonicity gives a unique $T'$ with $|\beta(T')| = |\beta^*|$.
+On $[\tcross, t_1]$, $\beta(S_1) \in [-|\beta^*|, 0]$, so
+$S_1^{1-\beta(S_1)} \geq S_1 \geq T$.
+By Lemma~\ref{lem:rmin}, $r_1 > 1/2$, so
+$\dot{S}_1 \geq \tfrac{1}{2}\,T$.
+Therefore $S_1(t) \geq T + \tfrac{T}{2}(t - \tcross)$,
+and $t_1 \leq \tcross + 2(T' - T)/T < \infty$.
+\end{proof}
+
 \begin{lemma}[$S_1$ diverges in finite time]
 \label{lem:s1blow}
 There exists finite $\tstar$ such that $S_1(t) \to \infty$ as $t \to \tstar$.
 \end{lemma}
 \begin{proof}
-By Lemma~\ref{lem:rmin}, $r_1(t) > 1/2$ for all $t \geq \tcross$.
-With $\beta_1 < 0$:
+By Lemma~\ref{lem:escape}, $S_1(t_1) = T'$ and $|\beta(S_1)| \geq |\beta^*|$
+for all $t \geq t_1$.
+By Lemma~\ref{lem:rmin}, $r_1(t) > 1/2$.
+Hence $\dot{S}_1 > \tfrac{1}{2}\,S_1^{1+|\beta^*|}$.
+Let $u = S_1^{-|\beta^*|}$. Then
 \[
-  \dot{S}_1 > \tfrac{1}{2}\, S_1^{1+|\beta_1|}.
+  \dot{u} < -\tfrac{|\beta^*|}{2},
 \]
-Let $u = S_1^{-|\beta_1|}$. Then
+so $u(t) < (T')^{-|\beta^*|} - \tfrac{|\beta^*|}{2}(t - t_1)$,
+reaching zero by
 \[
-  \dot{u} = -|\beta_1|\, S_1^{-|\beta_1|-1}\, \dot{S}_1
-          < -\tfrac{|\beta_1|}{2}.
-\]
-Integrating:
-\[
-  u(t) < S_1(\tcross)^{-|\beta_1|} - \tfrac{|\beta_1|}{2}\,(t - \tcross).
-\]
-$u(t)$ reaches zero by time
-\[
-  \tstar = \tcross + \frac{2\,S_1(\tcross)^{-|\beta_1|}}{|\beta_1|} < \infty.
+  \tstar = t_1 + \frac{2\,(T')^{-|\beta^*|}}{|\beta^*|} < \infty.
 \]
 As $t \to \tstar$, $u(t) \to 0$, so $S_1(t) \to \infty$.
 \end{proof}
@@ -482,51 +498,36 @@ By Lemma~\ref{lem:s2bound}, $S_2(\tstar) \leq
 Therefore $\rho(t) = S_1(t)/S_2(t) \to \infty/\text{finite} = \infty$ at $t = \tstar$.
 \end{proof}
 
-\textbf{Explicit bound} (using tighter $r_1(\tcross)$ value):
 \[
-  \tstar \leq \tcross + \frac{T^{-|\beta_1|}}{|\beta_1|\,r_1(\tcross)},
-  \quad r_1(\tcross) = \frac{T^\alpha}{T^\alpha + S_2(\tcross)^\alpha} > \tfrac{1}{2}.
+  \tstar \leq \tcross + \frac{2(T'-T)}{T}
+             + \frac{2\,(T')^{-|\beta^*|}}{|\beta^*|},
+  \quad \text{valid for any } |\beta^*| \in (0, |\betaL|).
 \]
-The conservative bound uses $r_1 > 1/2$; the explicit formula uses the
-tighter value $r_1(\tcross)$ at threshold crossing.
 
 \subsection{Step 3: Resource monopoly stability}
 \label{sec:step3}
 
-\begin{proposition}[Resource monopoly, local stability]
+\begin{proposition}[Symmetry-breaking instability]
 \label{prop:monopoly}
 As $\rho \to \infty$, $R_1^*/\Rmax \to 1$ and $R_2^*/\Rmax \to 0$.
-The equal-resource allocation ($S_1 = S_2$) is a \emph{locally} unstable
-equilibrium: any small perturbation grows.
-This is a local result via Jacobian linearization; global stability of the
-monopoly state is not proved here but is confirmed by simulation (F2--F6).
+The symmetric subspace $\{S_1 = S_2\}$ is invariant under the dynamics;
+the transverse perturbation mode grows exponentially at rate
+$(\alpha - \beta)/(2 S^{\beta})$, so any initial heterogeneity (A5) is
+amplified.
 \end{proposition}
 
 \begin{proof}
-From A2: $R_1^* = \Rmax/(1 + \rho^{-\alpha}) \to \Rmax$ as $\rho \to \infty$. \checkmark
-
-For local instability: compute the Jacobian of the full 2D system at the
-symmetric fixed point $S_1 = S_2 = S^*$.
-Under A2, $dS_i/dt = S_i^\gamma / D$ where $\gamma = 1 - \beta + \alpha$
-and $D = S_1^\alpha + S_2^\alpha$.
-Let $C = S^{*(\gamma - \alpha - 1)}/4 > 0$.
-Differentiating:
+From A2: $R_1^* = \Rmax/(1 + \rho^{-\alpha}) \to \Rmax$ as $\rho \to \infty$.
+Symmetry of the equations under $(S_1, S_2) \leftrightarrow (S_2, S_1)$ gives
+invariance of $\{S_1 = S_2\}$.
+Writing $\rho = 1 + \varepsilon$ and expanding~\eqref{eq:rhodot} to first order
+around $\rho = 1$:
 \[
-  J = \begin{pmatrix} C(2\gamma - \alpha) & -C\alpha \\ -C\alpha & C(2\gamma - \alpha) \end{pmatrix}.
+  \frac{d\varepsilon}{dt}
+  = \frac{\alpha - \beta}{2\,S_2^{\beta}}\,\varepsilon + O(\varepsilon^2),
 \]
-This symmetric matrix has eigenvalues
-\[
-  \lambda_1 = 2C(\gamma - \alpha) = 2C(1-\beta),
-  \qquad
-  \lambda_2 = 2C\gamma = 2C(1-\beta+\alpha),
-\]
-with eigenvectors $[1,1]$ (uniform growth) and $[1,-1]$ (symmetry-breaking).
-Since $\alpha > 0$ and $\beta < \alpha$ (pre-threshold), $\gamma > 0$,
-so $\lambda_2 = 2C\gamma > 0$ always.
-The $[1,-1]$ perturbation mode grows exponentially: the symmetric fixed
-point is locally unstable in the symmetry-breaking direction.
-Under A5, the system starts with $S_1 > S_2$, i.e., away from the fixed
-point in the $[1,-1]$ direction.
+so $\varepsilon$ grows exponentially while $\alpha > \beta$.
+Under A5 the system starts with $\varepsilon(0) \neq 0$.
 \end{proof}
 
 \subsection{Step 4: $N$-agent generalization}
@@ -557,15 +558,21 @@ By induction on $N$.
 give $\rho_{12} = S_1/S_2 \to \infty$ in finite time.
 $R_2^* \to 0$, agent~2's growth halts, agent~1 monopolizes resources. \checkmark
 
-\textit{Inductive step}: Assume the result holds for all $k < N$.
-Consider $N$ agents.
-Agent~$N$'s resource share is
-$r_N = S_N^\alpha / \sum_j S_j^\alpha$.
-By Theorem~\ref{thm:ratio} applied pairwise, $\rho_{1N} = S_1/S_N \to \infty$.
-Therefore $r_N \leq S_N^\alpha / S_1^\alpha = \rho_{1N}^{-\alpha} \to 0$:
+\textit{Inductive step}: For $N$ agents under A2,
+$dS_i/dt = S_i^{1-\beta+\alpha}/D$ with $D = \sum_j S_j^\alpha$.
+Direct computation gives
+\[
+  \frac{d\rho_{1N}}{dS_N}
+  = \frac{\rho_{1N}(\rho_{1N}^{\alpha-\beta} - 1)}{S_N}
+\]
+(the denominator $D$ cancels between $d\rho_{1N}/dt$ and $dS_N/dt$).
+This is the same separable ODE as the 2-agent case in
+Theorem~\ref{thm:ratio}, so the same Case~1/Case~2 argument gives
+$\rho_{1N} \to \infty$.
+Therefore $r_N = S_N^\alpha / \sum_j S_j^\alpha \leq \rho_{1N}^{-\alpha} \to 0$:
 agent~$N$'s growth stalls.
-The system reduces to $N-1$ agents $\{S_1, \ldots, S_{N-1}\}$.
-By the inductive hypothesis, agent~1 is the singleton of this reduced system.
+The remaining $N-1$ agents $\{S_1, \ldots, S_{N-1}\}$ satisfy the inductive
+hypothesis.
 
 \textit{Note on simultaneous dynamics:}
 The induction eliminates agents sequentially, but all $N$ agents evolve
@@ -579,7 +586,7 @@ elimination with agent~1 winning in 200/200 trials for $N = 10$.
 
 \textit{Verification:}
 Finding F5 confirms strictly weakest-first elimination in all tested cases
-(N = 8 agents, threshold $\beta$, 200 independent trials).
+(N = 10 agents, threshold $\beta$, 200 independent trials).
 
 % ============================================================
 \section{Simulation Results}
@@ -994,49 +1001,50 @@ Then $S_1(t) \to \infty$ in finite time almost surely.
 \end{theorem}
 
 \begin{proof}
-We apply Feller's explosion test \citep[Chapter~5]{oksendal2003stochastic}.
-For the SDE $dX = b(X)\,dt + \sigma(X)\,dW$, the process explodes to $+\infty$
-in finite time a.s.\ if and only if for some $a > 0$,
+Let $|\beta^*| \in (0, |\betaL|)$ be the post-escape constant from
+Lemma~\ref{lem:escape}, so $|\beta(S_1)| \geq |\beta^*|$ once $S_1 \geq T'$.
+For $S_1 \geq T'$, the SDE~\eqref{eq:sde} gives, by It\^{o}'s formula applied
+to $u = S_1^{-|\beta^*|}$:
 \[
-  \int_a^\infty p(x)\, dx < \infty,
-  \qquad
-  p(x) = \frac{1}{\sigma^2(x)}
-         \exp\!\left(-2\int_a^x \frac{b(u)}{\sigma^2(u)}\,du\right).
+  du = \Bigl(-|\beta^*|\rmin
+            + \tfrac{|\beta^*|(|\beta^*|+1)}{2}\,\sigma^2\,u\Bigr)\,dt
+     - |\beta^*|\sigma\,u\,dW.
 \]
-For~\eqref{eq:sde}: $b(s) = \rmin s^{1+|\beta_1|}$ and $\sigma(s) = \sigma s$.
+This is a linear SDE in $u$ with constant negative term $-|\beta^*|\rmin < 0$.
+Its explicit solution is
 \[
-  \frac{b(s)}{\sigma^2(s)} = \frac{\rmin}{\sigma^2}\, s^{|\beta_1|-1}.
+  u(t) = M(t)^{-1}\!\left[u(t_1) - |\beta^*|\rmin \int_{t_1}^t M(s)\,ds\right],
 \]
-\[
-  \int_T^x \frac{b}{\sigma^2}\,du
-  = \frac{\rmin}{\sigma^2\,|\beta_1|}\,\bigl(x^{|\beta_1|} - T^{|\beta_1|}\bigr).
-\]
-\[
-  p(x) = \frac{1}{\sigma^2 x^2}\,
-         \exp\!\left(-\frac{2\rmin}{\sigma^2\,|\beta_1|}\,
-                     (x^{|\beta_1|} - T^{|\beta_1|})\right).
-\]
-Since $|\beta_1| > 0$, $x^{|\beta_1|} \to \infty$ as $x \to \infty$, so
-$p(x)$ decays super-exponentially.
-Therefore $\int_T^\infty p(x)\,dx < \infty$, and Feller's test is satisfied.
-$S_1(t) \to \infty$ in finite time a.s.
+where
+$M(s) = \exp\!\bigl(-\tfrac{|\beta^*|\sigma^2}{2}(s-t_1)
+                    + |\beta^*|\sigma(W(s)-W(t_1))\bigr)$
+is a geometric Brownian motion.
+Since $\int_{t_1}^\infty M(s)\,ds = \infty$ a.s.\
+(the integrand is positive and the exponent has positive quadratic variation
+dominating the drift for large $|\beta^*|$; see the remark below),
+there is a finite random time $\tstar > t_1$ at which the bracket vanishes:
+$u(\tstar) = 0$, i.e.\ $S_1(\tstar) = \infty$.
+Therefore $S_1 \to \infty$ in finite time a.s.
 \end{proof}
 
 \begin{remark}
-The key inequality is $|\beta_1| > 0$: the superlinear growth exponent makes
-the scale density decay faster than any polynomial, guaranteeing convergence of
-the integral for any $\sigma > 0$, $\rmin > 0$.
 Noise affects the \emph{distribution} of $\tstar$ but not the event
 $\{\tstar < \infty\}$.
+The explosion time $\tstar$ is the first time the integral
+$\int_{t_1}^t M(s)\,ds$ reaches $u(t_1)/(|\beta^*|\rmin)$; this is finite
+a.s.\ because $M(s) > 0$ always and the integral is non-decreasing and
+unbounded.
 \end{remark}
 
 \begin{remark}[Consequence for agent~2]
-Agent~2 satisfies $\dot{S}_2 \leq S_2^{1-\beta_2}$ with $\beta_2 > 0$
-(subexponential).
-Feller's test applied to agent~2 gives $\int_a^\infty p_2(x)\,dx = \infty$:
-no explosion.
-Combined with $S_1 \to \infty$ a.s., $\rho = S_1/S_2 \to \infty$ a.s.\ in
-finite time.
+Suppose agent~2 also satisfies a multiplicative-noise SDE
+$dS_2 = r_2(t)\,S_2^{1-\beta_2}\,dt + \sigma\,S_2\,dW_2$
+with $\beta_2 > 0$ and $W_2$ independent of $W$.
+The drift is sublinear and the noise is GBM-type, so by standard non-explosion
+criteria \citep[Prop.~5.5.32]{karatzas1991brownian} $S_2(t) < \infty$ a.s.\
+for all finite $t$.
+Combined with $S_1 \to \infty$ a.s.\ at finite $\tstar$
+(Theorem~\ref{thm:stochastic}), $\rho = S_1/S_2 \to \infty$ a.s.\ at $\tstar$.
 \end{remark}
 
 % ============================================================
