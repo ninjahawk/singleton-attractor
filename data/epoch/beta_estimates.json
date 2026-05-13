@@ -88,11 +88,17 @@
       "a_intercept_log10S_at_mean_year": 19.726943123469564,
       "b_log10_per_year_at_mean_year": 1.0534600669357381,
       "gamma_curvature": 0.15706481889266088,
-      "se_gamma": 0.12856652411597094,
-      "ci95_gamma": [
+      "se_gamma_asymptotic": 0.12856652411597094,
+      "ci95_gamma_asymptotic": [
         -0.09492556837464217,
         0.40905520615996394
       ],
+      "ci95_gamma_bootstrap": [
+        -2.2680500638735155,
+        1.1886104230880568
+      ],
+      "bootstrap_n": 5000,
+      "bootstrap_frac_positive": 0.6584,
       "r_squared": 0.8651019649595815,
       "doubling_time_years_at_start": 0.6878366898577062,
       "doubling_time_years_at_end": 0.18832187917299384,
@@ -105,11 +111,17 @@
       "a_intercept_log10S_at_mean_year": 22.757280339525618,
       "b_log10_per_year_at_mean_year": 0.6899110046882277,
       "gamma_curvature": 0.08156663639833306,
-      "se_gamma": 0.12035742278453354,
-      "ci95_gamma": [
+      "se_gamma_asymptotic": 0.12035742278453354,
+      "ci95_gamma_asymptotic": [
         -0.15433391225935267,
         0.3174671850560188
       ],
+      "ci95_gamma_bootstrap": [
+        -2.9074638314403476,
+        0.973363782857583
+      ],
+      "bootstrap_n": 5000,
+      "bootstrap_frac_positive": 0.5834,
       "r_squared": 0.763457619322195,
       "doubling_time_years_at_start": 0.7454779056053036,
       "doubling_time_years_at_end": 0.31734449340976545,
@@ -122,11 +134,17 @@
       "a_intercept_log10S_at_mean_year": 25.77913802747407,
       "b_log10_per_year_at_mean_year": 0.7142519489286987,
       "gamma_curvature": -0.06878923096556253,
-      "se_gamma": 0.044486011837455666,
-      "ci95_gamma": [
+      "se_gamma_asymptotic": 0.044486011837455666,
+      "ci95_gamma_asymptotic": [
         -0.15598181416697562,
         0.018403352235850573
       ],
+      "ci95_gamma_bootstrap": [
+        -0.2165499004677087,
+        0.2400517898017192
+      ],
+      "bootstrap_n": 5000,
+      "bootstrap_frac_positive": 0.11,
       "r_squared": 0.9910775602412224,
       "doubling_time_years_at_start": 0.3153976550609989,
       "doubling_time_years_at_end": 0.6044574319669059,
@@ -139,11 +157,17 @@
       "a_intercept_log10S_at_mean_year": 22.50076041862705,
       "b_log10_per_year_at_mean_year": 0.6539510517592302,
       "gamma_curvature": 0.005474390786451746,
-      "se_gamma": 0.0077232060253890076,
-      "ci95_gamma": [
+      "se_gamma_asymptotic": 0.0077232060253890076,
+      "ci95_gamma_asymptotic": [
         -0.009663093023310709,
         0.020611874596214202
       ],
+      "ci95_gamma_bootstrap": [
+        -0.007841863267347895,
+        0.01936337774595654
+      ],
+      "bootstrap_n": 5000,
+      "bootstrap_frac_positive": 0.8218,
       "r_squared": 0.963947654804593,
       "doubling_time_years_at_start": 0.514832655101332,
       "doubling_time_years_at_end": 0.4173347184718592,
@@ -156,11 +180,17 @@
       "a_intercept_log10S_at_mean_year": 22.50076041862705,
       "b_log10_per_year_at_mean_year": 0.6539510517592302,
       "gamma_curvature": 0.005474390786451746,
-      "se_gamma": 0.0077232060253890076,
-      "ci95_gamma": [
+      "se_gamma_asymptotic": 0.0077232060253890076,
+      "ci95_gamma_asymptotic": [
         -0.009663093023310709,
         0.020611874596214202
       ],
+      "ci95_gamma_bootstrap": [
+        -0.007841863267347895,
+        0.01936337774595654
+      ],
+      "bootstrap_n": 5000,
+      "bootstrap_frac_positive": 0.8218,
       "r_squared": 0.963947654804593,
       "doubling_time_years_at_start": 0.514832655101332,
       "doubling_time_years_at_end": 0.4173347184718592,

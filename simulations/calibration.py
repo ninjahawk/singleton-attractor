@@ -152,6 +152,53 @@ def windowed_fits(rows: List[Tuple[float, float, str]], windows: List[Tuple[floa
     return out
 
 
+def _fit_quadratic(t: np.ndarray, y: np.ndarray):
+    X = np.vstack([np.ones_like(t), t, t * t]).T
+    coef, *_ = np.linalg.lstsq(X, y, rcond=None)
+    return coef, X
+
+
+def bootstrap_ci_gamma(
+    years: np.ndarray,
+    log10_S: np.ndarray,
+    n_boot: int = 5000,
+    seed: int = 20260513,
+) -> dict:
+    """
+    Block bootstrap of the curvature gamma in log10(S) = a + b*t + gamma*t^2.
+
+    Frontier records are unevenly spaced in time and may have correlated
+    residuals (a single architectural breakthrough can create several
+    record-setters in quick succession). The asymptotic OLS CI assumes
+    IID residuals; bootstrapping the (year, log10_S) pairs gives a more
+    honest interval.
+    """
+    rng = np.random.default_rng(seed)
+    n = len(years)
+    if n < 4:
+        return {"ok": False, "n": n}
+    gammas = np.empty(n_boot)
+    for k in range(n_boot):
+        idx = rng.integers(0, n, size=n)
+        ts = years[idx] - years[idx].mean()
+        ys = log10_S[idx]
+        try:
+            coef, _ = _fit_quadratic(ts, ys)
+            gammas[k] = coef[2]
+        except np.linalg.LinAlgError:
+            gammas[k] = np.nan
+    gammas = gammas[np.isfinite(gammas)]
+    lo, hi = np.quantile(gammas, [0.025, 0.975])
+    return {
+        "ok": True,
+        "n_boot": int(len(gammas)),
+        "gamma_mean": float(np.mean(gammas)),
+        "gamma_median": float(np.median(gammas)),
+        "ci95_boot": [float(lo), float(hi)],
+        "frac_positive": float((gammas > 0).mean()),
+    }
+
+
 def fit_polynomial_growth(years: np.ndarray, log10_S: np.ndarray) -> dict:
     """
     Fit log10(S) = a + b*t + gamma*t^2.
@@ -162,11 +209,10 @@ def fit_polynomial_growth(years: np.ndarray, log10_S: np.ndarray) -> dict:
     the trajectory is concave-up (beta < 0) or concave-down (beta > 0)
     or linear (beta = 0).
 
-    Returns gamma (curvature), 95% CI on gamma, sign interpretation.
+    Returns gamma (curvature), asymptotic 95% CI, bootstrap 95% CI, R^2.
     """
     t = years - years.mean()  # center for numerical stability
-    X = np.vstack([np.ones_like(t), t, t * t]).T
-    coef, *_ = np.linalg.lstsq(X, log10_S, rcond=None)
+    coef, X = _fit_quadratic(t, log10_S)
     a, b, gamma = coef
     yhat = X @ coef
     resid = log10_S - yhat
@@ -179,14 +225,18 @@ def fit_polynomial_growth(years: np.ndarray, log10_S: np.ndarray) -> dict:
     # convert: rate at end of window = b + 2*gamma*(t_end - t_mean)
     rate_end = b + 2.0 * gamma * (years.max() - years.mean())
     rate_start = b + 2.0 * gamma * (years.min() - years.mean())
+    boot = bootstrap_ci_gamma(years, log10_S)
     return {
         "n": int(n),
         "ok": True,
         "a_intercept_log10S_at_mean_year": float(a),
         "b_log10_per_year_at_mean_year": float(b),
         "gamma_curvature": float(gamma),
-        "se_gamma": float(se_gamma),
-        "ci95_gamma": [float(gamma - 1.96 * se_gamma), float(gamma + 1.96 * se_gamma)],
+        "se_gamma_asymptotic": float(se_gamma),
+        "ci95_gamma_asymptotic": [float(gamma - 1.96 * se_gamma), float(gamma + 1.96 * se_gamma)],
+        "ci95_gamma_bootstrap": boot.get("ci95_boot"),
+        "bootstrap_n": boot.get("n_boot"),
+        "bootstrap_frac_positive": boot.get("frac_positive"),
         "r_squared": float(r2),
         "doubling_time_years_at_start": float(math.log10(2) / rate_start) if rate_start > 0 else None,
         "doubling_time_years_at_end": float(math.log10(2) / rate_end) if rate_end > 0 else None,

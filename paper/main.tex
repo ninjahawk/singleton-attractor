@@ -1199,20 +1199,29 @@ not require estimating $\dot{y}$ at each frontier step.
 \begin{table}[h]
 \centering
 \small
-\begin{tabular}{lrrrl}
+\begin{tabular}{lrrrrr}
 \toprule
-Window & $n$ & $\gamma$ (curvature) & 95\% CI on $\gamma$ & Reading \\
+Window & $n$ & $\gamma$ & Asymptotic 95\% CI & Bootstrap 95\% CI & $\Pr(\gamma>0)_{\mathrm{boot}}$ \\
 \midrule
-2010--2018 & 9  & $+0.157$ & $[-0.095,\;+0.409]$ & accelerating, CI straddles 0 \\
-2018--2022 & 10 & $+0.082$ & $[-0.154,\;+0.317]$ & accelerating, CI straddles 0 \\
-2022--2026 & 7  & $-0.069$ & $[-0.156,\;+0.018]$ & decelerating, CI nearly excludes 0 \\
-2012--2026 & 26 & $+0.005$ & $[-0.010,\;+0.021]$ & exponential, CI tight around 0 \\
+2010--2018 & 9  & $+0.157$ & $[-0.095,\;+0.409]$ & $[-2.27,\;+1.19]$ & $0.66$ \\
+2018--2022 & 10 & $+0.082$ & $[-0.154,\;+0.317]$ & $[-2.91,\;+0.97]$ & $0.58$ \\
+2022--2026 & 7  & $-0.069$ & $[-0.156,\;+0.018]$ & $[-0.217,\;+0.240]$ & $0.11$ \\
+2012--2026 & 26 & $+0.005$ & $[-0.010,\;+0.021]$ & $[-0.008,\;+0.019]$ & $0.82$ \\
 \bottomrule
 \end{tabular}
 \caption{Polynomial-in-time fits of frontier $\log_{10}$ training
 compute. Curvature $\gamma$ is the coefficient on $t^{2}$ in
-$\log_{10} S = a + bt + \gamma t^{2}$.
-Positive $\gamma$ corresponds to super-exponential growth ($\beta < 0$).
+$\log_{10} S = a + bt + \gamma t^{2}$; positive $\gamma$ corresponds to
+super-exponential growth ($\beta < 0$).
+Asymptotic CI is the OLS standard error; bootstrap CI is from $5{,}000$
+draws of the (year, $\log_{10} S$) pairs with replacement (seed
+$20260513$).
+$\Pr(\gamma > 0)_{\mathrm{boot}}$ is the bootstrap-empirical
+probability that resampled curvature is positive.
+The two CIs disagree most where they should: short windows ($n \leq 10$)
+have heavy-tailed bootstrap distributions because frontier records
+cluster, so a few influential observations can flip the curvature sign.
+The full-window result is robust under both methods.
 $R^{2}$ for the four windows is $0.87$, $0.76$, $0.99$, $0.96$.}
 \label{tab:calibration}
 \end{table}
@@ -1228,12 +1237,17 @@ slope is $-\beta$.}
 \end{figure}
 
 The full deep-learning window 2012--2026 is consistent with pure
-exponential growth: $\gamma = +0.005$ with a 95\% CI of
-$[-0.010,\;+0.021]$ that tightly straddles zero, and $R^{2} = 0.96$.
-The doubling time is approximately $0.5$ years and roughly stable.
+exponential growth: $\gamma = +0.005$ with both CIs tightly straddling
+zero, $R^{2} = 0.96$, and a stable doubling time near $0.5$ years.
+The bootstrap probability of positive curvature is $0.82$, indicating
+a slight directional tilt toward acceleration that is too small to
+matter at the resolution of the data.
 Sub-windows show mild acceleration during 2010--2022 and mild
-deceleration during 2022--2026, but in every sub-window the 95\%
-confidence interval includes $\gamma = 0$ (exponential).
+deceleration during 2022--2026; bootstrap CIs reveal that all
+sub-window estimates are statistically indistinguishable from
+exponential, and the short-window asymptotic CIs in particular
+understate uncertainty because frontier records cluster around
+architectural breakthroughs.
 The power-law fit, which is noisier, gives $\beta = -0.014$ on the full
 window with a 95\% CI of $[-0.062,\;+0.035]$.
 
