@@ -772,9 +772,12 @@ The pre-threshold crossing time scales as $\tcross \propto N^{1}$ from
 the equal-agent approximation (Appendix~\ref{app:timescale}); empirical
 fits over our parameter sweep give $N^{0.96}$, the small deviation
 attributable to the leader's growing resource share above $1/N$.
-Across all parameters tested, $t_{10\times} \approx t_{100\times}
-\approx t_{\mathrm{dom}}$: superexponential growth collapses all
-subsequent milestones onto the same time.
+In the post-threshold regime, $t_{10\times} \approx t_{100\times}
+\approx t_{\mathrm{dom}}$ across all parameters tested: once the
+leader crosses $T$, finite-time blow-up collapses subsequent ratio
+milestones onto the same time.
+Pre-threshold, milestone times are spread out as ordinary power
+laws.
 
 \begin{remark}[Multi-parameter scaling estimate]
 Power-law fits over single-variable sweeps yield
@@ -819,7 +822,8 @@ F21--F23 are structural consequences of the no-renegotiation assumption
 (Section~\ref{sec:coalition}) rather than independent empirical discoveries;
 the experiments confirm that the model behaves as the assumption implies.
 (1)~Critical coalition size: $N = 2$ coalition members can prevent a singleton
-candidate ($S = 1.1$) from crossing $T = 3.0$ under certain conditions (F20).
+candidate ($S = 1.1$) from crossing $T = 3.0$ when $\alpha \geq \alpha^* \approx 0.64$
+(F20, with $\alpha^*$ from Theorem~\ref{thm:criticalalpha}).
 (2)~Coalition coherence failure: an 8-member coalition with $8\times$ combined
 capability fails because coalition resources split among 8 members give each
 $\sim\!11\%$ individually; the singleton gets $\sim\!12\%$ alone (F21).
@@ -885,18 +889,21 @@ is exponential rather than superexponential and the timescale is much longer.
 
 \paragraph{F3: Continuous entry (A3 weakened).}
 Late entry threatens only the pre-threshold incumbent (F15--F16).
-Two distinct entry-rate thresholds apply: $\lambda \approx 0.25$ per time
-unit is where incumbent survival first drops below 90\% (F18), and
-$\lambda > 6.3$ is where no stable pre-threshold incumbent can form at all
-(F18)---25$\times$ higher, describing a qualitatively different regime
-of competitive churn rather than degraded survival.
-Post-threshold, any entry rate is survivable.
+Two distinct entry-rate thresholds apply (F18):
+$\lambda \approx 0.25$ per time unit is where incumbent survival first
+drops below $90\%$, and at $\lambda \approx 6.3$ incumbent survival
+falls to $0\%$ across the tested trials.
+The latter regime is competitive churn---no incumbent persists long
+enough to cross $T$---and is qualitatively different from the former,
+which is degraded but nonzero survival.
+Post-threshold, any entry rate tested is survivable.
 
 \paragraph{F4: Identical initial conditions (A5 fails).}
-Under perfect symmetry, a singleton still emerges, but the theorem cannot
-designate which agent.
-Any physical noise breaks symmetry; F13--F14 show even $\sigma = 0.001$
-initial spread produces a singleton in every tested trial.
+Under perfect symmetry, a singleton still emerges in the deterministic
+model, but the theorem cannot designate which agent.
+Any physical noise breaks symmetry; F7 shows that even an initial
+capability spread of $\sigma = 0.001$ resolves to the initial leader
+in $100\%$ of tested trials.
 
 \paragraph{F5: Cooperation.}
 Coalition pooling can suppress a singleton candidate externally
