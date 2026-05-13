@@ -1,0 +1,137 @@
+{
+  "gpqa_diamond.csv": {
+    "ok": true,
+    "name": "GPQA Diamond",
+    "n_total": 165,
+    "n_frontier": 17,
+    "year_range": [
+      2023.1971252566734,
+      2026.1724845995893
+    ],
+    "score_range": [
+      0.3573232323232323,
+      0.946
+    ],
+    "gamma": 0.009857573324625434,
+    "ci95_asymptotic": [
+      -0.025393406110910184,
+      0.04510855276016105
+    ],
+    "ci95_bootstrap": [
+      -0.11636058727429505,
+      0.04707323528251425
+    ],
+    "bootstrap_frac_positive": 0.5736,
+    "r_squared": 0.9615109617004792,
+    "doubling_time_capability_years_at_end": 0.8940350584601374,
+    "transform": "S = -log10(1 - score)"
+  },
+  "frontiermath.csv": {
+    "ok": true,
+    "name": "FrontierMath",
+    "n_total": 96,
+    "n_frontier": 16,
+    "year_range": [
+      2024.4681724845996,
+      2026.3066392881587
+    ],
+    "score_range": [
+      0.010344827586206896,
+      0.524
+    ],
+    "gamma": -0.6513605837125519,
+    "ci95_asymptotic": [
+      -0.8455033121298425,
+      -0.45721785529526127
+    ],
+    "ci95_bootstrap": [
+      -0.952502065338445,
+      -0.36886827271811146
+    ],
+    "bootstrap_frac_positive": 0.0,
+    "r_squared": 0.9676104116519807,
+    "doubling_time_capability_years_at_end": null,
+    "transform": "S = -log10(1 - score)"
+  },
+  "arc_agi_external.csv": {
+    "ok": true,
+    "name": "ARC-AGI",
+    "n_total": 135,
+    "n_frontier": 12,
+    "year_range": [
+      2024.6981519507187,
+      2026.1341546885694
+    ],
+    "score_range": [
+      0.18,
+      0.98
+    ],
+    "gamma": 0.0030140990756428476,
+    "ci95_asymptotic": [
+      -0.3604861102886144,
+      0.3665143084399001
+    ],
+    "ci95_bootstrap": [
+      -0.4955222645251648,
+      1.1380999103371632
+    ],
+    "bootstrap_frac_positive": 0.5412,
+    "r_squared": 0.9355487101604396,
+    "doubling_time_capability_years_at_end": 0.3895405475440338,
+    "transform": "S = -log10(1 - score)"
+  },
+  "swe_bench_verified.csv": {
+    "ok": true,
+    "name": "SWE-bench Verified",
+    "n_total": 28,
+    "n_frontier": 9,
+    "year_range": [
+      2024.8870636550307,
+      2026.2874743326488
+    ],
+    "score_range": [
+      0.30991735537190085,
+      0.8347107438016529
+    ],
+    "gamma": -0.45434685016144094,
+    "ci95_asymptotic": [
+      -0.6872490914384565,
+      -0.2214446088844254
+    ],
+    "ci95_bootstrap": [
+      -0.9550470485631694,
+      0.0006688751482703037
+    ],
+    "bootstrap_frac_positive": 0.0254,
+    "r_squared": 0.9232718849733361,
+    "doubling_time_capability_years_at_end": null,
+    "transform": "S = -log10(1 - score)"
+  },
+  "math_level_5.csv": {
+    "ok": true,
+    "name": "MATH Level 5",
+    "n_total": 108,
+    "n_frontier": 13,
+    "year_range": [
+      2023.4462696783025,
+      2025.5968514715948
+    ],
+    "score_range": [
+      0.22970166163141995,
+      0.9813066465256798
+    ],
+    "gamma": 0.01677714761456632,
+    "ci95_asymptotic": [
+      -0.1696647802693606,
+      0.20321907549849327
+    ],
+    "ci95_bootstrap": [
+      -0.6751069305923271,
+      0.3707374732949403
+    ],
+    "bootstrap_frac_positive": 0.5732,
+    "r_squared": 0.887120250462636,
+    "doubling_time_capability_years_at_end": 0.4696197313612424,
+    "transform": "S = -log10(1 - score)"
+  }
+}

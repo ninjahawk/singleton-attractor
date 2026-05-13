@@ -1,0 +1,38 @@
+Model version,Scaffold,Average (%),Release date,Organization,Country,Training compute (FLOP),Training compute notes,Name,Average SD (%)
+claude-opus-4-7_xhigh,Claude Code,0.2856,2026-04-16,Anthropic,United States of America,,,Opus 4.7,
+claude-opus-4-6_high,Claude Code,0.2316,2026-02-05,Anthropic,United States of America,,,Opus 4.6,0.018000000000000002
+gemini-3.1-pro-preview,OpenCode,0.2159,2026-02-19,Google DeepMind,United States of America,,,Gemini 3.1 Pro,0.0105
+gpt-5.2-2025-12-11_medium,Codex CLI,0.2138,2025-12-11,OpenAI,United States of America,,,GPT-5.2,0.0244
+gpt-5.4-2026-03-05_high,Codex CLI,0.2023,2026-03-05,OpenAI,United States of America,,,GPT 5.4 (High),0.023700000000000002
+gpt-5.1-codex-max,Codex CLI,0.1968,2025-11-19,OpenAI,United States of America,,,GPT 5.1 Codex Max,0.0253
+gemini-3-pro-preview,Gemini CLI,0.1812,2025-11-18,Google DeepMind,United States of America,,Almost certainly >1e25,Gemini 3 Pro,0.024100000000000003
+gpt-5.3-codex_high,Codex CLI,0.1776,2026-02-05,OpenAI,United States of America,,,GPT 5.3 Codex (High),0.0363
+claude-opus-4-5-20251101,OpenCode,0.1729,2025-11-24,Anthropic,United States of America,,Flagship model from a leading developer in mid-2025; very likely it used >1e25 FLOP.,Opus 4.5,
+gpt-5.2-codex,Codex CLI,0.1722,2025-12-18,OpenAI,United States of America,,,GPT 5.2 Codex,0.0159
+claude-opus-4-5-20251101,Claude Code,0.1714,2025-11-24,Anthropic,United States of America,,Flagship model from a leading developer in mid-2025; very likely it used >1e25 FLOP.,Opus 4.5,0.044800000000000006
+claude-sonnet-4-6,Claude Code,0.1642,2026-02-17,Anthropic,United States of America,,,Sonnet 4.6,
+gemini-3-pro-preview,OpenCode,0.1486,2025-11-18,Google DeepMind,United States of America,,Almost certainly >1e25,Gemini 3 Pro,
+glm-5,OpenCode,0.1388,2026-02-11,Z.ai (Zhipu AI),China,,,GLM 5,
+gpt-5.3-codex,Codex CLI,0.1377,2026-02-05,OpenAI,United States of America,,,GPT 5.3 Codex (Med),0.008100000000000001
+kimi-k2.5,OpenCode,0.1026,2026-01-27,Moonshot,China,5.8e+24,"Per section 3.2, ""The joint pre-training stage continues from a near-end Kimi K2 checkpoint over additional 15T vision-text tokens at 4K sequence length""
+
+Kimi K2 was pretrained on 15T tokens. A near-end checkpoint of K2 was trained into K2.5 over another 15T tokens (or 15.2 to 15.5T tokens). This makes for a total of ~30T.
+
+There are an additional 1T tokens in ""Stage 1"" used to train the ViT encoder, which is likely much smaller than the full LLM, so we omit those tokens to calculate training compute.
+
+30e12 tokens * 32B parameters * 6 = 5.76e24 FLOP
+
+Per Kimi talk (timestamp 26:00), the 15 trillion tokens of K2.5 were additive, for 30T training tokens overall: https://x.com/Kimi_Moonshot/status/2035011542115393973?s=20",Kimi K2.5,
+claude-sonnet-4-5-20250929,Claude Code,0.0994,2025-09-29,Anthropic,United States of America,,,Sonnet 4.5,
+MiniMax-M2.5,OpenCode,0.095,2026-02-12,MiniMax,China,,,MiniMax M2.5,
+MiniMax-M2.1,OpenCode,0.09330000000000001,2025-12-23,MiniMax,China,,,MiniMax M2.1,
+gpt-5.1-codex-max,OpenCode,0.0765,2025-11-19,OpenAI,United States of America,,,GPT 5.1 Codex Max,
+glm-4.7,OpenCode,0.0748,2025-12-22,Z.ai (Zhipu AI),China,4.42e+24,"Training tokens not disclosed.
+
+Presuming this is a post-training update from GLM-4.5 (23T tokens) with minor additional compute, training compute is at least:
+
+6 FLOP/parameter/token * 32B active parameters * 23T tokens = 4.42e24 FLOP",GLM 4.7,
+qwen3-max-2025-09-23,Claude Code,0.0742,2025-09-24,Alibaba,China,1.512e+25,"6ND with:
+36T tokens is taken from the qwen3 technical report
+70B active params is based on it having >1T params, and the architectures of Qwen3-235B-A22B and Qwen3-Coder-480B-A35B",Qwen3 Max,
+kimi-k2-thinking,OpenCode,0.0725,2025-11-06,Moonshot,China,4.2e+24,"Assuming the additional post-training contributed between 1% and 100% of Kimi K2's training compute (which we confidently estimate at 2.976e+24), we get a range of 3.0e24 to 6.0e24, and a geometric mean of 4.2e24.",Kimi K2 Thinking,

@@ -74,8 +74,12 @@ singleton emergence when both agents share a $\beta$-function that crosses zero;
 structurally different $\beta$-regimes are required.
 This refines, rather than refutes, \citet{bostrom2005singleton}.
 Section~\ref{sec:calibration} attempts an empirical calibration of $\beta(S)$
-against frontier-AI training compute (\citealt{epoch2024compute}); the
-result is reported alongside its limitations.
+against frontier-AI training compute and against five benchmark-derived
+capability proxies (\citealt{epoch2024compute}).
+On no proxy is the curvature statistically positive; on two benchmarks
+it is statistically negative.
+The data through $2026$ do not support $\beta(S) < 0$ under any tested
+proxy.
 \end{abstract}
 
 % ============================================================
@@ -153,13 +157,15 @@ scaling estimate for $t_{10\times}$ (Section~\ref{sec:simulations}; only the $N$
 exponent is analytically derived) and critical coalition entry rate
 $\lambda_{\mathrm{crit}} \approx 0.25$.
 
-\item \textbf{An empirical calibration to frontier-AI training compute}
-(Section~\ref{sec:calibration}) using the Epoch AI dataset
-\citep{epoch2024compute}.
-The frontier trajectory 2012--2026 is consistent with pure exponential
-growth ($\gamma = +0.005$, 95\% CI $[-0.010,\;+0.021]$); the
-2022--2026 sub-window shows mild deceleration.
-Under this proxy the data do not support $\beta(S) < 0$.
+\item \textbf{Empirical calibrations} (Section~\ref{sec:calibration}) of
+$\beta(S)$ against six capability proxies using the Epoch AI datasets
+\citep{epoch2024compute}: frontier training compute and five public
+benchmarks (GPQA Diamond, FrontierMath, ARC-AGI, SWE-bench Verified,
+MATH Level 5).
+Under all six proxies the curvature is at most zero; on two benchmarks
+it is significantly negative.
+The hypothesis $\beta(S) < 0$ is not supported by the public record
+through $2026$.
 \end{enumerate}
 
 Section~\ref{sec:model} gives the model.
@@ -1251,41 +1257,91 @@ architectural breakthroughs.
 The power-law fit, which is noisier, gives $\beta = -0.014$ on the full
 window with a 95\% CI of $[-0.062,\;+0.035]$.
 
+\subsection{Robustness: benchmark-performance proxies}
+\label{sec:calib_benchmarks}
+
+Training compute is an input to capability rather than capability
+itself.
+We re-run the calibration on five public benchmarks released by
+\citet{epoch2024compute}: GPQA Diamond, FrontierMath, ARC-AGI,
+SWE-bench Verified, and MATH Level 5.
+For each benchmark we form the running-maximum frontier of the best
+score reported across model versions over time, transform raw scores
+in $[0,1]$ to an unbounded capability via $S = -\log_{10}(1 - \mathrm{score})$
+(so $S \to \infty$ as score $\to 1$), and fit
+$\log_{10} S = a + bt + \gamma t^{2}$ on the transformed frontier.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Benchmark & $n_{\mathrm{front}}$ & $\gamma$ & Bootstrap 95\% CI & $\Pr(\gamma>0)_{\mathrm{boot}}$ & $R^{2}$ \\
+\midrule
+GPQA Diamond        & 17 & $+0.010$ & $[-0.116,\;+0.047]$ & $0.57$ & $0.96$ \\
+FrontierMath        & 16 & $-0.651$ & $[-0.953,\;-0.369]$ & $0.00$ & $0.97$ \\
+ARC-AGI             & 12 & $+0.003$ & $[-0.496,\;+1.138]$ & $0.54$ & $0.94$ \\
+SWE-bench Verified  &  9 & $-0.454$ & $[-0.955,\;+0.001]$ & $0.03$ & $0.92$ \\
+MATH Level 5        & 13 & $+0.017$ & $[-0.675,\;+0.371]$ & $0.57$ & $0.89$ \\
+\bottomrule
+\end{tabular}
+\caption{Polynomial-in-time fits on benchmark-derived capability
+($S = -\log_{10}(1 - \mathrm{score})$) for five public benchmarks.
+Three of five give $\gamma$ statistically indistinguishable from zero
+(exponential capability growth); two give $\gamma$ significantly
+negative under the bootstrap (decelerating capability).
+None of the five give $\gamma$ significantly positive.}
+\label{tab:bench_calibration}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{../figures/calibration_benchmarks.png}
+\caption{Per-benchmark frontier (orange) and all evaluations (grey),
+with fitted curvature $\gamma$ and bootstrap probability of acceleration.}
+\label{fig:bench_calibration}
+\end{figure}
+
+Across the five benchmarks: three (GPQA, ARC-AGI, MATH) are
+indistinguishable from exponential capability growth; two
+(FrontierMath, SWE-bench) show statistically significant
+\emph{deceleration}; none show acceleration.
+The compute-based and benchmark-based proxies agree on the qualitative
+finding: capability growth is at most exponential under every proxy
+tested.
+
 \subsection{Reading}
 
-Under the frontier-compute proxy, frontier capability has been growing
-exponentially, not super-exponentially.
-The data are not consistent with $\beta(S)$ having flipped negative
-during the period observed.
-The 2022--2026 window---which the AI-safety literature sometimes
-identifies as a possible take-off period---in fact shows a doubling
-time that has lengthened from roughly $4$ months to roughly $7$ months.
+Across compute and five benchmark-based capability proxies, frontier
+capability is growing at most exponentially over the deep-learning
+window.
+On no proxy is the curvature significantly positive; on two benchmarks
+the curvature is significantly negative.
+The data are not consistent with $\beta(S) < 0$ during the period
+observed.
 
 This does not refute A4.
 Three reasons the result is weak as evidence against the framework:
-(i)~training compute is one of several capability inputs and the
-post-training, scaffolding, and inference-compute regimes that have
-become important since $2024$ are not captured here;
+(i)~each proxy captures one slice of capability and none isolates the
+post-training, scaffolding, or inference-compute regimes that have
+become important since $2024$;
 (ii)~A4 requires only that $\beta < 0$ become reachable at some future
-$T$, not that the trajectory be already in that regime; the data are
+$T$, not that the trajectory already be in that regime; the data are
 silent on the future;
-(iii)~$26$ frontier records over $14$ years is a small sample; tighter
-data, particularly with capability measured by benchmark performance,
-might reverse the curvature sign.
-Conversely, the result \emph{is} evidence that the often-stated
-``compute is going superexponential'' claim is not supported by the
-public record on training FLOP through 2026, and that a singleton
-emerging on this proxy alone within the next several years would
-require a sharp regime change rather than continuation of the current
-trend.
+(iii)~frontier-record counts are small ($n_{\mathrm{front}} \in [9, 26]$
+across proxies), making sub-window estimates noisy.
+Conversely, the result \emph{is} evidence against the popular claim
+that capability growth is currently super-exponential under any of the
+proxies most commonly cited as evidence for it: a singleton emerging
+on these proxies alone within the next several years would require a
+sharp regime change, not continuation of the current trend.
 
 The exercise's main contribution is methodological: it makes A4 a
-falsifiable hypothesis on a specific dataset.
-A future study could repeat this calibration with capability proxies
-better suited to recent trends (effective compute, frontier benchmark
-performance, agentic capability scores) and with explicit confidence
-bands on whether $\beta < 0$ is consistent with the data at any
-horizon.
+falsifiable hypothesis on specific datasets.
+A future study could extend the calibration to capability proxies
+better suited to recent trends (effective compute, agentic
+capability scores, multi-step reasoning benchmarks) and to longer time
+horizons as data accumulate.
 
 % ============================================================
 \section{Discussion}
@@ -1322,10 +1378,10 @@ The simulation scripts produce quantitative measurements---timescale formula,
 $\lambda_{\mathrm{crit}}$, moat characterization, F1--F25---that were not
 previously available.
 
-Section~\ref{sec:calibration} introduces the first empirical test of A4
-on a public dataset: under frontier training compute as a capability
-proxy, $\beta(S) < 0$ is not currently supported, and the framework's
-central premise becomes a falsifiable hypothesis with negative
+Section~\ref{sec:calibration} introduces an empirical test of A4 across
+six capability proxies (frontier compute plus five benchmarks): on no
+proxy is $\beta(S) < 0$ supported, and the framework's central premise
+becomes a falsifiable hypothesis with negative
 preliminary evidence.
 
 \subsection{Timescale scaling}

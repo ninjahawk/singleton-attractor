@@ -1,0 +1,60 @@
+Model version,Arena Score,Release date,Organization,Country,Training compute (FLOP),Training compute notes,Score 95% CI,Votes,Last updated,Source,Source link (site from table),Notes,95% CI High,95% CI Low,id
+claude-opus-4-6_unknown,1556.29,2026-02-05,Anthropic,United States of America,,,,2553.0,,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,1570.13,1542.44,rec42aGstj0e6Rset
+claude-opus-4-6,1555.35,2026-02-05,Anthropic,United States of America,,,,3273.0,,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,1567.97,1542.73,recMRozRLKk7DABCI
+glm-5.1,1534.0,2026-04-07,Z.ai (Zhipu AI),China,,,,,,https://arena.ai/leaderboard,https://web.lmarena.ai/leaderboard,,,,reczQ82qDNkFeSOqt
+kimi-k2.6,1526.0,2026-04-20,Moonshot,China,,,,,,https://arena.ai/leaderboard,https://web.lmarena.ai/leaderboard,,,,recLmGhmz9Qq5pJ29
+claude-sonnet-4-6,1522.86,2026-02-17,Anthropic,United States of America,,,,3150.0,,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,1535.13,1510.6,recEydvPq3RwtFg6j
+muse-spark,1512.53,2026-04-08,Meta AI,United States of America,,,,1608.0,,https://arena.ai/leaderboard,https://web.lmarena.ai/leaderboard,,1528.6,1496.47,recRiDSRbOFjYObWz
+claude-opus-4-5-20251101_32K,1512.0,2025-11-24,Anthropic,United States of America,,Flagship model from a leading developer in mid-2025; very likely it used >1e25 FLOP.,=+11/-11,4564.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recQLSl4DM4fz7VAt
+gpt-5.2-2025-12-11_high,1480.0,2025-12-11,OpenAI,United States of America,,,=+17/-17,1647.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recDCbjVONLP8GhN2
+claude-opus-4-5-20251101,1479.0,2025-11-24,Anthropic,United States of America,,Flagship model from a leading developer in mid-2025; very likely it used >1e25 FLOP.,=+11/-11,4468.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recxJC6KaFZO5Yo47
+gemini-3-pro-preview,1471.0,2025-11-18,Google DeepMind,United States of America,,Almost certainly >1e25,=+9/-9,9824.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,rec7tzKLSS6JTykAP
+gemini-3.1-pro-preview,1461.49,2026-02-19,Google DeepMind,United States of America,,,,1829.0,,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,1476.53,1446.46,reczlQxaml8buBx3t
+gemini-3-flash-preview,1454.0,2025-12-17,Google DeepMind,United States of America,,,=+12/-12,3053.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,rec8wVMb44iQySeae
+glm-5,1447.32,2026-02-11,Z.ai (Zhipu AI),China,,,,3166.0,,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,1458.88,1435.76,recjSg0H9Q5BhD7ez
+glm-4.7,1441.0,2025-12-22,Z.ai (Zhipu AI),China,4.42e+24,"Training tokens not disclosed.
+
+Presuming this is a post-training update from GLM-4.5 (23T tokens) with minor additional compute, training compute is at least:
+
+6 FLOP/parameter/token * 32B active parameters * 23T tokens = 4.42e24 FLOP",=+13/-13,2270.0,2026-01-05,WebDev Arena Leaderboard,https://lmarena.ai/leaderboard/webdev,,,,reczgCME2AOVMdLPt
+gpt-5-2025-08-07_medium,1395.0,2025-08-07,OpenAI,United States of America,6.6e+25,"Likely around 6e25 [CI: 2e25 to 2e26] FLOP. See document below for details
+
+https://docs.google.com/document/d/1V2jIk365LnhH4WDoCw5dYJjZr1Htw8IHaK1noMf5Y48/edit?tab=t.z871imftkus",=+12/-12,3949.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,rec0jRmpNdEDdrg8X
+gpt-5.2-2025-12-11_medium,1394.0,2025-12-11,OpenAI,United States of America,,,=+15/-15,1641.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recSZOpvwfvrDdO4h
+claude-sonnet-4-5-20250929_32K,1391.0,2025-09-29,Anthropic,United States of America,,,=+9/-9,8616.0,2026-01-05,WebDev Arena Leaderboard,https://lmarena.ai/leaderboard/webdev,,,,rectf5pzQGRAR1sZY
+gpt-5.1-2025-11-13_medium,1387.0,2025-11-13,OpenAI,United States of America,,"Almost certainly > 1e25
+",=+10/-10,5626.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recoxpFCpzEImK5i4
+claude-sonnet-4-5-20250929,1387.0,2025-09-29,Anthropic,United States of America,,,=+9/-9,9698.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recUrHg93mpJgakI0
+claude-opus-4-1-20250805,1386.0,2025-08-05,Anthropic,United States of America,,,=+9/-9,8210.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recDMjkTx9oZNAOzz
+,1377.0,,,,,,=+14/-14,1885.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recyD2ZNG4gtW9Y0m
+DeepSeek-V3.2-Exp_thinking,1367.0,2025-09-29,DeepSeek,China,4.18e+24,"3.594058e+24 FLOP [base model] + 2.095014e+23 FLOP = 3.8035594e+24 FLOP for pre-training plus continued pre-training
+
+Then, ""this framework allocates a
+post-training computational budget exceeding 10% of the pre-training cost"", so 4.18e24",=+20/-19,955.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,reciI0uZdChhyGrUw
+glm-4.6,1366.0,2025-09-30,"Z.ai (Zhipu AI),Tsinghua University",China,4.42e+24,6 FLOP/parameter/token * 32000000000 active parameters [very likely assumption - everything else is reported to be same as at GLM 4.5] * 23000000000000 tokens = 4.42e24 FLOP,=+9/-9,7921.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recT1lwdoUHQkrBMV
+gpt-5.1-2025-11-13_low,1359.0,2025-11-13,OpenAI,United States of America,,"Almost certainly > 1e25
+",=+10/-10,6540.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recGfqSb7DIX51ffo
+claude-sonnet-4-5-20250929_32K,1353.0,2025-09-29,Anthropic,United States of America,,,=+9/-9,7544.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recKmKjyv8AiR9k1T
+kimi-k2-thinking-turbo,1337.0,2025-11-06,Moonshot,China,4.2e+24,"Assuming the additional post-training contributed between 1% and 100% of Kimi K2's training compute (which we confidently estimate at 2.976e+24), we get a range of 3.0e24 to 6.0e24, and a geometric mean of 4.2e24.",=+9/-9,7336.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recumTXyHTALFh1iH
+gpt-5.1-codex,1331.0,2025-11-12,OpenAI,United States of America,,,=+10/-10,5719.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recSXM0s3Vsny5oZP
+,1313.0,,,,,,=+9/-9,8023.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recneYtrITTW9cMYw
+DeepSeek-V3.2-Exp,1290.0,2025-09-29,DeepSeek,China,4.18e+24,"3.594058e+24 FLOP [base model] + 2.095014e+23 FLOP = 3.8035594e+24 FLOP for pre-training plus continued pre-training
+
+Then, ""this framework allocates a
+post-training computational budget exceeding 10% of the pre-training cost"", so 4.18e24",=+10/-10,5162.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recoUouxwJTO6jCv1
+claude-haiku-4-5-20251001,1286.0,2025-10-15,Anthropic,United States of America,,,=+9/-9,8276.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,rec4L4znR9E7Yeb7E
+deepseek/deepseek-v3.2,1286.0,2025-12-01,DeepSeek,China,4.2e+24,"Pre-trained base was DeepSeek-V3.1-Terminus
+3.594058e+24 FLOP [base model] + 2.095014e+23 FLOP = 3.8035594e+24 FLOP for pre-training plus continued pre-training
+
+Then, ""this framework allocates a
+post-training computational budget exceeding 10% of the pre-training cost"", so 4.18e24",=+13/-13,2155.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recBICRjNsv9JEKQt
+Qwen3-Coder-480B-A35B-Instruct,1285.0,2025-07-31,Alibaba,China,1.575e+24,6 FLOP / parameter / token * 35 * 10^9 active parameters * 7.5 * 10^12 tokens = 1.575e+24 FLOP`,=+9/-9,8199.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recb5Q2Ez7Shxvl2o
+,1260.0,,,,,,=+15/-15,1946.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,rec8hNzDMIzA5RXxq
+gpt-5.1-codex-mini,1247.0,2025-11-12,OpenAI,United States of America,,,=+17/-17,1566.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recPRratljctS351K
+,1226.0,,,,,,=+20/-20,1025.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,reclY6B2Wp2f59mld
+grok-4-1-fast-reasoning,1223.0,2025-11-19,xAI,United States of America,,,=+13/-13,3721.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recgHWkkshK8nYtfz
+gemini-2.5-pro,1209.0,2025-06-17,Google DeepMind,United States of America,,Flagship model from a leading developer in mid-2025; very likely it used >1e25 FLOP.,=+13/-13,3505.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recmBglMHLXb6m6s8
+,1202.0,,,,,,=+19/-19,1262.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,reco07u0phmlUKOm4
+grok-4-fast,1149.0,2025-09-19,xAI,United States of America,,,=+23/-23,945.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,rec8Eg2KdgjeEWepd
+grok-code-fast-1,1139.0,2025-08-28,,,,,=+21/-21,1014.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recT6aoJlcWcMufso
+,1099.0,,,,,,=+22/-22,1033.0,2026-01-05,WebDev Arena Leaderboard,https://web.lmarena.ai/leaderboard,,,,recYBnWjhmTwpsA6r
