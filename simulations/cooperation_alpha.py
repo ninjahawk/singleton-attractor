@@ -30,10 +30,10 @@ import os
 FIGURES = os.path.join(os.path.dirname(__file__), '..', 'figures')
 os.makedirs(FIGURES, exist_ok=True)
 
-BG = '#0a0a0a'
-FG = '#e0e0e0'
+BG = 'white'
+FG = 'black'
 ACCENT = '#ff6b35'
-GRID = '#1e1e1e'
+GRID = '#cccccc'
 
 THRESHOLD = 3.0
 BETA_HIGH = 0.5
@@ -50,7 +50,7 @@ def style_ax(ax):
     ax.yaxis.label.set_color(FG)
     ax.title.set_color(FG)
     for spine in ax.spines.values():
-        spine.set_edgecolor('#2a2a2a')
+        spine.set_edgecolor('#888888')
     ax.grid(True, color=GRID, linewidth=0.5, linestyle='--', alpha=0.7)
 
 
@@ -199,7 +199,7 @@ def exp_alpha_sweep():
     N_star_clipped = np.clip(N_star_curve, min(Ns), max(Ns))
     ax1.plot(N_star_clipped, alpha_interp, color='white', linewidth=1.5,
              linestyle='--', label='Theoretical N* (Section 9 formula)')
-    ax1.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    ax1.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     # Right: N* comparison plot
     valid_alphas = [a for a in alphas if a > 1.0]
@@ -214,14 +214,14 @@ def exp_alpha_sweep():
     ax2.set_xlabel('alpha')
     ax2.set_ylabel('Critical coalition size N*')
     ax2.set_title('Theoretical vs empirical N* (coalition wins race to T)')
-    ax2.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    ax2.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
     ax2.set_yscale('log')
 
     plt.suptitle('Coalition coherence: does alpha > 1 rescue the coalition?',
                  color=FG, fontsize=11)
     plt.tight_layout()
     path = os.path.join(FIGURES, 'ca_alpha_sweep.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"\n  Saved: {path}")
     return empirical_N_star
@@ -313,7 +313,7 @@ def exp_alpha2_internal_dynamics():
     axes[0].set_title(f'Capabilities (alpha={alpha}, N_coal={N_coal})')
     axes[0].set_xlabel('Time')
     axes[0].set_ylabel('S log')
-    axes[0].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[0].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     # Resource shares
     powers = np.maximum(S, 1e-12) ** alpha
@@ -325,7 +325,7 @@ def exp_alpha2_internal_dynamics():
     axes[1].set_title('Individual resource shares (%)')
     axes[1].set_xlabel('Time')
     axes[1].set_ylabel('%')
-    axes[1].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[1].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     # Internal coalition spread
     coal_S = S[1:]
@@ -339,7 +339,7 @@ def exp_alpha2_internal_dynamics():
                  color=FG, fontsize=10)
     plt.tight_layout()
     path = os.path.join(FIGURES, 'ca_internal_alpha2.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
     return coalition_suppressed_singleton, winner != 0

@@ -34,10 +34,10 @@ import os
 FIGURES = os.path.join(os.path.dirname(__file__), '..', 'figures')
 os.makedirs(FIGURES, exist_ok=True)
 
-BG = '#0a0a0a'
-FG = '#e0e0e0'
+BG = 'white'
+FG = 'black'
 ACCENT = '#ff6b35'
-GRID = '#1e1e1e'
+GRID = '#cccccc'
 
 S_CAP = 1e7
 THRESHOLD = 3.0
@@ -53,7 +53,7 @@ def style_ax(ax):
     ax.yaxis.label.set_color(FG)
     ax.title.set_color(FG)
     for spine in ax.spines.values():
-        spine.set_edgecolor('#2a2a2a')
+        spine.set_edgecolor('#888888')
     ax.grid(True, color=GRID, linewidth=0.5, linestyle='--', alpha=0.7)
 
 
@@ -182,11 +182,11 @@ def exp_coalition_size():
     ax2.set_xlabel('Time')
     ax2.set_ylabel('Capability log')
     ax2.set_title('Example trajectories: singleton vs coalitions')
-    ax2.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    ax2.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'coop_coalition_size.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
     return Ns, singleton_crossed, critical_N
@@ -287,7 +287,7 @@ def exp_internal_dynamics():
     axes[0].set_title('Capabilities over time')
     axes[0].set_xlabel('Time')
     axes[0].set_ylabel('S log')
-    axes[0].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[0].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     # Resource shares
     axes[1].plot(t, resource_shares[0] * 100, color=ACCENT, linewidth=2,
@@ -298,7 +298,7 @@ def exp_internal_dynamics():
     axes[1].set_title('Resource shares (%)')
     axes[1].set_xlabel('Time')
     axes[1].set_ylabel('%')
-    axes[1].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[1].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     # Internal coalition spread: max/min ratio within coalition
     coal_S = S[1:]
@@ -312,7 +312,7 @@ def exp_internal_dynamics():
                  color=FG, fontsize=11)
     plt.tight_layout()
     path = os.path.join(FIGURES, 'coop_internal.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 
@@ -454,7 +454,7 @@ def exp_defection():
     axes[0, 0].set_title('Capabilities (orange=singleton, green=still in coalition, blue=defected)')
     axes[0, 0].set_xlabel('Time')
     axes[0, 0].set_ylabel('S log')
-    axes[0, 0].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=7)
+    axes[0, 0].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=7)
 
     # Coalition size over time
     axes[0, 1].plot(t_series, coalition_size_series, color='#2ca02c', linewidth=1.8)
@@ -493,7 +493,7 @@ def exp_defection():
                  color=FG, fontsize=10)
     plt.tight_layout()
     path = os.path.join(FIGURES, 'coop_defection.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 
@@ -681,11 +681,11 @@ def exp_dynamic_game(n_trials=50):
     ax.set_xlabel('Time to singleton (10x separation)')
     ax.set_ylabel('Cumulative fraction of trials')
     ax.set_title(f'Cooperation regimes: CDF of time to singleton (N={N}, {n_trials} trials)')
-    ax.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=9)
+    ax.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=9)
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'coop_dynamic_game.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 

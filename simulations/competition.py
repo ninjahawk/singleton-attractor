@@ -19,10 +19,10 @@ import os
 FIGURES = os.path.join(os.path.dirname(__file__), '..', 'figures')
 os.makedirs(FIGURES, exist_ok=True)
 
-BG = '#0a0a0a'
-FG = '#e0e0e0'
+BG = 'white'
+FG = 'black'
 ACCENT = '#ff6b35'
-GRID = '#1e1e1e'
+GRID = '#cccccc'
 
 T_MAX = 40.0
 S_CAP = 1e8
@@ -35,7 +35,7 @@ def style_ax(ax):
     ax.yaxis.label.set_color(FG)
     ax.title.set_color(FG)
     for spine in ax.spines.values():
-        spine.set_edgecolor('#2a2a2a')
+        spine.set_edgecolor('#888888')
     ax.grid(True, color=GRID, linewidth=0.5, linestyle='--', alpha=0.7)
 
 
@@ -112,14 +112,14 @@ def exp_baseline():
     axes[0].set_xlabel('Time')
     axes[0].set_ylabel('Capability S(t)')
     axes[0].set_title('Capability trajectories')
-    axes[0].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[0].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     axes[1].semilogy(t, S1, color=ACCENT, label='Agent 1', linewidth=1.8)
     axes[1].semilogy(t, S2, color='#1f77b4', label='Agent 2', linewidth=1.8)
     axes[1].set_xlabel('Time')
     axes[1].set_ylabel('S(t) — log scale')
     axes[1].set_title('Capability — log scale')
-    axes[1].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[1].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
 
     axes[2].semilogy(t, rho, color='#2ca02c', linewidth=1.8)
     axes[2].set_xlabel('Time')
@@ -128,7 +128,7 @@ def exp_baseline():
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'comp_baseline.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 
@@ -166,16 +166,16 @@ def exp_initial_gap():
     ax1.set_xlabel('Time')
     ax1.set_ylabel('rho = S1/S2 — log scale')
     ax1.set_title('Ratio divergence by initial gap (log)')
-    ax1.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8, title='Initial advantage', title_fontsize=8)
+    ax1.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8, title='Initial advantage', title_fontsize=8)
 
     ax2.set_xlabel('Time')
     ax2.set_ylabel('rho = S1/S2')
     ax2.set_title('Ratio divergence by initial gap (linear)')
-    ax2.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8, title='Initial advantage', title_fontsize=8)
+    ax2.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8, title='Initial advantage', title_fontsize=8)
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'comp_initial_gap.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 
@@ -202,11 +202,11 @@ def exp_alpha():
     ax.set_xlabel('Time')
     ax.set_ylabel('rho = S1/S2 — log scale')
     ax.set_title('Divergence rate vs alpha — higher alpha = faster exclusion')
-    ax.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=9)
+    ax.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=9)
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'comp_alpha.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 
@@ -247,7 +247,7 @@ def exp_beta_threshold():
     axes[0, 0].semilogy(t_f, S1_f, color=ACCENT, label='Agent 1', linewidth=1.8)
     axes[0, 0].semilogy(t_f, S2_f, color='#1f77b4', label='Agent 2', linewidth=1.8)
     axes[0, 0].set_title(f'Flat beta={beta_high} — capabilities')
-    axes[0, 0].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[0, 0].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
     axes[0, 0].set_xlabel('Time')
     axes[0, 0].set_ylabel('S(t) log')
 
@@ -263,20 +263,20 @@ def exp_beta_threshold():
     axes[1, 0].semilogy(t_th, S2_th, color='#1f77b4', label='Agent 2', linewidth=1.8)
     axes[1, 0].axhline(threshold, color='#888888', linestyle='--', linewidth=1, label=f'Threshold T={threshold}')
     axes[1, 0].set_title(f'Threshold beta (high={beta_high} -> low={beta_low} at T={threshold}) — capabilities')
-    axes[1, 0].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[1, 0].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
     axes[1, 0].set_xlabel('Time')
     axes[1, 0].set_ylabel('S(t) log')
 
     axes[1, 1].semilogy(t_th, rho_th, color=ACCENT, linewidth=1.8, label='Threshold')
     axes[1, 1].semilogy(t_f, rho_f, color='#555555', linewidth=1.4, linestyle='--', label='Flat (reference)')
     axes[1, 1].set_title('Threshold vs flat — ratio comparison')
-    axes[1, 1].legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    axes[1, 1].legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
     axes[1, 1].set_xlabel('Time')
     axes[1, 1].set_ylabel('rho log')
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'comp_threshold.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 

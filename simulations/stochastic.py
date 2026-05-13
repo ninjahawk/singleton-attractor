@@ -24,10 +24,10 @@ import os
 FIGURES = os.path.join(os.path.dirname(__file__), '..', 'figures')
 os.makedirs(FIGURES, exist_ok=True)
 
-BG = '#0a0a0a'
-FG = '#e0e0e0'
+BG = 'white'
+FG = 'black'
 ACCENT = '#ff6b35'
-GRID = '#1e1e1e'
+GRID = '#cccccc'
 
 
 def style_ax(ax):
@@ -37,7 +37,7 @@ def style_ax(ax):
     ax.yaxis.label.set_color(FG)
     ax.title.set_color(FG)
     for spine in ax.spines.values():
-        spine.set_edgecolor('#2a2a2a')
+        spine.set_edgecolor('#888888')
     ax.grid(True, color=GRID, linewidth=0.5, linestyle='--', alpha=0.7)
 
 
@@ -133,7 +133,7 @@ def exp_sample_trajectories():
     plt.suptitle('Stochastic trajectories at varying noise levels', color=FG, fontsize=11)
     plt.tight_layout()
     path = os.path.join(FIGURES, 'stoch_trajectories.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 
@@ -198,7 +198,7 @@ def exp_winner_rate(n_trials=300):
     ax1.set_xlabel('Noise level (sigma)')
     ax1.set_ylabel('Rate (%)')
     ax1.set_title(f'Stochastic outcome rates ({n_trials} trials per sigma)')
-    ax1.legend(facecolor='#111111', labelcolor=FG, edgecolor='#333333', fontsize=8)
+    ax1.legend(facecolor='white', labelcolor=FG, edgecolor='#bbbbbb', fontsize=8)
     ax1.set_ylim(0, 105)
 
     ax2.loglog(sigmas, mean_ratios, color=ACCENT, linewidth=1.8, marker='o', markersize=5)
@@ -209,7 +209,7 @@ def exp_winner_rate(n_trials=300):
 
     plt.tight_layout()
     path = os.path.join(FIGURES, 'stoch_winner_rate.png')
-    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor=BG)
+    plt.savefig(path, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"  Saved: {path}")
 

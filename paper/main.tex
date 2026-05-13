@@ -2,7 +2,7 @@
 
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[authoryear,round]{natbib}
-\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -35,8 +35,8 @@
 
 \title{The Singleton Attractor:\\
 Formal Theory and Simulation of Dominant Intelligence Emergence}
-\author{Nathan Langley\\[4pt]
-\small\texttt{https://github.com/ninjahawk/singleton-attractor}}
+\author{Nathan Langley\\[2pt]
+\small University of North Carolina at Greensboro}
 \date{May 2026}
 
 % ============================================================
@@ -606,9 +606,8 @@ Finding F5 confirms strictly weakest-first elimination in all tested cases
 \section{Simulation Results}
 \label{sec:simulations}
 
-All simulations are available at
-\url{https://github.com/ninjahawk/singleton-attractor};
-random seeds and Python dependency versions are recorded in each script.
+Random seeds and Python dependency versions are recorded in each
+simulation script (code link in the Acknowledgments).
 Default parameters: $\alpha = 1.0$, $\betaH = 0.5$, $\betaL = -0.3$,
 $T = 3.0$, $S_0^{\max} = 10^7$.
 We use $\beta(S)$ as a sigmoid transitioning from $\betaH$ to $\betaL$ at $T$.
@@ -1413,8 +1412,12 @@ what timescale.
 % ============================================================
 \section*{Acknowledgments}
 
-No external funding was received for this work.
-Simulation code is available at
+No external funding was received.
+
+\section*{Code and data availability}
+
+Simulation scripts, calibration code, and the Epoch AI dataset
+snapshot used in Section~\ref{sec:calibration} are available at
 \url{https://github.com/ninjahawk/singleton-attractor}.
 
 % ============================================================
