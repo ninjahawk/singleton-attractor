@@ -34,7 +34,8 @@
 \newcommand{\tstar}{t^{*}}
 
 \title{The Singleton Attractor:\\
-Formal Theory and Simulation of Dominant Intelligence Emergence}
+A Formal Model and Empirical Calibration of\\
+Capability-Threshold Dynamics in Frontier AI}
 \author{Nathan Langley\\[2pt]
 \small University of North Carolina at Greensboro}
 \date{May 2026}
@@ -45,41 +46,43 @@ Formal Theory and Simulation of Dominant Intelligence Emergence}
 
 % ---------- Abstract ----------
 \begin{abstract}
-This paper asks what happens to competitive multi-agent systems when one agent
-can undergo recursive self-improvement fast enough to enter superexponential
-growth.
-The answer, under five explicit assumptions, is that the agent achieves
-unbounded capability advantage over all competitors in finite time.
-The critical assumption is A4: that a capability threshold $T$ exists where
-the growth exponent $\beta(S)$ flips negative.
-Whether any real system satisfies A4 is an open empirical question; the paper
-does not settle it.
+We study capability-threshold dynamics in competitive multi-agent
+systems---specifically, the conditions under which a single dominant
+agent emerges from recursive self-improvement under adversarial resource
+competition---and calibrate the framework's central premise against the
+public record on frontier-AI training compute and benchmark performance
+through $2026$.
 The model combines Yudkowsky's intelligence explosion equation
-($dS/dt = S^{1-\beta}$), Omohundro's instrumental resource acquisition, and
-Lotka--Volterra competitive exclusion.
-Three results are proved formally.
-The $N$-agent generalization is a conjecture with an acknowledged
-simultaneous-dynamics gap.
-Additional results include the exact transcendental condition for coalition
-suppression ($\alpha^* \approx 0.64$, Theorem~\ref{thm:criticalalpha}) and an
-explicit Dufresne-perpetuity formula for the probability of singleton
-emergence under multiplicative GBM noise (Theorem~\ref{thm:stochastic}):
-the probability lies in $(0,1)$ for any $\sigma > 0$ and tends to $1$ as
-$\sigma \to 0$.
-Eleven simulation scripts verify the ODE system's numerical behavior across
-25 parameter configurations; the simulations use a capability cap that
-inflates apparent emergence and is discussed where used.
-Within the formal model (A1--A5), separate resource pools alone do not prevent
-singleton emergence when both agents share a $\beta$-function that crosses zero;
-structurally different $\beta$-regimes are required.
-This refines, rather than refutes, \citet{bostrom2005singleton}.
-Section~\ref{sec:calibration} attempts an empirical calibration of $\beta(S)$
-against frontier-AI training compute and against five benchmark-derived
-capability proxies (\citealt{epoch2024compute}).
-On no proxy is the curvature statistically positive; on two benchmarks
-it is statistically negative.
+($dS/dt = S^{1-\beta}$), Omohundro's instrumental resource acquisition,
+and Lotka--Volterra competitive exclusion.
+Under five explicit assumptions, the agent that crosses a capability
+threshold first achieves unbounded advantage over all competitors in
+finite time; the critical assumption (A4) is that the growth exponent
+$\beta(S)$ flips negative for some reachable capability $S = T$.
+Whether any real AI system will satisfy A4 is the open empirical question
+the paper makes falsifiable: in Section~\ref{sec:calibration} we fit the
+curvature of capability growth on six proxies---frontier training compute
+and five public benchmarks (GPQA Diamond, FrontierMath, ARC-AGI,
+SWE-bench Verified, MATH Level 5) from the Epoch AI dataset
+\citep{epoch2024compute}---and find no proxy with statistically positive
+curvature, with two benchmarks statistically negative.
 The data through $2026$ do not support $\beta(S) < 0$ under any tested
 proxy.
+On the formal side: three results are proved
+(Theorems~\ref{thm:ratio},~\ref{thm:finitetime},~\ref{thm:criticalalpha});
+the $N$-agent generalization is a conjecture with an acknowledged
+simultaneous-dynamics gap; an explicit Dufresne-perpetuity formula
+(Theorem~\ref{thm:stochastic}) gives the probability of singleton
+emergence under multiplicative GBM noise as $\Pr(J \geq c) \in (0,1)$,
+tending to $1$ as $\sigma \to 0$; the exact transcendental condition for
+coalition external suppression yields $\alpha^* \approx 0.64$
+(Theorem~\ref{thm:criticalalpha}).
+Within the formal model (A1--A5), separate resource pools alone do not
+prevent singleton emergence when both agents share a $\beta$-function that
+crosses zero, refining (not refuting) \citet{bostrom2005singleton}.
+Eleven simulation scripts verify the ODE behavior across 25 parameter
+configurations; the simulations use a capability cap that inflates
+apparent emergence, discussed where used.
 \end{abstract}
 
 % ============================================================
@@ -113,6 +116,19 @@ Omohundro gives mechanisms without dynamics.
 Yudkowsky's growth equation covers a single agent in isolation.
 Lotka--Volterra handles biological competition without self-improvement.
 
+The contemporary AI capability discourse adds urgency to the question.
+Scaling-laws research and frontier-model development have produced a
+public debate over takeoff speed---whether capability growth is currently
+exponential, decelerating, or entering a super-exponential regime---in
+which Yudkowsky's $\beta < 0$ threshold is the load-bearing assumption
+of the dramatic-takeoff scenarios.
+This paper makes that assumption falsifiable on the public AI-capability
+record.
+The framework we develop is general (the dynamics apply to any
+recursively-improving competitive system), but the calibration in
+Section~\ref{sec:calibration} is specifically aimed at the AI case
+because that is where the assumption is currently consequential.
+
 Everything in this paper is conditional on Assumption~A4: that $\beta(S)$
 can go negative for some capability level $S = T$ that is actually reachable.
 A4 is the contested premise.
@@ -121,10 +137,11 @@ finite time under adversarial resource dynamics; under multiplicative
 GBM-type noise the emergence becomes a high-probability rather than
 almost-sure event (Theorem~\ref{thm:stochastic}).
 That structure is close to tautological.
-The interesting empirical question---whether any real system will ever satisfy
-A4---is partially addressed in Section~\ref{sec:calibration} via a
-calibration to frontier training-compute data; the result for that
-proxy is that $\beta(S) < 0$ is not currently supported.
+The interesting empirical question---whether any real AI system will ever
+satisfy A4---is partially addressed in Section~\ref{sec:calibration} via
+calibrations on six capability proxies (frontier training compute and
+five public benchmarks); on none of the six is $\beta(S) < 0$ currently
+supported.
 
 This paper makes the following contributions.
 
