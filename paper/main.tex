@@ -47,9 +47,9 @@ Capability-Threshold Dynamics in Frontier AI}
 % ---------- Abstract ----------
 \begin{abstract}
 We study capability-threshold dynamics in competitive multi-agent
-systems---specifically, the conditions under which a single dominant
+systems, specifically the conditions under which a single dominant
 agent emerges from recursive self-improvement under adversarial resource
-competition---and calibrate the framework's central premise against the
+competition, and calibrate the framework's central premise against the
 public record on frontier-AI training compute and benchmark performance
 through $2026$.
 The model combines Yudkowsky's intelligence explosion equation
@@ -61,22 +61,24 @@ finite time; the critical assumption (A4) is that the growth exponent
 $\beta(S)$ flips negative for some reachable capability $S = T$.
 Whether any real AI system will satisfy A4 is the open empirical question
 the paper makes falsifiable: in Section~\ref{sec:calibration} we fit the
-curvature of capability growth on six proxies---frontier training compute
-and five public benchmarks (GPQA Diamond, FrontierMath, ARC-AGI,
+curvature of capability growth on six proxies (frontier training compute
+and five public benchmarks: GPQA Diamond, FrontierMath, ARC-AGI,
 SWE-bench Verified, MATH Level 5) from the Epoch AI dataset
-\citep{epoch2024compute}---and find no proxy with statistically positive
+\citep{epoch2024compute}, and find no proxy with statistically positive
 curvature, with two benchmarks statistically negative.
 The data through $2026$ do not support $\beta(S) < 0$ under any tested
 proxy.
-On the formal side: three results are proved
-(Theorems~\ref{thm:ratio},~\ref{thm:finitetime},~\ref{thm:criticalalpha});
-the $N$-agent generalization is a conjecture with an acknowledged
-simultaneous-dynamics gap; an explicit Dufresne-perpetuity formula
-(Theorem~\ref{thm:stochastic}) gives the probability of singleton
+Three results are proved formally
+(Theorems~\ref{thm:ratio},~\ref{thm:finitetime},~\ref{thm:criticalalpha}),
+and the $N$-agent generalization is stated as a conjecture with an
+acknowledged simultaneous-dynamics gap.
+Theorem~\ref{thm:stochastic} gives the probability of singleton
 emergence under multiplicative GBM noise as $\Pr(J \geq c) \in (0,1)$,
-tending to $1$ as $\sigma \to 0$; the exact transcendental condition for
-coalition external suppression yields $\alpha^* \approx 0.64$
-(Theorem~\ref{thm:criticalalpha}).
+expressible in closed form as a Dufresne perpetuity and tending to $1$
+as $\sigma \to 0$.
+Theorem~\ref{thm:criticalalpha} derives the exact transcendental
+condition for coalition external suppression, with numerical solution
+$\alpha^* \approx 0.64$.
 Within the formal model (A1--A5), separate resource pools alone do not
 prevent singleton emergence when both agents share a $\beta$-function that
 crosses zero, refining (not refuting) \citet{bostrom2005singleton}.
@@ -118,8 +120,8 @@ Lotka--Volterra handles biological competition without self-improvement.
 
 The contemporary AI capability discourse adds urgency to the question.
 Scaling-laws research and frontier-model development have produced a
-public debate over takeoff speed---whether capability growth is currently
-exponential, decelerating, or entering a super-exponential regime---in
+public debate over takeoff speed, that is, whether capability growth is currently
+exponential, decelerating, or entering a super-exponential regime, in
 which Yudkowsky's $\beta < 0$ threshold is the load-bearing assumption
 of the dramatic-takeoff scenarios.
 This paper makes that assumption falsifiable on the public AI-capability
@@ -137,8 +139,8 @@ finite time under adversarial resource dynamics; under multiplicative
 GBM-type noise the emergence becomes a high-probability rather than
 almost-sure event (Theorem~\ref{thm:stochastic}).
 That structure is close to tautological.
-The interesting empirical question---whether any real AI system will ever
-satisfy A4---is partially addressed in Section~\ref{sec:calibration} via
+The interesting empirical question, whether any real AI system will ever
+satisfy A4, is partially addressed in Section~\ref{sec:calibration} via
 calibrations on six capability proxies (frontier training compute and
 five public benchmarks); on none of the six is $\beta(S) < 0$ currently
 supported.
@@ -212,7 +214,7 @@ control. Resources are rivalrous: $\sum_i R_i(t) \leq \Rmax$ for all $t$.
 \begin{definition}[Growth function]
 $f(S) = S^{1-\beta(S)}$, where $\beta: \mathbb{R}_{>0} \to \mathbb{R}$ is a
 sigmoid with $\beta(S) > 0$ for $S < T$ and $\beta(S) < 0$ for $S > T$.
-The sigmoid is chosen for mathematical tractability---it yields a single
+The sigmoid is chosen for mathematical tractability: it yields a single
 threshold $T$ and monotone sign change.
 Real self-improvement dynamics could be non-monotonic, multi-threshold, or
 plateau-structured; the sigmoid is a tractability assumption, not an
@@ -402,7 +404,7 @@ Since $\rho$ is strictly increasing and $\rho(0) > 1$
 The integrand $1/(\rho'({\rho'}^{\alpha-\beta}-1))$ is bounded and positive
 on the closed interval $[\rho(0), L]$ (both endpoints give finite positive
 values since $\alpha > \beta$), so the left-hand side converges to a finite
-limit---contradicting the right-hand side diverging to $+\infty$.
+limit, contradicting the right-hand side diverging to $+\infty$.
 Therefore $\rho(t) \to \infty$.
 
 \textit{Case~2: $S_2(t)\to M<\infty$.}
@@ -448,7 +450,7 @@ same instant; by Theorem~\ref{thm:ratio}, the initial leader reaches $T$
 first.
 However, the \emph{near-simultaneous} case (both agents close to $T$ with
 similar trajectories) produces competitive dynamics that Theorem~\ref{thm:ratio}
-handles only asymptotically---the separation may be small at threshold
+handles only asymptotically. The separation may be small at threshold
 crossing, and the subsequent post-threshold advantage depends on the
 capability gap at that moment.
 \end{remark}
@@ -592,8 +594,8 @@ Elimination order is strictly weakest-first.
 
 \emph{Note:} The inductive argument is formally complete for the sequential
 limit ($r_N \to 0$ removing agent~$N$'s influence one at a time), but the
-simultaneous-dynamics correction---that the remaining $N-1$ agents'
-interaction is not perturbed by agent~$N$'s residual share---is not
+simultaneous-dynamics correction (that the remaining $N-1$ agents'
+interaction is not perturbed by agent~$N$'s residual share) is not
 analytically bounded.
 This theorem is therefore a conjecture supported by simulation (F4, F5:
 the result held in all 200 tested trials for $N=10$ on a purpose-built ODE
@@ -693,7 +695,7 @@ For illustration, at $t = 6.8$ in the default configuration the
 threshold-crossing simulation produces a ratio of $\sim\!1.9\times 10^7$
 versus $\sim\!1.55$ for the flat-$\beta$ comparator (Fig.~\ref{fig:threshold});
 this ratio grows without bound as $t \to \tstar$.
-The qualitative comparison---super- versus sub-exponential---is robust
+The qualitative comparison (super- versus sub-exponential) is robust
 across the tested parameter range, with minimum measured separation
 $1{,}179\times$ at the most adverse parameter set tested (F9).
 
@@ -708,7 +710,7 @@ time, so the snapshot value is illustrative rather than invariant.}
 \label{fig:threshold}
 \end{figure}
 
-\subsection{Niche partitioning---unexpected result (F8)}
+\subsection{Niche partitioning: unexpected result (F8)}
 
 Bostrom \citeyearpar{bostrom2005singleton} lists niche partitioning (separate
 resource pools) as a failure condition for singleton emergence.
@@ -721,8 +723,8 @@ agent with higher initial capability crosses $T$ first regardless of resource
 structure.
 
 \textit{Revised failure condition:}
-Stable oligopoly requires agents to operate in different $\beta$-regimes---one
-agent structurally unable to cross into $\beta < 0$---not merely separate
+Stable oligopoly requires agents to operate in different $\beta$-regimes (one
+agent structurally unable to cross into $\beta < 0$), not merely separate
 resource pools (see Section~\ref{sec:failures}, F1 revised).
 
 \subsection{$\beta$-regime sensitivity (F10--F12)}
@@ -768,7 +770,7 @@ regime but does not establish almost-sure emergence.
 Three noise thresholds appear in these results and are distinct:
 (1)~$\sigma \approx 0.023$: winner identity begins to degrade (initial leader
 starts losing some trials) for the default 10\% initial gap;
-(2)~$\sigma \approx 0.05$: a 1\% initial gap is overwhelmed---winner becomes
+(2)~$\sigma \approx 0.05$: a 1\% initial gap is overwhelmed and the winner becomes
 essentially random at that specific gap (F14);
 (3)~$\sigma \approx 0.23$: winner identity is fully random for the default
 10\% gap.
@@ -816,7 +818,7 @@ $\lambda \approx 0.25$ per time unit (F18).
 Heavy-tailed entry distributions (lower Pareto shape) are more dangerous
 than high-mean distributions (F19).
 Post-threshold, any $\lambda$ is survivable due to moat growth.
-Arrival timing follows a Poisson process---a tractable baseline that assumes
+Arrival timing follows a Poisson process, a tractable baseline that assumes
 memoryless, independent entry events.
 Real competitive entry may be clustered (triggered by a public breakthrough)
 or self-inhibiting (early failures discourage successors); these deviations
@@ -888,7 +890,7 @@ values.
 The theorem requires A1--A5. Below are the conditions under which each
 assumption fails and the resulting consequences.
 
-\paragraph{F1: Niche partitioning (A2/A3 weakened)---revised.}
+\paragraph{F1: Niche partitioning (A2/A3 weakened), revised.}
 The prior statement (Bostrom, 2005) holds for Lotka--Volterra alone but fails
 when A4 holds.
 The $\beta$-flip mechanism operates independently of resource competition.
@@ -896,7 +898,7 @@ The $\beta$-flip mechanism operates independently of resource competition.
 pool) and operates outside the formal model.
 It is an out-of-model robustness check, not a theorem consequence.
 Within the formal model, A3 holds and the revised condition is:
-stable oligopoly requires genuinely different $\beta$-regimes---one agent
+stable oligopoly requires genuinely different $\beta$-regimes, with one agent
 structurally incapable of crossing into $\beta < 0$.
 
 \paragraph{F2: No $\beta$-threshold (A4 fails).}
@@ -910,8 +912,8 @@ Two distinct entry-rate thresholds apply (F18):
 $\lambda \approx 0.25$ per time unit is where incumbent survival first
 drops below $90\%$, and at $\lambda \approx 6.3$ incumbent survival
 falls to $0\%$ across the tested trials.
-The latter regime is competitive churn---no incumbent persists long
-enough to cross $T$---and is qualitatively different from the former,
+The latter regime is competitive churn (no incumbent persists long
+enough to cross $T$) and is qualitatively different from the former,
 which is degraded but nonzero survival.
 Post-threshold, any entry rate tested is survivable.
 
@@ -946,13 +948,13 @@ capability ($C_i^\alpha / \sum_j C_j^\alpha$) and cannot renegotiate to
 concentrate all resources on a single member.
 This assumption is load-bearing and deserves scrutiny.
 In practice, leading AI organizations \emph{do} concentrate compute on
-their best-performing training runs---operationally equivalent to resource
+their best-performing training runs, operationally equivalent to resource
 concentration within a coalition.
 If a coalition can credibly commit to full resource concentration on its
 fastest member, it functions as a merged agent, and the cooperation-failure
 result does not apply: the merger is simply a stronger singleton candidate.
 The paper's claim that cooperation fails therefore rests on the inability
-to achieve credible, stable resource concentration---which is a social and
+to achieve credible, stable resource concentration, which is a social and
 game-theoretic constraint, not a physical one.
 Whether this constraint holds in practice is an open empirical question.
 
@@ -992,8 +994,8 @@ simulation parameter): regardless of coalition size, the singleton
 \label{sec:criticalalpha}
 
 The result above governs individual races.
-For the coalition to \emph{externally suppress} the singleton---prevent it from
-crossing $T$ at all---the coalition must collectively reach $N\cdot T$
+For the coalition to \emph{externally suppress} the singleton (prevent it from
+crossing $T$ at all), the coalition must collectively reach $N\cdot T$
 before the singleton reaches $T$.
 
 \begin{theorem}[Critical $\alpha$]
@@ -1056,7 +1058,7 @@ $\alpha = 0.5$ (singleton wins) and $\alpha = 0.75$ (coalition wins), F24. \chec
 \textit{Behavior at $\gamma \to 0$:}
 First-order expansion gives LHS $\approx \gamma \ln(Nc/x_0)$ and
 RHS $\approx \gamma \ln N$.
-The condition LHS $\geq$ RHS reduces to $c \geq x_0$---coalition wins at
+The condition LHS $\geq$ RHS reduces to $c \geq x_0$: coalition wins at
 $\gamma = 0$ only if each member starts no weaker than the singleton.
 Since $c = 1.0 < x_0 = 1.1$, no coalition wins at $\gamma = 0$.
 For $\gamma > \gamma^*$, the larger ratio $T/x_0$ provides enough time to
@@ -1179,8 +1181,8 @@ emergence.
 \section{Empirical Calibration to Frontier AI Compute}
 \label{sec:calibration}
 
-The framework's central conditional---``if A4 holds, a singleton
-emerges''---is mute on whether A4 \emph{does} hold for any system that
+The framework's central conditional, ``if A4 holds, a singleton
+emerges,'' is mute on whether A4 \emph{does} hold for any system that
 matters.
 This section attempts a falsifiable check using publicly available data
 on training compute for notable machine-learning systems
@@ -1394,15 +1396,15 @@ runaway dynamics; that framework does not model multi-agent competition,
 coalition dynamics, or stochastic noise, and does not perform an
 empirical calibration.
 The present paper proves the $\beta$-flip survives adversarial resource
-dynamics, which is non-trivial---an opponent can slow the race to
+dynamics, which is non-trivial: an opponent can slow the race to
 threshold, but not stop it.
 
 The niche partitioning finding (F8) corrects Bostrom (2005).
 Separate resource pools are not a sufficient failure condition; what matters
 is whether the trailing agent can reach $\beta < 0$ at all.
 
-On the stochastic side, Theorem~\ref{thm:stochastic} replaces an earlier
-incorrect a.s.-emergence claim with the correct probabilistic statement:
+Theorem~\ref{thm:stochastic} replaces an earlier incorrect
+almost-sure-emergence claim with the correct probabilistic statement:
 under multiplicative GBM noise, $\Pr(\text{singleton emerges}) =
 \Pr(J \geq c)$ for the explicit Dufresne perpetuity $J$.
 Noise can therefore prevent emergence, with probability tending to $1$
@@ -1413,8 +1415,8 @@ analytically.
 The transition near $\alpha = 0.64$ was previously only a simulation
 observation; it now has an exact transcendental equation behind it.
 
-The simulation scripts produce quantitative measurements---timescale formula,
-$\lambda_{\mathrm{crit}}$, moat characterization, F1--F25---that were not
+The simulation scripts produce quantitative measurements (timescale formula,
+$\lambda_{\mathrm{crit}}$, moat characterization, F1--F25) that were not
 previously available.
 
 Section~\ref{sec:calibration} introduces an empirical test of A4 across
@@ -1455,8 +1457,8 @@ converge to monopoly.
 \textit{Scalar capability.}
 The $\beta$-flip mechanism requires a scalar $S$ crossing a single threshold
 $T$.
-Real optimization capability is multidimensional---compute, algorithmic
-efficiency, data access, adversarial robustness---and different agents can
+Real optimization capability is multidimensional (compute, algorithmic
+efficiency, data access, adversarial robustness) and different agents can
 lead on different dimensions simultaneously.
 There is no obvious way to extend the model to that setting.
 Whether competitive exclusion holds in a vector capability space is an open
@@ -1523,7 +1525,7 @@ deterministic model.
 
 The failure conditions are narrower than the prior literature implies.
 Bostrom's niche partitioning argument requires that one agent cannot reach
-$\beta < 0$---separate resource pools alone are not enough.
+$\beta < 0$. Separate resource pools alone are not enough.
 Late entrants are a real threat only before threshold crossing.
 Coalitions fail not because they are irrational but because proportional
 internal resource distribution leaves each member individually weaker than a
@@ -1539,8 +1541,8 @@ compute and five public benchmarks).
 On none of the six is the curvature significantly positive; on two
 benchmarks it is significantly negative; the full deep-learning window
 of frontier compute is consistent with pure exponential growth.
-This does not refute A4---each proxy is a partial slice of capability,
-and the data are silent on the future---but it does shift the burden
+This does not refute A4 (each proxy is a partial slice of capability,
+and the data are silent on the future), but it does shift the burden
 onto proponents of the singleton scenario to specify which capability
 proxy they expect to enter the $\beta < 0$ regime, and on what
 timescale.
