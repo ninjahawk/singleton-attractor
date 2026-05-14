@@ -1368,6 +1368,11 @@ A future study could extend the calibration to capability proxies
 better suited to recent trends (effective compute, agentic
 capability scores, multi-step reasoning benchmarks) and to longer time
 horizons as data accumulate.
+Related empirical work: \citet{ge2026exponential} compare exponential,
+hyperbolic, and sigmoid models of capability growth on the METR
+time-horizon benchmark using Bayesian model selection, with no
+explicit super-exponential alternative; their methodology and dataset
+are complementary to the calibration here.
 
 % ============================================================
 \section{Discussion}
@@ -1381,8 +1386,16 @@ The combination is not.
 The main technical contribution is Theorem~\ref{thm:finitetime}: finite-time
 separation \emph{under competition}.
 Prior work treats the $\beta$-flip as a single-agent phenomenon.
-This paper proves it survives adversarial resource dynamics, which is
-non-trivial---an opponent can slow the race to threshold, but not stop it.
+The closest adjacent formal treatment is
+\citet{anbarjafari2025singularity}, which establishes finite-time blow-up
+criteria via Osgood-style conditions on a single-agent capability ODE
+$\ddot{I} \geq aI^p$ and analyses physical and economic caps on
+runaway dynamics; that framework does not model multi-agent competition,
+coalition dynamics, or stochastic noise, and does not perform an
+empirical calibration.
+The present paper proves the $\beta$-flip survives adversarial resource
+dynamics, which is non-trivial---an opponent can slow the race to
+threshold, but not stop it.
 
 The niche partitioning finding (F8) corrects Bostrom (2005).
 Separate resource pools are not a sufficient failure condition; what matters
