@@ -1,8 +1,18 @@
-# Singleton Attractor
+![hero](figures/hero.gif)
 
-**Formal theory and simulation of dominant-intelligence emergence in competitive multi-agent systems.**
+# The Singleton Attractor
 
-Author: Nathan Langley (University of North Carolina at Greensboro)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://python.org) [![NumPy](https://img.shields.io/badge/NumPy-scientific_computing-013243?logo=numpy&logoColor=white)](https://numpy.org) [![SciPy](https://img.shields.io/badge/SciPy-stochastic_ODE-8CAAE6?logo=scipy&logoColor=white)](https://scipy.org) [![Matplotlib](https://img.shields.io/badge/Matplotlib-visualization-11557c)](https://matplotlib.org) [![Affiliation](https://img.shields.io/badge/UNCG-Independent_Research-gold)](https://uncg.edu) [![Status](https://img.shields.io/badge/status-submission_ready-brightgreen)](https://github.com/ninjahawk/singleton-attractor) [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+
+**Independent Research  |  University of North Carolina at Greensboro**
+
+A formal model and empirical calibration of capability-threshold dynamics in
+frontier AI. Combines Yudkowsky's intelligence explosion equation,
+Omohundro's instrumental resource acquisition, and Lotka–Volterra
+competitive exclusion into one coupled ODE system; derives the conditions
+under which a single dominant agent emerges; and tests the model's central
+empirical premise against six public AI capability proxies.
+
 Paper: [`paper/main.pdf`](paper/main.pdf) — compiled from [`paper/main.tex`](paper/main.tex).
 
 ---
@@ -70,6 +80,7 @@ simulations/            Eleven Python scripts producing all figures
   cooperation_alpha.py
   calibration.py            §8 compute-based calibration
   benchmark_calibration.py  §8 benchmark-based calibration
+  make_hero_gif.py          README hero animation
 
 data/epoch/             Input data snapshot
   notable_ai_models.csv
