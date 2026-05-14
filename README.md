@@ -1,27 +1,26 @@
-![hero](figures/hero.gif)
+<div align="center">
+
+<img src="figures/hero.gif" alt="Singleton attractor: finite-time separation under the beta-threshold" width="820"/>
 
 # The Singleton Attractor
 
-[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://python.org) [![NumPy](https://img.shields.io/badge/NumPy-scientific_computing-013243?logo=numpy&logoColor=white)](https://numpy.org) [![SciPy](https://img.shields.io/badge/SciPy-stochastic_ODE-8CAAE6?logo=scipy&logoColor=white)](https://scipy.org) [![Matplotlib](https://img.shields.io/badge/Matplotlib-visualization-11557c)](https://matplotlib.org) [![Affiliation](https://img.shields.io/badge/UNCG-Independent_Research-gold)](https://uncg.edu) [![Status](https://img.shields.io/badge/status-submission_ready-brightgreen)](https://github.com/ninjahawk/singleton-attractor) [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://python.org) [![NumPy](https://img.shields.io/badge/NumPy-scientific_computing-013243?logo=numpy&logoColor=white)](https://numpy.org) [![SciPy](https://img.shields.io/badge/SciPy-stochastic_ODE-8CAAE6?logo=scipy&logoColor=white)](https://scipy.org) [![Matplotlib](https://img.shields.io/badge/Matplotlib-visualization-11557c)](https://matplotlib.org) [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-**Independent Research  |  University of North Carolina at Greensboro**
+**University of North Carolina at Greensboro**
 
-A formal model and empirical calibration of capability-threshold dynamics in
-frontier AI. Combines Yudkowsky's intelligence explosion equation,
-Omohundro's instrumental resource acquisition, and Lotka–Volterra
-competitive exclusion into one coupled ODE system; derives the conditions
-under which a single dominant agent emerges; and tests the model's central
-empirical premise against six public AI capability proxies.
+A formal model and empirical calibration of capability-threshold dynamics in frontier AI. Combines Yudkowsky's intelligence explosion equation, Omohundro's instrumental resource acquisition, and Lotka-Volterra competitive exclusion into one coupled ODE system; derives the conditions under which a single dominant agent emerges; and tests the model's central empirical premise against six public AI capability proxies.
 
-Paper: [`paper/main.pdf`](paper/main.pdf) — compiled from [`paper/main.tex`](paper/main.tex).
+Paper: [`paper/main.pdf`](paper/main.pdf) (compiled from [`paper/main.tex`](paper/main.tex))
+
+</div>
 
 ---
 
 ## What this is
 
-A formal model that combines three known frameworks — Yudkowsky's recursive
+A formal model that combines three known frameworks (Yudkowsky's recursive
 self-improvement equation `dS/dt = S^(1-β)`, Omohundro's instrumental
-resource acquisition, and Lotka–Volterra competitive exclusion — into one
+resource acquisition, and Lotka-Volterra competitive exclusion) into one
 coupled ODE system, derives several theorems, and tests the model's central
 empirical premise (Assumption A4: that β can flip negative for some reachable
 capability) against the public record on AI training compute and benchmark
@@ -153,7 +152,7 @@ unzip data/epoch/benchmark_data.zip -d data/epoch/benchmarks
 | F19 | Heavy-tailed entry distributions are more dangerous than high-mean              |
 | F20 | Coalition critical size N=2 (for α ≥ α* ≈ 0.64)                                 |
 | F21 | 8-member coalition with 8× combined power loses individual race                 |
-| F22 | Rational defection rate is zero — coalition stable, singleton wins              |
+| F22 | Rational defection rate is zero, coalition stable, singleton wins               |
 | F23 | Singleton emerges in 100% of trials across three cooperation regimes            |
 | F24 | Critical α for coalition suppression: transition near α=0.75                    |
 | F25 | At α=2.0, N=4: external suppression succeeds; internal singleton forms          |
